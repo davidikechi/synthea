@@ -250,4 +250,44 @@ public class AppTest {
     System.out.println(output);
   }
 
+  @Test
+  public void testWithModuleAddsFilterWhenMissing() {
+    String[] args = {"-s", "0", "-p", "0"};
+
+    String[] updated = App.withModule(args, "acute_myeloid_leukemia");
+
+    Assert.assertArrayEquals(new String[] {
+        "-s", "0", "-p", "0", "-m", "acute_myeloid_leukemia"
+    }, updated);
+  }
+
+  @Test
+  public void testWithModuleAppendsToExistingFilter() {
+    String[] args = {"-p", "0", "-m", "copd"};
+
+    String[] updated = App.withModule(args, "acute_myeloid_leukemia");
+
+    Assert.assertEquals("-m", updated[2]);
+    Assert.assertEquals("copd" + File.pathSeparator + "acute_myeloid_leukemia", updated[3]);
+  }
+
+  @Test
+  public void testAcuteMyeloidLeukemiaAppAddsModule() throws Exception {
+    TestHelper.exportOff();
+    String[] args = {"-s", "0", "-p", "0"};
+
+    final PrintStream original = System.out;
+    final ByteArrayOutputStream out = new ByteArrayOutputStream();
+    final PrintStream print = new PrintStream(out, true);
+    System.setOut(print);
+    AcuteMyeloidLeukemiaApp.main(args);
+    out.flush();
+    String output = out.toString();
+
+    Assert.assertTrue(output.contains("Modules:"));
+    Assert.assertTrue(output.contains("acute_myeloid_leukemia"));
+
+    System.setOut(original);
+  }
+
 }
