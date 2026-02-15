@@ -25,6 +25,7 @@ import org.mitre.synthea.helpers.Utilities;
  */
 public class App {
 
+
   /**
    * Add a module filter to the provided command line arguments.
    * If a module filter is already present, append the given module to it.
@@ -321,6 +322,7 @@ public class App {
       generator.run();
     }
   }
+
 
   /**
    * Reset the fields of the provided options to the current values in the Config.
