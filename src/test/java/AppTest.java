@@ -271,6 +271,44 @@ public class AppTest {
     Assert.assertEquals("copd" + File.pathSeparator + "acute_myeloid_leukemia", updated[3]);
   }
 
+
+  @Test
+  public void testAmlSubclassNormalizesClassAndDateFlags() {
+    String[] args = {"-class", "aml", "-start_date", "20180101", "-end_date", "20200101", "-p", "0"};
+
+    String[] updated = AcuteMyeloidLeukemiaApp.normalizeArgs(args);
+
+    Assert.assertArrayEquals(new String[] {
+        "-r", "20180101", "-e", "20200101", "-p", "0"
+    }, updated);
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void testAmlSubclassRejectsUnknownClass() {
+    String[] args = {"-class", "copd", "-p", "0"};
+
+    AcuteMyeloidLeukemiaApp.normalizeArgs(args);
+  }
+
+  @Test
+  public void testAmlSubclassStartDateAndEndDateAliases() throws Exception {
+    TestHelper.exportOff();
+    String[] args = {"-class", "aml", "-s", "0", "-p", "0", "-start_date", "20180101", "-end_date", "20200101"};
+
+    final PrintStream original = System.out;
+    final ByteArrayOutputStream out = new ByteArrayOutputStream();
+    final PrintStream print = new PrintStream(out, true);
+    System.setOut(print);
+    AcuteMyeloidLeukemiaApp.main(args);
+    out.flush();
+    String output = out.toString();
+
+    Assert.assertTrue(output.contains("Modules:"));
+    Assert.assertTrue(output.contains("acute_myeloid_leukemia"));
+
+    System.setOut(original);
+  }
+
   @Test
   public void testAcuteMyeloidLeukemiaAppAddsModule() throws Exception {
     TestHelper.exportOff();
