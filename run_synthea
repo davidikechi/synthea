@@ -6,21 +6,29 @@
 ##
 ##############################################################################
 
+RUN_TASK=run
+SYNTHEA_ARGS=
+
+for arg in "$@"
+do
+  if [ "$arg" = "--aml" ]; then
+    RUN_TASK=runAml
+  else
+    SYNTHEA_ARGS=$SYNTHEA_ARGS\'$arg\',
+    # Trailing comma ok, don't need to remove it
+  fi
+done
+
 if [ $# -eq 0 ]; then
   # run synthea with no args
-  ./gradlew run
+  ./gradlew "$RUN_TASK"
+
+elif [ -z "$SYNTHEA_ARGS" ]; then
+  # running with only wrapper flags like --aml
+  ./gradlew "$RUN_TASK"
 
 else
   # Running Synthea with arguments
   # For simplicity, do nothing and just pass the args to gradle
-  SYNTHEA_ARGS=
-
-  for arg in "$@"
-  do
-      SYNTHEA_ARGS=$SYNTHEA_ARGS\'$arg\',
-      # Trailing comma ok, don't need to remove it
-  done
-
-  ./gradlew run -Params="[$SYNTHEA_ARGS]"
+  ./gradlew "$RUN_TASK" -Params="[$SYNTHEA_ARGS]"
 fi
-

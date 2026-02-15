@@ -361,6 +361,20 @@ run {
   }
 }
 
+task runAml(type: JavaExec) {
+  group = "application"
+  description = "Run Synthea constrained to the AML module via AcuteMyeloidLeukemiaApp"
+  classpath = sourceSets.main.runtimeClasspath
+  mainClass = 'AcuteMyeloidLeukemiaApp'
+  if (project.hasProperty("arams")) {
+    args Eval.me(arams)
+  }
+  def maxHeapSizeVar = System.getenv("MAX_HEAP_SIZE")
+  if (maxHeapSizeVar != null) {
+    maxHeapSize = maxHeapSizeVar
+  }
+}
+
 task sourceJar(type: Jar) {
     archiveClassifier = "sources"
     from sourceSets.main.allJava
