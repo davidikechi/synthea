@@ -5,10 +5,11 @@
 @rem
 @rem ##########################################################################
 setlocal EnableDelayedExpansion
+SET runTask=run
 
 IF "%~1" == "" (
   @rem Just run Synthea with no args
-  gradlew.bat run
+  gradlew.bat %runTask%
   
 ) ELSE (
   @rem Running Synthea with arguments
@@ -16,13 +17,19 @@ IF "%~1" == "" (
   SET syntheaArgs= 
 
   :loop
-  ECHO ARG = %1
   if "%~1"=="" goto run
-  SET syntheaArgs=!syntheaArgs!'%~1',
+  if "%~1"=="--aml" (
+    SET runTask=runAml
+  ) else (
+    SET syntheaArgs=!syntheaArgs!'%~1',
+  )
   shift
   goto loop
 
   :run
-  ECHO syntheaArgs = !syntheaArgs!
-  gradlew.bat run -Params="[!syntheaArgs!]"
+  if "!syntheaArgs!"==" " (
+    gradlew.bat !runTask!
+  ) else (
+    gradlew.bat !runTask! -Params="[!syntheaArgs!]"
+  )
 )

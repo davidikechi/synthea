@@ -90,7 +90,14 @@ run_synthea -s 21 -p 100 Utah "Salt Lake City"
 run_synthea -g M -a 60-65
 run_synthea -p 10 --exporter.fhir.export=true
 run_synthea --exporter.baseDirectory="./output_tx/" Texas
+
+# run the AML-focused entrypoint (AcuteMyeloidLeukemiaApp)
+run_synthea --aml -p 100 Massachusetts Boston
 ```
+
+`--aml` is a launcher-level flag that routes execution through
+`AcuteMyeloidLeukemiaApp`, which automatically enables the
+`acute_myeloid_leukemia` module.
 
 Some settings can be changed in `./src/main/resources/synthea.properties`.
 
