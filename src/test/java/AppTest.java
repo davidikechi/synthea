@@ -86,6 +86,7 @@ public class AppTest {
     System.out.println(output);
   }
 
+
   @Test
   public void testAppWithAges() throws Exception {
     TestHelper.exportOff();
@@ -288,6 +289,49 @@ public class AppTest {
     String[] args = {"-class", "copd", "-p", "0"};
 
     AcuteMyeloidLeukemiaApp.normalizeArgs(args);
+  }
+
+
+  @Test
+  public void testAmlSubclassExtractMalePercentage() {
+    String[] args = {"-class", "aml", "-gender", "70", "-p", "10"};
+
+    Integer malePercentage = AcuteMyeloidLeukemiaApp.extractMalePercentage(args);
+
+    Assert.assertEquals(Integer.valueOf(70), malePercentage);
+  }
+
+  @Test
+  public void testAmlSubclassGenderMix() throws Exception {
+    TestHelper.exportOff();
+    String[] args = {"-class", "aml", "-s", "0", "-p", "40", "-gender", "70"};
+
+    final PrintStream original = System.out;
+    final ByteArrayOutputStream out = new ByteArrayOutputStream();
+    final PrintStream print = new PrintStream(out, true);
+    System.setOut(print);
+    AcuteMyeloidLeukemiaApp.main(args);
+    out.flush();
+    String output = out.toString();
+
+    Assert.assertTrue(output.contains("Gender Mix: 70% male / 30% female"));
+
+    Matcher maleMatches = Pattern.compile("y/o M").matcher(output);
+    int maleCount = 0;
+    while (maleMatches.find()) {
+      maleCount++;
+    }
+
+    Matcher femaleMatches = Pattern.compile("y/o F").matcher(output);
+    int femaleCount = 0;
+    while (femaleMatches.find()) {
+      femaleCount++;
+    }
+
+    Assert.assertTrue(maleCount > femaleCount);
+    Assert.assertTrue(femaleCount > 0);
+
+    System.setOut(original);
   }
 
   @Test
