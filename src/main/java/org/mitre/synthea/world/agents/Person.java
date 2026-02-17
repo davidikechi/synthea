@@ -27,6 +27,7 @@ import org.mitre.synthea.engine.State;
 import org.mitre.synthea.helpers.Config;
 import org.mitre.synthea.helpers.ConstantValueGenerator;
 import org.mitre.synthea.helpers.DefaultRandomNumberGenerator;
+import org.mitre.synthea.helpers.GenomicAlteration;
 import org.mitre.synthea.helpers.RandomNumberGenerator;
 import org.mitre.synthea.helpers.Utilities;
 import org.mitre.synthea.helpers.ValueGenerator;
@@ -239,6 +240,8 @@ public class Person implements Serializable, RandomNumberGenerator, QuadTreeElem
   public boolean hasMultipleRecords;
   /** History of the currently active module. */
   public List<State> history;
+  /** Genomic alterations collected from module attributes for export. */
+  public List<GenomicAlteration> genomics = new ArrayList<>();
   /** Record of insurance coverage. */
   public final CoverageRecord coverage;
 
