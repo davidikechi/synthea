@@ -30,6 +30,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.mitre.synthea.export.CSVConstants;
 import org.mitre.synthea.export.CSVFileManager;
 import org.mitre.synthea.helpers.Config;
+import org.mitre.synthea.helpers.GenomicAlteration;
+import org.mitre.synthea.helpers.GenomicsHelper;
 import org.mitre.synthea.helpers.RandomCodeGenerator;
 import org.mitre.synthea.helpers.Utilities;
 import org.mitre.synthea.modules.QualityOfLifeModule;
@@ -205,6 +207,8 @@ public class CSVExporter {
    */
   public void export(Person person, long time) throws IOException {
 
+    GenomicsHelper.collectGenomics(person);
+
     String personID = exportPatient(person, time);
 
     for (Encounter encounter : person.record.encounters) {
@@ -316,6 +320,41 @@ public class CSVExporter {
     fileManager.flushWriter(CSVConstants.CLAIM_KEY);
     fileManager.flushWriter(CSVConstants.CLAIM_TRANSACTION_KEY);
     fileManager.flushWriter(CSVConstants.PATIENT_EXPENSE_KEY);
+    exportGenomics(person);
+    fileManager.flushWriter(CSVConstants.GENOMICS_KEY);
+  }
+
+  private void exportGenomics(Person person) throws IOException {
+    if (person.genomics.isEmpty()) {
+      return;
+    }
+
+    for (GenomicAlteration alteration : person.genomics) {
+      StringBuilder line = new StringBuilder();
+      line.append(person.attributes.get(Person.ID)).append(',');
+      line.append(clean(alteration.dateGenomics)).append(',');
+      line.append(clean(alteration.methodGenomics)).append(',');
+      line.append(clean(alteration.sourceGenomics)).append(',');
+      line.append(clean(alteration.alterationType)).append(',');
+      line.append(clean(alteration.gene)).append(',');
+      line.append(clean(alteration.geneOther)).append(',');
+      line.append(clean(alteration.fusion)).append(',');
+      line.append(clean(alteration.structuralEvent)).append(',');
+      line.append(clean(alteration.alterationStatus)).append(',');
+      line.append(clean(alteration.chromosome)).append(',');
+      line.append(clean(alteration.hgvsGenome)).append(',');
+      line.append(clean(alteration.hgvsCoding)).append(',');
+      line.append(clean(alteration.hgvsProtein)).append(',');
+      line.append(clean(alteration.genomeVersion)).append(',');
+      line.append(alteration.vaf == null ? "" : alteration.vaf).append(',');
+      line.append(alteration.abnormalCellsKaryo == null ? "" : alteration.abnormalCellsKaryo)
+          .append(',');
+      line.append(alteration.abnormalCellsFish == null ? "" : alteration.abnormalCellsFish)
+          .append(',');
+      line.append(clean(alteration.externalDbId));
+      line.append(NEWLINE);
+      fileManager.writeResourceLine(line.toString(), CSVConstants.GENOMICS_KEY);
+    }
   }
 
   /**

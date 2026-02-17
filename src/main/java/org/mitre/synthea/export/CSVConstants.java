@@ -26,6 +26,7 @@ public class CSVConstants {
   public static final String CLAIM_KEY = "claims";
   public static final String CLAIM_TRANSACTION_KEY = "claims_transactions";
   public static final String PATIENT_EXPENSE_KEY = "patient_expenses";
+  public static final String GENOMICS_KEY = "genomics";
 
   public static final String PATIENT_HEADER_LINE =
       "Id,BIRTHDATE,DEATHDATE,SSN,DRIVERS,PASSPORT,"
@@ -109,6 +110,12 @@ public class CSVConstants {
       "PATIENT_ID,YEAR,PAYER_ID,"
       + "HEALTHCARE_EXPENSES,INSURANCE_COSTS,COVERED_COSTS"
       + NEWLINE;
+  public static final String GENOMICS_HEADER_LINE =
+      "PATIENT,DATE_GENOMICS,METHOD_GENOMICS,SOURCE_GENOMICS,"
+      + "ALTERATION_TYPE,GENE,GENE_OTHER,FUSION,STRUCTURAL_EVENT,ALTERATION_STATUS,"
+      + "CHROMOSOME,HGVS_GENOME,HGVS_CODING,HGVS_PROTEIN,GENOME_VERSION,"
+      + "VAF,ABNORMAL_CELLS_KARYO,ABNORMAL_CELLS_FISH,EXTERNAL_DB_ID"
+      + NEWLINE;
 
   public static final Map<String, String> HEADER_LINE_MAP = initializeHeaderMap();
 
@@ -134,6 +141,7 @@ public class CSVConstants {
     map.put(CLAIM_KEY, CLAIM_HEADER_LINE);
     map.put(CLAIM_TRANSACTION_KEY, CLAIM_TRANSACTION_HEADER_LINE);
     map.put(PATIENT_EXPENSE_KEY, PATIENT_EXPENSE_HEADER_LINE);
+    map.put(GENOMICS_KEY, GENOMICS_HEADER_LINE);
 
     return Collections.unmodifiableMap(map);
   }
