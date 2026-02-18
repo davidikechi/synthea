@@ -13,6 +13,9 @@ import java.io.OutputStreamWriter;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.nio.file.Path;
+import java.time.LocalDate;
+import java.time.ZoneOffset;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Comparator;
@@ -320,11 +323,11 @@ public class CSVExporter {
     fileManager.flushWriter(CSVConstants.CLAIM_KEY);
     fileManager.flushWriter(CSVConstants.CLAIM_TRANSACTION_KEY);
     fileManager.flushWriter(CSVConstants.PATIENT_EXPENSE_KEY);
-    exportGenomics(person);
+    exportGenomics(person, time);
     fileManager.flushWriter(CSVConstants.GENOMICS_KEY);
   }
 
-  private void exportGenomics(Person person) throws IOException {
+  private void exportGenomics(Person person, long exportTime) throws IOException {
     if (person.genomics.isEmpty()) {
       return;
     }
@@ -332,7 +335,7 @@ public class CSVExporter {
     for (GenomicAlteration alteration : person.genomics) {
       StringBuilder line = new StringBuilder();
       line.append(person.attributes.get(Person.ID)).append(',');
-      line.append(clean(alteration.dateGenomics)).append(',');
+      line.append(clean(resolveDateGenomics(person, alteration, exportTime))).append(',');
       line.append(clean(alteration.methodGenomics)).append(',');
       line.append(clean(alteration.sourceGenomics)).append(',');
       line.append(clean(alteration.alterationType)).append(',');
@@ -355,6 +358,64 @@ public class CSVExporter {
       line.append(NEWLINE);
       fileManager.writeResourceLine(line.toString(), CSVConstants.GENOMICS_KEY);
     }
+  }
+
+  static String resolveDateGenomics(Person person, GenomicAlteration alteration,
+      long exportTime) {
+    long lowerBound = 0L;
+    Object birthdate = person.attributes.get(Person.BIRTHDATE);
+    if (birthdate instanceof Long) {
+      lowerBound = (Long) birthdate;
+    }
+
+    Long earliestConditionStart = getEarliestConditionStart(person);
+    if (earliestConditionStart != null) {
+      lowerBound = Math.max(lowerBound, earliestConditionStart);
+    }
+
+    long upperBound = exportTime;
+    Object deathdate = person.attributes.get(Person.DEATHDATE);
+    if (deathdate instanceof Long) {
+      upperBound = Math.min(upperBound, (Long) deathdate);
+    }
+
+    if (upperBound < lowerBound) {
+      upperBound = lowerBound;
+    }
+
+    if (!StringUtils.isBlank(alteration.dateGenomics)) {
+      try {
+        long explicitDate = LocalDate.parse(alteration.dateGenomics.trim())
+            .atStartOfDay().toInstant(ZoneOffset.UTC).toEpochMilli();
+        return dateFromTimestamp(clamp(explicitDate, lowerBound, upperBound));
+      } catch (DateTimeParseException dtpe) {
+        // Fall through to generated date when explicit date cannot be parsed.
+      }
+    }
+
+    long sampledTime = lowerBound;
+    if (upperBound > lowerBound) {
+      double offset = person.rand(0, (double) (upperBound - lowerBound));
+      sampledTime = lowerBound + (long) Math.floor(offset);
+    }
+
+    return dateFromTimestamp(sampledTime);
+  }
+
+  private static long clamp(long value, long min, long max) {
+    return Math.max(min, Math.min(max, value));
+  }
+
+  static Long getEarliestConditionStart(Person person) {
+    Long earliest = null;
+    for (Encounter encounter : person.record.encounters) {
+      for (Entry condition : encounter.conditions) {
+        if (earliest == null || condition.start < earliest) {
+          earliest = condition.start;
+        }
+      }
+    }
+    return earliest;
   }
 
   /**

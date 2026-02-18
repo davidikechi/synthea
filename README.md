@@ -99,6 +99,54 @@ run_synthea --aml -p 100 Massachusetts Boston
 `AcuteMyeloidLeukemiaApp`, which automatically enables the
 `acute_myeloid_leukemia` module.
 
+### AML genomics customization example
+
+If you want AML patients to include genomic alterations in `genomics.csv`, set the
+`genomics_alterations` person attribute inside the module. The CSV exporter reads this
+attribute and writes one output row per alteration.
+
+To match normal AML transition style, add a `SetAttribute` state with a
+`direct_transition` (no hardcoded date required):
+
+```json
+"Capture_AML_Genomics": {
+  "type": "SetAttribute",
+  "attribute": "genomics_alterations",
+  "value": [
+    {
+      "method_genomics": "NGS",
+      "source_genomics": "Bone marrow",
+      "alteration_type": "SNV",
+      "gene": "FLT3",
+      "alteration_status": "Pathogenic",
+      "chromosome": "13",
+      "hgvs_coding": "c.2503G>T",
+      "hgvs_protein": "p.Asp835Tyr",
+      "genome_version": "GRCh38",
+      "vaf": 0.42
+    },
+    {
+      "method_genomics": "NGS",
+      "source_genomics": "Bone marrow",
+      "alteration_type": "SNV",
+      "gene": "NPM1",
+      "alteration_status": "Pathogenic",
+      "hgvs_coding": "c.860_863dup",
+      "hgvs_protein": "p.Trp288CysfsTer12",
+      "genome_version": "GRCh38",
+      "vaf": 0.35
+    }
+  ],
+  "direct_transition": "Next_State"
+}
+```
+
+Then route AML states through `Capture_AML_Genomics` before terminal states. If
+`date_genomics` is omitted, CSV export generates a realistic date automatically:
+it is sampled on/after the earliest condition start (and never before birthdate), and
+clamped to not exceed death date or simulation end time. If `date_genomics` is
+provided, it is still normalized/clamped to this same realistic timeline window.
+
 Some settings can be changed in `./src/main/resources/synthea.properties`.
 
 Synthea<sup>TM</sup> will output patient records in C-CDA and FHIR formats in `./output`.
