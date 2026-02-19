@@ -99,6 +99,19 @@ run_synthea --aml -p 100 Massachusetts Boston
 `AcuteMyeloidLeukemiaApp`, which automatically enables the
 `acute_myeloid_leukemia` module.
 
+> **Important:** `src/main/resources/modules/aml_disease_model.json` is a
+> disease knowledge model document (metadata/reference content), not an
+> executable Synthea state-machine module. Passing `-m aml_disease_model` does
+> not replace the AML simulation module used by `--aml`.
+
+If you use `--aml` without `-m`, the launcher defaults to the
+`acute_myeloid_leukemia` module. If you pass `-m ...`, your explicit module
+filter is respected.
+
+`genomics.csv` is only populated when a module sets the
+`genomics_alterations` person attribute (for example via a `SetAttribute`
+state).
+
 ### AML genomics customization example
 
 If you want AML patients to include genomic alterations in `genomics.csv`, set the
