@@ -1,0 +1,587 @@
+{
+  "name": "AML Model",
+  "remarks": [
+    "Comprehensive AML simulation module for genomics-focused PCOR research.",
+    "Covers five major AML subtypes with subtype-specific genomic alterations,",
+    "diagnostic labs, bone marrow biopsy, and targeted therapy.",
+    "",
+    "All patients entering this module are assigned an AML subtype and proceed",
+    "through the full diagnosis-to-treatment pathway, generating rows in:",
+    "  conditions.csv, encounters.csv, observations.csv, procedures.csv,",
+    "  medications.csv, and genomics.csv.",
+    "",
+    "Use with: run_synthea --aml -m aml_model -p 100 Massachusetts Bedford",
+    "            --exporter.csv.export=true",
+    "Or:       run_synthea -class aml -m aml_model -p 100 Massachusetts Bedford",
+    "            --exporter.csv.export=true",
+    "",
+    "Subtype distribution (approximate real-world frequencies):",
+    "  FLT3-ITD  30%  - high-risk, targeted with midostaurin",
+    "  NPM1      30%  - standard 7+3 induction",
+    "  APL       15%  - ATRA + arsenic trioxide",
+    "  CBF       15%  - core-binding factor, good prognosis",
+    "  TP53      10%  - adverse risk, venetoclax-based regimen"
+  ],
+  "gmf_version": 2,
+  "states": {
+    "Initial": {
+      "type": "Initial",
+      "direct_transition": "Assign_AML_Subtype"
+    },
+
+    "Assign_AML_Subtype": {
+      "type": "Simple",
+      "distributed_transition": [
+        { "transition": "Set_Subtype_FLT3_ITD", "distribution": 0.30 },
+        { "transition": "Set_Subtype_NPM1",     "distribution": 0.30 },
+        { "transition": "Set_Subtype_APL",      "distribution": 0.15 },
+        { "transition": "Set_Subtype_CBF",      "distribution": 0.15 },
+        { "transition": "Set_Subtype_TP53",     "distribution": 0.10 }
+      ]
+    },
+
+    "Set_Subtype_FLT3_ITD": {
+      "type": "SetAttribute",
+      "attribute": "aml_subtype",
+      "value": "AML_FLT3_ITD",
+      "direct_transition": "AML_Condition_Onset"
+    },
+    "Set_Subtype_NPM1": {
+      "type": "SetAttribute",
+      "attribute": "aml_subtype",
+      "value": "AML_NPM1",
+      "direct_transition": "AML_Condition_Onset"
+    },
+    "Set_Subtype_APL": {
+      "type": "SetAttribute",
+      "attribute": "aml_subtype",
+      "value": "APL_PML_RARA",
+      "direct_transition": "AML_Condition_Onset"
+    },
+    "Set_Subtype_CBF": {
+      "type": "SetAttribute",
+      "attribute": "aml_subtype",
+      "value": "AML_CBF",
+      "direct_transition": "AML_Condition_Onset"
+    },
+    "Set_Subtype_TP53": {
+      "type": "SetAttribute",
+      "attribute": "aml_subtype",
+      "value": "AML_TP53",
+      "direct_transition": "AML_Condition_Onset"
+    },
+
+    "AML_Condition_Onset": {
+      "type": "ConditionOnset",
+      "assign_to_attribute": "aml_condition",
+      "codes": [
+        {
+          "system": "SNOMED-CT",
+          "code": "91857003",
+          "display": "Acute myeloid leukemia (disorder)"
+        }
+      ],
+      "direct_transition": "Diagnosis_Inpatient_Encounter"
+    },
+
+    "Diagnosis_Inpatient_Encounter": {
+      "type": "Encounter",
+      "encounter_class": "inpatient",
+      "reason": "aml_condition",
+      "codes": [
+        {
+          "system": "SNOMED-CT",
+          "code": "185347001",
+          "display": "Encounter for problem (procedure)"
+        }
+      ],
+      "direct_transition": "WBC_Lab"
+    },
+
+    "WBC_Lab": {
+      "type": "Observation",
+      "category": "laboratory",
+      "unit": "10*3/uL",
+      "codes": [
+        {
+          "system": "LOINC",
+          "code": "6690-2",
+          "display": "Leukocytes [#/volume] in Blood by Automated count"
+        }
+      ],
+      "range": { "low": 10.0, "high": 100.0 },
+      "direct_transition": "Peripheral_Blast_Lab"
+    },
+
+    "Peripheral_Blast_Lab": {
+      "type": "Observation",
+      "category": "laboratory",
+      "unit": "%",
+      "codes": [
+        {
+          "system": "LOINC",
+          "code": "709-6",
+          "display": "Blasts/100 leukocytes in Blood by Manual count"
+        }
+      ],
+      "range": { "low": 25, "high": 95 },
+      "direct_transition": "Hemoglobin_Lab"
+    },
+
+    "Hemoglobin_Lab": {
+      "type": "Observation",
+      "category": "laboratory",
+      "unit": "g/dL",
+      "codes": [
+        {
+          "system": "LOINC",
+          "code": "718-7",
+          "display": "Hemoglobin [Mass/volume] in Blood"
+        }
+      ],
+      "range": { "low": 6.0, "high": 10.5 },
+      "direct_transition": "Platelet_Lab"
+    },
+
+    "Platelet_Lab": {
+      "type": "Observation",
+      "category": "laboratory",
+      "unit": "10*3/uL",
+      "codes": [
+        {
+          "system": "LOINC",
+          "code": "777-3",
+          "display": "Platelets [#/volume] in Blood by Automated count"
+        }
+      ],
+      "range": { "low": 10, "high": 100 },
+      "direct_transition": "ANC_Lab"
+    },
+
+    "ANC_Lab": {
+      "type": "Observation",
+      "category": "laboratory",
+      "unit": "10*3/uL",
+      "codes": [
+        {
+          "system": "LOINC",
+          "code": "751-8",
+          "display": "Neutrophils [#/volume] in Blood by Automated count"
+        }
+      ],
+      "range": { "low": 0.1, "high": 0.5 },
+      "direct_transition": "LDH_Lab"
+    },
+
+    "LDH_Lab": {
+      "type": "Observation",
+      "category": "laboratory",
+      "unit": "U/L",
+      "codes": [
+        {
+          "system": "LOINC",
+          "code": "14804-9",
+          "display": "Lactate dehydrogenase [Enzymatic activity/volume] in Serum or Plasma"
+        }
+      ],
+      "range": { "low": 250, "high": 700 },
+      "direct_transition": "Bone_Marrow_Biopsy"
+    },
+
+    "Bone_Marrow_Biopsy": {
+      "type": "Procedure",
+      "codes": [
+        {
+          "system": "SNOMED-CT",
+          "code": "86273004",
+          "display": "Biopsy of bone marrow"
+        }
+      ],
+      "duration": { "low": 30, "high": 60, "unit": "minutes" },
+      "reason": "aml_condition",
+      "direct_transition": "Bone_Marrow_Blast_Lab"
+    },
+
+    "Bone_Marrow_Blast_Lab": {
+      "type": "Observation",
+      "category": "laboratory",
+      "unit": "%",
+      "codes": [
+        {
+          "system": "LOINC",
+          "code": "26464-8",
+          "display": "Blasts/100 cells in Bone marrow"
+        }
+      ],
+      "range": { "low": 25, "high": 95 },
+      "direct_transition": "Genomics_Branch"
+    },
+
+    "Genomics_Branch": {
+      "type": "Simple",
+      "complex_transition": [
+        {
+          "condition": {
+            "condition_type": "Attribute",
+            "attribute": "aml_subtype",
+            "operator": "=",
+            "value": "AML_FLT3_ITD"
+          },
+          "transition": "Capture_Genomics_FLT3"
+        },
+        {
+          "condition": {
+            "condition_type": "Attribute",
+            "attribute": "aml_subtype",
+            "operator": "=",
+            "value": "AML_NPM1"
+          },
+          "transition": "Capture_Genomics_NPM1"
+        },
+        {
+          "condition": {
+            "condition_type": "Attribute",
+            "attribute": "aml_subtype",
+            "operator": "=",
+            "value": "APL_PML_RARA"
+          },
+          "transition": "Capture_Genomics_APL"
+        },
+        {
+          "condition": {
+            "condition_type": "Attribute",
+            "attribute": "aml_subtype",
+            "operator": "=",
+            "value": "AML_CBF"
+          },
+          "transition": "Capture_Genomics_CBF"
+        },
+        {
+          "condition": {
+            "condition_type": "Attribute",
+            "attribute": "aml_subtype",
+            "operator": "=",
+            "value": "AML_TP53"
+          },
+          "transition": "Capture_Genomics_TP53"
+        }
+      ]
+    },
+
+    "Capture_Genomics_FLT3": {
+      "type": "SetAttribute",
+      "attribute": "genomics_alterations",
+      "value": [
+        {
+          "method_genomics": "NGS",
+          "source_genomics": "Bone marrow",
+          "alteration_type": "ITD",
+          "gene": "FLT3",
+          "alteration_status": "Pathogenic",
+          "hgvs_coding": "c.1770_1771ins18",
+          "genome_version": "GRCh38",
+          "vaf": 0.48,
+          "chromosome": "13"
+        },
+        {
+          "method_genomics": "NGS",
+          "source_genomics": "Bone marrow",
+          "alteration_type": "SNV",
+          "gene": "DNMT3A",
+          "alteration_status": "Pathogenic",
+          "hgvs_coding": "c.2645G>A",
+          "hgvs_protein": "p.Arg882His",
+          "genome_version": "GRCh38",
+          "vaf": 0.50,
+          "chromosome": "2"
+        }
+      ],
+      "direct_transition": "Therapy_Branch"
+    },
+
+    "Capture_Genomics_NPM1": {
+      "type": "SetAttribute",
+      "attribute": "genomics_alterations",
+      "value": [
+        {
+          "method_genomics": "NGS",
+          "source_genomics": "Bone marrow",
+          "alteration_type": "Insertion",
+          "gene": "NPM1",
+          "alteration_status": "Pathogenic",
+          "hgvs_coding": "c.860_863dup",
+          "hgvs_protein": "p.Trp288CysfsTer12",
+          "genome_version": "GRCh38",
+          "vaf": 0.46,
+          "chromosome": "5"
+        }
+      ],
+      "direct_transition": "Therapy_Branch"
+    },
+
+    "Capture_Genomics_APL": {
+      "type": "SetAttribute",
+      "attribute": "genomics_alterations",
+      "value": [
+        {
+          "method_genomics": "FISH",
+          "source_genomics": "Bone marrow",
+          "alteration_type": "Fusion",
+          "gene": "PML",
+          "gene_other": "RARA",
+          "fusion": "PML::RARA",
+          "structural_event": "t(15;17)(q24.1;q21.2)",
+          "alteration_status": "Pathogenic",
+          "genome_version": "GRCh38",
+          "chromosome": "15"
+        }
+      ],
+      "direct_transition": "Therapy_Branch"
+    },
+
+    "Capture_Genomics_CBF": {
+      "type": "SetAttribute",
+      "attribute": "genomics_alterations",
+      "value": [
+        {
+          "method_genomics": "FISH",
+          "source_genomics": "Bone marrow",
+          "alteration_type": "Fusion",
+          "gene": "RUNX1",
+          "gene_other": "RUNX1T1",
+          "fusion": "RUNX1::RUNX1T1",
+          "structural_event": "t(8;21)(q22;q22.1)",
+          "alteration_status": "Pathogenic",
+          "genome_version": "GRCh38",
+          "chromosome": "8"
+        },
+        {
+          "method_genomics": "NGS",
+          "source_genomics": "Bone marrow",
+          "alteration_type": "SNV",
+          "gene": "KIT",
+          "alteration_status": "Pathogenic",
+          "hgvs_coding": "c.2447A>T",
+          "hgvs_protein": "p.Asp816Val",
+          "genome_version": "GRCh38",
+          "vaf": 0.40,
+          "chromosome": "4"
+        }
+      ],
+      "direct_transition": "Therapy_Branch"
+    },
+
+    "Capture_Genomics_TP53": {
+      "type": "SetAttribute",
+      "attribute": "genomics_alterations",
+      "value": [
+        {
+          "method_genomics": "NGS",
+          "source_genomics": "Bone marrow",
+          "alteration_type": "SNV",
+          "gene": "TP53",
+          "alteration_status": "Pathogenic",
+          "hgvs_coding": "c.817C>T",
+          "hgvs_protein": "p.Arg273Cys",
+          "genome_version": "GRCh38",
+          "vaf": 0.55,
+          "chromosome": "17"
+        }
+      ],
+      "direct_transition": "Therapy_Branch"
+    },
+
+    "Therapy_Branch": {
+      "type": "Simple",
+      "complex_transition": [
+        {
+          "condition": {
+            "condition_type": "Attribute",
+            "attribute": "aml_subtype",
+            "operator": "=",
+            "value": "AML_FLT3_ITD"
+          },
+          "transition": "Give_Cytarabine_FLT3"
+        },
+        {
+          "condition": {
+            "condition_type": "Attribute",
+            "attribute": "aml_subtype",
+            "operator": "=",
+            "value": "AML_NPM1"
+          },
+          "transition": "Give_Daunorubicin_NPM1"
+        },
+        {
+          "condition": {
+            "condition_type": "Attribute",
+            "attribute": "aml_subtype",
+            "operator": "=",
+            "value": "APL_PML_RARA"
+          },
+          "transition": "Give_ATRA"
+        },
+        {
+          "condition": {
+            "condition_type": "Attribute",
+            "attribute": "aml_subtype",
+            "operator": "=",
+            "value": "AML_CBF"
+          },
+          "transition": "Give_Cytarabine_CBF"
+        },
+        {
+          "condition": {
+            "condition_type": "Attribute",
+            "attribute": "aml_subtype",
+            "operator": "=",
+            "value": "AML_TP53"
+          },
+          "transition": "Give_Venetoclax"
+        }
+      ]
+    },
+
+    "Give_Cytarabine_FLT3": {
+      "type": "MedicationOrder",
+      "codes": [
+        {
+          "system": "RxNorm",
+          "code": "197361",
+          "display": "cytarabine 100 MG Injection"
+        }
+      ],
+      "reason": "aml_condition",
+      "direct_transition": "Give_Midostaurin"
+    },
+    "Give_Midostaurin": {
+      "type": "MedicationOrder",
+      "codes": [
+        {
+          "system": "RxNorm",
+          "code": "2056826",
+          "display": "midostaurin 25 MG Oral Capsule"
+        }
+      ],
+      "reason": "aml_condition",
+      "direct_transition": "MRD_Observation"
+    },
+
+    "Give_Daunorubicin_NPM1": {
+      "type": "MedicationOrder",
+      "codes": [
+        {
+          "system": "RxNorm",
+          "code": "197519",
+          "display": "daunorubicin 5 MG/ML Injection"
+        }
+      ],
+      "reason": "aml_condition",
+      "direct_transition": "Give_Cytarabine_NPM1"
+    },
+    "Give_Cytarabine_NPM1": {
+      "type": "MedicationOrder",
+      "codes": [
+        {
+          "system": "RxNorm",
+          "code": "197361",
+          "display": "cytarabine 100 MG Injection"
+        }
+      ],
+      "reason": "aml_condition",
+      "direct_transition": "MRD_Observation"
+    },
+
+    "Give_ATRA": {
+      "type": "MedicationOrder",
+      "codes": [
+        {
+          "system": "RxNorm",
+          "code": "83367",
+          "display": "tretinoin 10 MG Oral Capsule"
+        }
+      ],
+      "reason": "aml_condition",
+      "direct_transition": "Give_Arsenic"
+    },
+    "Give_Arsenic": {
+      "type": "MedicationOrder",
+      "codes": [
+        {
+          "system": "RxNorm",
+          "code": "115698",
+          "display": "arsenic trioxide 1 MG/ML Injection"
+        }
+      ],
+      "reason": "aml_condition",
+      "direct_transition": "MRD_Observation"
+    },
+
+    "Give_Cytarabine_CBF": {
+      "type": "MedicationOrder",
+      "codes": [
+        {
+          "system": "RxNorm",
+          "code": "197361",
+          "display": "cytarabine 100 MG Injection"
+        }
+      ],
+      "reason": "aml_condition",
+      "direct_transition": "MRD_Observation"
+    },
+
+    "Give_Venetoclax": {
+      "type": "MedicationOrder",
+      "codes": [
+        {
+          "system": "RxNorm",
+          "code": "1860487",
+          "display": "venetoclax 10 MG Oral Tablet"
+        }
+      ],
+      "reason": "aml_condition",
+      "direct_transition": "Give_Azacitidine"
+    },
+    "Give_Azacitidine": {
+      "type": "MedicationOrder",
+      "codes": [
+        {
+          "system": "RxNorm",
+          "code": "1044807",
+          "display": "azacitidine 100 MG Injection"
+        }
+      ],
+      "reason": "aml_condition",
+      "direct_transition": "MRD_Observation"
+    },
+
+    "MRD_Observation": {
+      "type": "Observation",
+      "category": "laboratory",
+      "unit": "%",
+      "codes": [
+        {
+          "system": "LOINC",
+          "code": "59776-5",
+          "display": "Blasts/100 cells in Bone marrow by Flow cytometry (FC)"
+        }
+      ],
+      "range": { "low": 0.01, "high": 5.0 },
+      "direct_transition": "Encounter_End"
+    },
+
+    "Encounter_End": {
+      "type": "EncounterEnd",
+      "discharge_disposition": {
+        "system": "NUBC",
+        "code": 1,
+        "display": "Discharge to Home"
+      },
+      "direct_transition": "Terminal"
+    },
+
+    "Terminal": {
+      "type": "Terminal"
+    }
+  }
+}
