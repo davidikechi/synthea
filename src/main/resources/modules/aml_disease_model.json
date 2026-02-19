@@ -1,0 +1,522 @@
+{
+  "resourceType": "DiseaseKnowledgeModel",
+  "id": "acute-myeloid-leukemia-model-v1",
+  "name": "Acute Myeloid Leukemia (AML) Integrated Model",
+  "version": "1.0.0",
+  "status": "draft",
+  "description": "Structured AML knowledge model containing disease subtypes, genomic methods, diagnostic assays, treatment options, conditions, observations, and quantitative measurements with ontology mappings.",
+  "ontologies": {
+    "disease": [
+      {
+        "system": "MONDO",
+        "code": "MONDO:0018874",
+        "display": "acute myeloid leukemia"
+      },
+      {
+        "system": "NCIT",
+        "code": "C3171",
+        "display": "Acute Myeloid Leukemia"
+      },
+      {
+        "system": "SNOMED-CT",
+        "code": "91857003",
+        "display": "Acute myeloid leukemia (disorder)"
+      },
+      {
+        "system": "ICD-10-CM",
+        "code": "C92.00",
+        "display": "Acute myeloblastic leukemia, not having achieved remission"
+      }
+    ],
+    "classificationSystems": [
+      {
+        "system": "WHO-HAEM5",
+        "display": "WHO Classification of Haematolymphoid Tumours, 5th edition"
+      },
+      {
+        "system": "ICC",
+        "display": "International Consensus Classification"
+      },
+      {
+        "system": "ELN-2022",
+        "display": "European LeukemiaNet genetic risk classification"
+      }
+    ]
+  },
+  "subtypes": [
+    {
+      "id": "aml-defining-genetic-abnormalities",
+      "label": "AML with defining genetic abnormalities",
+      "category": "genetically_defined",
+      "examples": [
+        {
+          "name": "AML with RUNX1::RUNX1T1 fusion",
+          "ontology": {
+            "system": "NCIT",
+            "code": "C129785"
+          },
+          "definingFindings": [
+            "t(8;21)(q22;q22.1)",
+            "RUNX1::RUNX1T1 fusion"
+          ]
+        },
+        {
+          "name": "AML with CBFB::MYH11 fusion",
+          "ontology": {
+            "system": "NCIT",
+            "code": "C37214"
+          },
+          "definingFindings": [
+            "inv(16)(p13.1q22) or t(16;16)",
+            "CBFB::MYH11 fusion"
+          ]
+        },
+        {
+          "name": "Acute promyelocytic leukemia",
+          "ontology": {
+            "system": "NCIT",
+            "code": "C3439"
+          },
+          "definingFindings": [
+            "PML::RARA fusion",
+            "t(15;17)(q24.1;q21.2)"
+          ]
+        },
+        {
+          "name": "AML with mutated NPM1",
+          "ontology": {
+            "system": "NCIT",
+            "code": "C129786"
+          },
+          "definingFindings": [
+            "NPM1 pathogenic mutation"
+          ]
+        },
+        {
+          "name": "AML with bZIP in-frame mutated CEBPA",
+          "ontology": {
+            "system": "NCIT",
+            "code": "C168785"
+          },
+          "definingFindings": [
+            "CEBPA bZIP in-frame mutation"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "aml-myelodysplasia-related",
+      "label": "AML, myelodysplasia related",
+      "category": "secondary",
+      "examples": [
+        {
+          "name": "AML with myelodysplasia-related gene mutations",
+          "commonGenes": [
+            "ASXL1",
+            "BCOR",
+            "EZH2",
+            "RUNX1",
+            "SF3B1",
+            "SRSF2",
+            "STAG2",
+            "U2AF1",
+            "ZRSR2"
+          ]
+        },
+        {
+          "name": "AML with myelodysplasia-related cytogenetic abnormalities"
+        }
+      ]
+    },
+    {
+      "id": "therapy-related-aml",
+      "label": "Therapy-related AML",
+      "category": "secondary",
+      "examples": [
+        {
+          "name": "AML post-alkylating agent exposure"
+        },
+        {
+          "name": "AML post-topoisomerase-II inhibitor exposure"
+        }
+      ]
+    }
+  ],
+  "genomicMethodsAndAssays": [
+    {
+      "name": "Conventional karyotype",
+      "purpose": "Detect balanced/unbalanced chromosomal abnormalities",
+      "ontology": {
+        "system": "NCIT",
+        "code": "C111137",
+        "display": "Karyotyping"
+      },
+      "outputExamples": [
+        "t(8;21)",
+        "inv(16)",
+        "complex karyotype"
+      ]
+    },
+    {
+      "name": "Fluorescence in situ hybridization (FISH)",
+      "purpose": "Rapid targeted fusion/structural variant confirmation",
+      "ontology": {
+        "system": "NCIT",
+        "code": "C17356",
+        "display": "Fluorescence In Situ Hybridization"
+      }
+    },
+    {
+      "name": "RT-PCR / qPCR fusion testing",
+      "purpose": "Detect recurrent fusion transcripts and molecular monitoring",
+      "ontology": {
+        "system": "NCIT",
+        "code": "C18189",
+        "display": "Polymerase Chain Reaction"
+      },
+      "targets": [
+        "PML::RARA",
+        "RUNX1::RUNX1T1",
+        "CBFB::MYH11"
+      ]
+    },
+    {
+      "name": "Targeted DNA NGS panel",
+      "purpose": "Identify pathogenic SNV/indel variants for diagnosis/prognosis/therapy",
+      "ontology": {
+        "system": "NCIT",
+        "code": "C157598",
+        "display": "Next Generation Sequencing"
+      },
+      "commonGenes": [
+        "FLT3",
+        "NPM1",
+        "IDH1",
+        "IDH2",
+        "TP53",
+        "RUNX1",
+        "ASXL1",
+        "DNMT3A",
+        "TET2",
+        "KIT",
+        "NRAS",
+        "KRAS"
+      ]
+    },
+    {
+      "name": "RNA sequencing",
+      "purpose": "Fusion discovery and expression profiling",
+      "ontology": {
+        "system": "NCIT",
+        "code": "C116071",
+        "display": "RNA Sequencing"
+      }
+    },
+    {
+      "name": "MRD flow cytometry",
+      "purpose": "Quantify measurable residual disease using leukemia-associated immunophenotypes",
+      "ontology": {
+        "system": "NCIT",
+        "code": "C18195",
+        "display": "Flow Cytometry"
+      },
+      "resultUnit": "% cells"
+    }
+  ],
+  "conditions": [
+    {
+      "name": "Acute myeloid leukemia",
+      "role": "primary_diagnosis",
+      "ontology": {
+        "system": "SNOMED-CT",
+        "code": "91857003",
+        "display": "Acute myeloid leukemia (disorder)"
+      }
+    },
+    {
+      "name": "Febrile neutropenia",
+      "role": "treatment_complication",
+      "ontology": {
+        "system": "SNOMED-CT",
+        "code": "409089005",
+        "display": "Febrile neutropenia (disorder)"
+      }
+    },
+    {
+      "name": "Tumor lysis syndrome",
+      "role": "oncologic_emergency",
+      "ontology": {
+        "system": "SNOMED-CT",
+        "code": "426263006",
+        "display": "Tumor lysis syndrome (disorder)"
+      }
+    },
+    {
+      "name": "Disseminated intravascular coagulation",
+      "role": "coagulopathy",
+      "ontology": {
+        "system": "SNOMED-CT",
+        "code": "234466008",
+        "display": "Disseminated intravascular coagulation (disorder)"
+      }
+    }
+  ],
+  "observations": [
+    {
+      "name": "Bone marrow blast percentage",
+      "type": "morphology",
+      "ontology": {
+        "system": "LOINC",
+        "code": "26464-8",
+        "display": "Blasts/100 cells in Bone marrow"
+      },
+      "interpretation": "AML is typically diagnosed at >=20% blasts, except in defined genetic entities"
+    },
+    {
+      "name": "Peripheral blood blast percentage",
+      "type": "morphology",
+      "ontology": {
+        "system": "LOINC",
+        "code": "709-6",
+        "display": "Blasts/100 leukocytes in Blood by Manual count"
+      }
+    },
+    {
+      "name": "FLT3 internal tandem duplication status",
+      "type": "molecular",
+      "ontology": {
+        "system": "LOINC",
+        "code": "85176-4",
+        "display": "FLT3 gene internal tandem duplication [Presence] in Blood or Tissue by Molecular genetics method"
+      }
+    },
+    {
+      "name": "NPM1 mutation status",
+      "type": "molecular",
+      "ontology": {
+        "system": "LOINC",
+        "code": "89266-3",
+        "display": "NPM1 gene mutation analysis in Blood or Tissue by Molecular genetics method"
+      }
+    },
+    {
+      "name": "MRD level by flow",
+      "type": "response_assessment",
+      "ontology": {
+        "system": "NCIT",
+        "code": "C122229",
+        "display": "Measurable Residual Disease"
+      }
+    }
+  ],
+  "measurements": [
+    {
+      "name": "Absolute neutrophil count",
+      "category": "hematology",
+      "ontology": {
+        "system": "LOINC",
+        "code": "751-8",
+        "display": "Neutrophils [#/volume] in Blood by Automated count"
+      },
+      "unit": "10*3/uL",
+      "referenceRange": {
+        "low": 1.5,
+        "high": 8.0
+      },
+      "clinicalUse": "Infection risk stratification and chemotherapy supportive care"
+    },
+    {
+      "name": "Platelet count",
+      "category": "hematology",
+      "ontology": {
+        "system": "LOINC",
+        "code": "777-3",
+        "display": "Platelets [#/volume] in Blood by Automated count"
+      },
+      "unit": "10*3/uL"
+    },
+    {
+      "name": "Hemoglobin",
+      "category": "hematology",
+      "ontology": {
+        "system": "LOINC",
+        "code": "718-7",
+        "display": "Hemoglobin [Mass/volume] in Blood"
+      },
+      "unit": "g/dL"
+    },
+    {
+      "name": "Lactate dehydrogenase",
+      "category": "chemistry",
+      "ontology": {
+        "system": "LOINC",
+        "code": "14804-9",
+        "display": "Lactate dehydrogenase [Enzymatic activity/volume] in Serum or Plasma"
+      },
+      "unit": "U/L"
+    },
+    {
+      "name": "Creatinine",
+      "category": "chemistry",
+      "ontology": {
+        "system": "LOINC",
+        "code": "2160-0",
+        "display": "Creatinine [Mass/volume] in Serum or Plasma"
+      },
+      "unit": "mg/dL"
+    }
+  ],
+  "treatments": {
+    "induction": [
+      {
+        "name": "7+3 induction chemotherapy",
+        "regimen": [
+          "Cytarabine continuous infusion x7 days",
+          "Anthracycline (daunorubicin or idarubicin) x3 days"
+        ],
+        "ontology": {
+          "system": "NCIT",
+          "code": "C63446",
+          "display": "Induction Therapy"
+        }
+      },
+      {
+        "name": "Venetoclax + hypomethylating agent",
+        "regimen": [
+          "Venetoclax",
+          "Azacitidine or decitabine"
+        ],
+        "useCase": "Older/unfit patients"
+      }
+    ],
+    "targeted": [
+      {
+        "name": "Midostaurin",
+        "target": "FLT3",
+        "ontology": {
+          "system": "RxNorm",
+          "code": "1111495",
+          "display": "midostaurin"
+        }
+      },
+      {
+        "name": "Gilteritinib",
+        "target": "FLT3",
+        "ontology": {
+          "system": "RxNorm",
+          "code": "2373702",
+          "display": "gilteritinib"
+        }
+      },
+      {
+        "name": "Ivosidenib",
+        "target": "IDH1",
+        "ontology": {
+          "system": "RxNorm",
+          "code": "1792776",
+          "display": "ivosidenib"
+        }
+      },
+      {
+        "name": "Enasidenib",
+        "target": "IDH2",
+        "ontology": {
+          "system": "RxNorm",
+          "code": "1923619",
+          "display": "enasidenib"
+        }
+      },
+      {
+        "name": "Gemtuzumab ozogamicin",
+        "target": "CD33",
+        "ontology": {
+          "system": "RxNorm",
+          "code": "1293705",
+          "display": "gemtuzumab ozogamicin"
+        }
+      }
+    ],
+    "aplSpecific": [
+      {
+        "name": "All-trans retinoic acid (ATRA)",
+        "ontology": {
+          "system": "RxNorm",
+          "code": "723",
+          "display": "tretinoin"
+        }
+      },
+      {
+        "name": "Arsenic trioxide",
+        "ontology": {
+          "system": "RxNorm",
+          "code": "17419",
+          "display": "arsenic trioxide"
+        }
+      }
+    ],
+    "consolidationAndDefinitive": [
+      {
+        "name": "High-dose cytarabine consolidation"
+      },
+      {
+        "name": "Allogeneic hematopoietic stem cell transplantation",
+        "ontology": {
+          "system": "SNOMED-CT",
+          "code": "423003",
+          "display": "Allogeneic bone marrow transplant"
+        }
+      }
+    ],
+    "supportiveCare": [
+      {
+        "name": "Antimicrobial prophylaxis",
+        "examples": [
+          "Levofloxacin",
+          "Acyclovir",
+          "Posaconazole"
+        ]
+      },
+      {
+        "name": "Tumor lysis prophylaxis",
+        "examples": [
+          "Allopurinol",
+          "Rasburicase",
+          "Aggressive hydration"
+        ]
+      },
+      {
+        "name": "Transfusion support",
+        "examples": [
+          "Packed red blood cells",
+          "Platelets"
+        ]
+      }
+    ]
+  },
+  "riskStratification": {
+    "framework": "ELN-2022",
+    "groups": [
+      {
+        "label": "Favorable",
+        "examples": [
+          "NPM1-mutated without FLT3-ITD high burden",
+          "Core-binding factor AML"
+        ]
+      },
+      {
+        "label": "Intermediate",
+        "examples": [
+          "Genetic profiles not in favorable or adverse"
+        ]
+      },
+      {
+        "label": "Adverse",
+        "examples": [
+          "TP53 mutation",
+          "Complex karyotype",
+          "Certain myelodysplasia-related gene mutations"
+        ]
+      }
+    ]
+  }
+}
