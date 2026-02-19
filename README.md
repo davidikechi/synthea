@@ -99,10 +99,11 @@ run_synthea --aml -p 100 Massachusetts Boston
 `AcuteMyeloidLeukemiaApp`, which automatically enables the
 `acute_myeloid_leukemia` module.
 
-> **Important:** `src/main/resources/modules/aml_disease_model.json` is a
-> disease knowledge model document (metadata/reference content), not an
-> executable Synthea state-machine module. Passing `-m aml_disease_model` does
-> not replace the AML simulation module used by `--aml`.
+`src/main/resources/modules/aml_model.json` is an executable Synthea module
+that models AML with subtype branching, lab observations, bone marrow biopsy,
+genomic alterations, and subtype-guided treatment. Pass `-m aml_model` to use it
+directly, or use `--aml` without `-m` to fall back to the `acute_myeloid_leukemia`
+module.
 
 If you use `--aml` without `-m`, the launcher defaults to the
 `acute_myeloid_leukemia` module. If you pass `-m ...`, your explicit module
