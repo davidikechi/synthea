@@ -354,7 +354,7 @@ public class AppTest {
   }
 
   @Test
-  public void testAcuteMyeloidLeukemiaAppAddsModule() throws Exception {
+  public void testAcuteMyeloidLeukemiaAppAddsDefaultModuleWhenMissing() throws Exception {
     TestHelper.exportOff();
     String[] args = {"-s", "0", "-p", "0"};
 
@@ -368,6 +368,26 @@ public class AppTest {
 
     Assert.assertTrue(output.contains("Modules:"));
     Assert.assertTrue(output.contains("acute_myeloid_leukemia"));
+
+    System.setOut(original);
+  }
+
+  @Test
+  public void testAcuteMyeloidLeukemiaAppRespectsExplicitModuleFilter() throws Exception {
+    TestHelper.exportOff();
+    String[] args = {"-s", "0", "-p", "0", "-m", "aml_disease_model"};
+
+    final PrintStream original = System.out;
+    final ByteArrayOutputStream out = new ByteArrayOutputStream();
+    final PrintStream print = new PrintStream(out, true);
+    System.setOut(print);
+    AcuteMyeloidLeukemiaApp.main(args);
+    out.flush();
+    String output = out.toString();
+
+    Assert.assertTrue(output.contains("Modules:"));
+    Assert.assertTrue(output.contains("aml_disease_model"));
+    Assert.assertFalse(output.contains("acute_myeloid_leukemia"));
 
     System.setOut(original);
   }

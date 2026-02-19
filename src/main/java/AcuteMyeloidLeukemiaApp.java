@@ -107,6 +107,21 @@ public class AcuteMyeloidLeukemiaApp extends App {
     return filtered.toArray(new String[0]);
   }
 
+
+  static boolean hasModuleFilter(String[] args) {
+    if (args == null) {
+      return false;
+    }
+
+    for (int i = 0; i < args.length; i++) {
+      if (args[i].equalsIgnoreCase("-m")) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
   static int extractPopulation(String[] args) {
     for (int i = 0; i < args.length; i++) {
       if (args[i].equalsIgnoreCase("-p")) {
@@ -155,8 +170,10 @@ public class AcuteMyeloidLeukemiaApp extends App {
     String[] normalized = normalizeArgs(removeGenderMixArg(args));
     Integer malePercentage = extractMalePercentage(args);
 
+    boolean moduleSpecified = hasModuleFilter(normalized);
+
     if (malePercentage == null) {
-      App.main(withModule(normalized, MODULE_NAME));
+      App.main(moduleSpecified ? normalized : withModule(normalized, MODULE_NAME));
       return;
     }
 
@@ -168,10 +185,12 @@ public class AcuteMyeloidLeukemiaApp extends App {
         malePercentage, 100 - malePercentage));
 
     if (malePopulation > 0) {
-      App.main(withModule(withPopulationAndGender(normalized, malePopulation, "M"), MODULE_NAME));
+      String[] maleArgs = withPopulationAndGender(normalized, malePopulation, "M");
+      App.main(moduleSpecified ? maleArgs : withModule(maleArgs, MODULE_NAME));
     }
     if (femalePopulation > 0) {
-      App.main(withModule(withPopulationAndGender(normalized, femalePopulation, "F"), MODULE_NAME));
+      String[] femaleArgs = withPopulationAndGender(normalized, femalePopulation, "F");
+      App.main(moduleSpecified ? femaleArgs : withModule(femaleArgs, MODULE_NAME));
     }
   }
 }
