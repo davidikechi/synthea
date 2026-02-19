@@ -91,7 +91,7 @@
     },
     "Febrile_Neutropenia": {
       "type": "ConditionOnset",
-      "assign_to_attribute": "",
+      "assign_to_attribute": "febrile_neutropenia",
       "target_encounter": "Chemotherapy_Inpatient_Encounter",
       "codes": [
         {
@@ -104,7 +104,7 @@
     },
     "Non-Febrile_Neutropenia": {
       "type": "ConditionOnset",
-      "assign_to_attribute": "",
+      "assign_to_attribute": "non_febrile_neutropenia",
       "target_encounter": "Chemotherapy_Inpatient_Encounter",
       "codes": [
         {
@@ -702,7 +702,7 @@
     },
     "Acute_Myeloid_Leukemia_AML": {
       "type": "ConditionOnset",
-      "assign_to_attribute": "",
+      "assign_to_attribute": "aml_condition",
       "codes": [
         {
           "system": "SNOMED-CT",
@@ -715,14 +715,7 @@
     "End_Levofloxacin": {
       "type": "MedicationEnd",
       "direct_transition": "End_AML",
-      "medication_order": "Levofloxacin",
-      "codes": [
-        {
-          "system": "RxNorm",
-          "code": 199885,
-          "display": "levofloxacin 500 MG Oral Tablet"
-        }
-      ]
+      "referenced_by_attribute": "levofloxacin"
     },
     "End_Non-Febrile_Neutropenia": {
       "type": "ConditionEnd",
