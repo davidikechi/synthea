@@ -372,4 +372,48 @@ public class AppTest {
     System.setOut(original);
   }
 
+
+  @Test
+  public void testPointOfEntryDefaultsToApp() throws Exception {
+    TestHelper.exportOff();
+    String[] args = {"-s", "0", "-p", "0"};
+
+    final PrintStream original = System.out;
+    final ByteArrayOutputStream out = new ByteArrayOutputStream();
+    final PrintStream print = new PrintStream(out, true);
+    System.setOut(print);
+    PointOfEntry.main(args);
+    out.flush();
+    String output = out.toString();
+
+    Assert.assertTrue(output.contains("Running with options:"));
+    Assert.assertFalse(output.contains("acute_myeloid_leukemia"));
+
+    System.setOut(original);
+  }
+
+  @Test
+  public void testPointOfEntryRoutesToAmlClass() throws Exception {
+    TestHelper.exportOff();
+    String[] args = {"-class", "aml", "-s", "0", "-p", "0"};
+
+    final PrintStream original = System.out;
+    final ByteArrayOutputStream out = new ByteArrayOutputStream();
+    final PrintStream print = new PrintStream(out, true);
+    System.setOut(print);
+    PointOfEntry.main(args);
+    out.flush();
+    String output = out.toString();
+
+    Assert.assertTrue(output.contains("Modules:"));
+    Assert.assertTrue(output.contains("acute_myeloid_leukemia"));
+
+    System.setOut(original);
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void testPointOfEntryRejectsUnsupportedClass() throws Exception {
+    PointOfEntry.main(new String[] {"-class", "unknown"});
+  }
+
 }
