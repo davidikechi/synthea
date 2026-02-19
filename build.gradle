@@ -238,7 +238,7 @@ shadowJar {
   archiveVersion.set('')
   manifest {
     attributes(
-      'Main-Class'     : 'App',
+      'Main-Class'     : 'PointOfEntry',
       'Build-Timestamp': new java.text.SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ").format(new Date()),
       'Build-Version'  : versionText,
       'Created-By'     : "Gradle ${gradle.gradleVersion}",
@@ -345,7 +345,7 @@ task cleanOutput {
 
 // Define the main class for the application
 application {
-  mainClass = 'App'
+  mainClass = 'PointOfEntry'
 }
 
 run {
