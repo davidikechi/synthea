@@ -141,11 +141,13 @@ To match normal AML transition style, add a `SetAttribute` state with a
 }
 ```
 
-Then route AML states through `Capture_AML_Genomics` before terminal states. If
-`date_genomics` is omitted, CSV export generates a realistic date automatically:
-it is sampled on/after the earliest condition start (and never before birthdate), and
-clamped to not exceed death date or simulation end time. If `date_genomics` is
-provided, it is still normalized/clamped to this same realistic timeline window.
+Then route AML states through `Capture_AML_Genomics` only **after** the AML
+`ConditionOnset` (diagnosis) state has occurred, typically after diagnostic workup
+states and before terminal states. If `date_genomics` is omitted, CSV export
+generates a realistic date automatically: it is sampled on/after the earliest
+condition start (and never before birthdate), and clamped to not exceed death
+date or simulation end time. If `date_genomics` is provided, it is still
+normalized/clamped to this same realistic timeline window.
 
 Some settings can be changed in `./src/main/resources/synthea.properties`.
 

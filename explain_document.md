@@ -98,7 +98,7 @@ Per branch, add realistic med/procedure/lab/observation states.
 
 ### Step E: Capture genomics
 
-Set `genomics_alterations` once subtype is known or once testing is performed.
+Set `genomics_alterations` only after AML has been diagnosed (after `ConditionOnset`), once subtype is known or testing is performed.
 
 ---
 
