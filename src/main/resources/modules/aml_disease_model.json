@@ -26,7 +26,10 @@
     "  - ConditionEnd states use condition_onset: STATE NAME (e.g. Febrile_Neutropenia_Onset).",
     "  - All MedicationOrder states have assign_to_attribute for tracking.",
     "  - MedicationEnd states added for every MedicationOrder.",
-    "  - RxNorm codes are integers as required by Synthea."
+    "  - RxNorm codes are integers as required by Synthea.",
+    "  - Death states added after MRD assessment with subtype-specific SNOMED causes",
+    "    and realistic ELN-2022 mortality rates (APL 15%, NPM1 20%, CBF 25%,",
+    "    IDH 35%, FLT3-ITD 40%, TP53/MDS 60%). Death occurs 1-12 months post-induction."
   ],
   "gmf_version": 2,
   "states": {
@@ -1332,7 +1335,187 @@
         }
       ],
       "range": { "low": 0.001, "high": 5.0 },
-      "direct_transition": "End_Medications"
+      "direct_transition": "Treatment_Outcome_Branch"
+    },
+
+    "Treatment_Outcome_Branch": {
+      "type": "Simple",
+      "remarks": [
+        "Route each patient to a subtype-specific mortality outcome state.",
+        "Mortality rates reflect ELN-2022 / SEER estimates for each AML subtype."
+      ],
+      "complex_transition": [
+        {
+          "condition": {
+            "condition_type": "Attribute",
+            "attribute": "aml_subtype",
+            "operator": "==",
+            "value": "AML_NPM1"
+          },
+          "transition": "Outcome_NPM1"
+        },
+        {
+          "condition": {
+            "condition_type": "Attribute",
+            "attribute": "aml_subtype",
+            "operator": "==",
+            "value": "AML_FLT3_ITD"
+          },
+          "transition": "Outcome_FLT3_ITD"
+        },
+        {
+          "condition": {
+            "condition_type": "Attribute",
+            "attribute": "aml_subtype",
+            "operator": "==",
+            "value": "APL_PML_RARA"
+          },
+          "transition": "Outcome_APL"
+        },
+        {
+          "condition": {
+            "condition_type": "Attribute",
+            "attribute": "aml_subtype",
+            "operator": "==",
+            "value": "AML_CBF_RUNX1_RUNX1T1"
+          },
+          "transition": "Outcome_CBF"
+        },
+        {
+          "condition": {
+            "condition_type": "Attribute",
+            "attribute": "aml_subtype",
+            "operator": "==",
+            "value": "AML_IDH"
+          },
+          "transition": "Outcome_IDH"
+        },
+        {
+          "transition": "Outcome_TP53_MDS"
+        }
+      ]
+    },
+
+    "Outcome_NPM1": {
+      "type": "Simple",
+      "remarks": ["NPM1-mutated AML: ~20% mortality post-induction (ELN Favorable risk)."],
+      "distributed_transition": [
+        { "distribution": 0.20, "transition": "Death_NPM1" },
+        { "distribution": 0.80, "transition": "End_Medications" }
+      ]
+    },
+    "Outcome_FLT3_ITD": {
+      "type": "Simple",
+      "remarks": ["FLT3-ITD AML: ~40% mortality post-induction (ELN Intermediate risk)."],
+      "distributed_transition": [
+        { "distribution": 0.40, "transition": "Death_FLT3_ITD" },
+        { "distribution": 0.60, "transition": "End_Medications" }
+      ]
+    },
+    "Outcome_APL": {
+      "type": "Simple",
+      "remarks": ["APL (PML::RARA): ~15% mortality post-induction (ELN Favorable, best prognosis)."],
+      "distributed_transition": [
+        { "distribution": 0.15, "transition": "Death_APL" },
+        { "distribution": 0.85, "transition": "End_Medications" }
+      ]
+    },
+    "Outcome_CBF": {
+      "type": "Simple",
+      "remarks": ["CBF AML (RUNX1::RUNX1T1): ~25% mortality post-induction (ELN Favorable risk)."],
+      "distributed_transition": [
+        { "distribution": 0.25, "transition": "Death_CBF" },
+        { "distribution": 0.75, "transition": "End_Medications" }
+      ]
+    },
+    "Outcome_IDH": {
+      "type": "Simple",
+      "remarks": ["IDH1/IDH2-mutated AML: ~35% mortality post-induction (ELN Intermediate risk)."],
+      "distributed_transition": [
+        { "distribution": 0.35, "transition": "Death_IDH" },
+        { "distribution": 0.65, "transition": "End_Medications" }
+      ]
+    },
+    "Outcome_TP53_MDS": {
+      "type": "Simple",
+      "remarks": ["TP53/MDS-related AML: ~60% mortality post-induction (ELN Adverse risk, worst prognosis)."],
+      "distributed_transition": [
+        { "distribution": 0.60, "transition": "Death_TP53_MDS" },
+        { "distribution": 0.40, "transition": "End_Medications" }
+      ]
+    },
+
+    "Death_NPM1": {
+      "type": "Death",
+      "range": { "low": 1, "high": 12, "unit": "months" },
+      "codes": [
+        {
+          "system": "SNOMED-CT",
+          "code": "413448000",
+          "display": "Acute myeloid leukemia with NPM1 mutation (disorder)"
+        }
+      ],
+      "direct_transition": "Terminal"
+    },
+    "Death_FLT3_ITD": {
+      "type": "Death",
+      "range": { "low": 1, "high": 12, "unit": "months" },
+      "codes": [
+        {
+          "system": "SNOMED-CT",
+          "code": "413449008",
+          "display": "Acute myeloid leukemia with FLT3 mutation (disorder)"
+        }
+      ],
+      "direct_transition": "Terminal"
+    },
+    "Death_APL": {
+      "type": "Death",
+      "range": { "low": 1, "high": 12, "unit": "months" },
+      "codes": [
+        {
+          "system": "SNOMED-CT",
+          "code": "413441009",
+          "display": "Acute promyelocytic leukemia (disorder)"
+        }
+      ],
+      "direct_transition": "Terminal"
+    },
+    "Death_CBF": {
+      "type": "Death",
+      "range": { "low": 1, "high": 12, "unit": "months" },
+      "codes": [
+        {
+          "system": "SNOMED-CT",
+          "code": "413442002",
+          "display": "Acute myeloid leukemia with t(8;21)(q22;q22) (disorder)"
+        }
+      ],
+      "direct_transition": "Terminal"
+    },
+    "Death_IDH": {
+      "type": "Death",
+      "range": { "low": 1, "high": 12, "unit": "months" },
+      "codes": [
+        {
+          "system": "SNOMED-CT",
+          "code": "1162864003",
+          "display": "Acute myeloid leukemia with IDH1 mutation (disorder)"
+        }
+      ],
+      "direct_transition": "Terminal"
+    },
+    "Death_TP53_MDS": {
+      "type": "Death",
+      "range": { "low": 1, "high": 12, "unit": "months" },
+      "codes": [
+        {
+          "system": "SNOMED-CT",
+          "code": "763512003",
+          "display": "Acute myeloid leukemia with myelodysplasia-related changes (disorder)"
+        }
+      ],
+      "direct_transition": "Terminal"
     },
 
     "End_Medications": {
