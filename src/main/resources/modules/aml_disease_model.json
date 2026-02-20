@@ -18,7 +18,15 @@
     "Incidence gate: 0.2% females, 0.3% males (ACS 2022), consistent with",
     "acute_myeloid_leukemia.json.  Onset distributed across ages 0-21 years.",
     "",
-    "Ontology systems used: SNOMED-CT, LOINC, RxNorm, NCIT."
+    "Ontology systems used: SNOMED-CT, LOINC, RxNorm, NUBC.",
+    "",
+    "FIXES applied:",
+    "  - reason fields on Encounter/Procedure/MedicationOrder now reference the",
+    "    ConditionOnset STATE NAME (AML_Condition_Onset) not the attribute name.",
+    "  - ConditionEnd states use condition_onset: STATE NAME (e.g. Febrile_Neutropenia_Onset).",
+    "  - All MedicationOrder states have assign_to_attribute for tracking.",
+    "  - MedicationEnd states added for every MedicationOrder.",
+    "  - RxNorm codes are integers as required by Synthea."
   ],
   "gmf_version": 2,
   "states": {
@@ -190,7 +198,7 @@
     "Inpatient_Encounter": {
       "type": "Encounter",
       "encounter_class": "inpatient",
-      "reason": "aml_condition",
+      "reason": "AML_Condition_Onset",
       "codes": [
         {
           "system": "SNOMED-CT",
@@ -324,7 +332,7 @@
         }
       ],
       "duration": { "low": 30, "high": 60, "unit": "minutes" },
-      "reason": "aml_condition",
+      "reason": "AML_Condition_Onset",
       "direct_transition": "BM_Blast_Percentage"
     },
     "BM_Blast_Percentage": {
@@ -352,7 +360,7 @@
         }
       ],
       "duration": { "low": 60, "high": 120, "unit": "minutes" },
-      "reason": "aml_condition",
+      "reason": "AML_Condition_Onset",
       "direct_transition": "FISH_Procedure"
     },
     "FISH_Procedure": {
@@ -365,7 +373,7 @@
         }
       ],
       "duration": { "low": 30, "high": 60, "unit": "minutes" },
-      "reason": "aml_condition",
+      "reason": "AML_Condition_Onset",
       "direct_transition": "NGS_Panel_Procedure"
     },
     "NGS_Panel_Procedure": {
@@ -378,7 +386,7 @@
         }
       ],
       "duration": { "low": 60, "high": 120, "unit": "minutes" },
-      "reason": "aml_condition",
+      "reason": "AML_Condition_Onset",
       "direct_transition": "Subtype_Assay_Branch"
     },
 
@@ -386,7 +394,7 @@
       "type": "Simple",
       "remarks": [
         "Branch to subtype-specific confirmatory assays and genomic capture.",
-        "RT-PCR for fusion subtypes (APL, CBF); flow MRD ordered for all."
+        "RT-PCR for fusion subtypes (APL, CBF); molecular observations for point-mutation subtypes."
       ],
       "complex_transition": [
         {
@@ -450,7 +458,7 @@
         }
       ],
       "duration": { "low": 30, "high": 60, "unit": "minutes" },
-      "reason": "aml_condition",
+      "reason": "AML_Condition_Onset",
       "direct_transition": "PML_RARA_Fusion_Observation"
     },
     "PML_RARA_Fusion_Observation": {
@@ -482,7 +490,7 @@
         }
       ],
       "duration": { "low": 30, "high": 60, "unit": "minutes" },
-      "reason": "aml_condition",
+      "reason": "AML_Condition_Onset",
       "direct_transition": "RUNX1_RUNX1T1_Fusion_Observation"
     },
     "RUNX1_RUNX1T1_Fusion_Observation": {
@@ -690,14 +698,16 @@
 
     "Allopurinol_TLS_Prophylaxis": {
       "type": "MedicationOrder",
+      "assign_to_attribute": "allopurinol_medication",
       "codes": [
         {
           "system": "RxNorm",
-          "code": "1152",
+          "code": 1152,
           "display": "allopurinol"
         }
       ],
-      "reason": "aml_condition",
+      "reason": "AML_Condition_Onset",
+      "administration": true,
       "prescription": {
         "dosage": { "amount": 1, "frequency": 1, "period": 1, "unit": "days" },
         "duration": { "quantity": 7, "unit": "days" }
@@ -762,14 +772,16 @@
 
     "Give_ATRA": {
       "type": "MedicationOrder",
+      "assign_to_attribute": "atra_medication",
       "codes": [
         {
           "system": "RxNorm",
-          "code": "83367",
+          "code": 83367,
           "display": "tretinoin 10 MG Oral Capsule"
         }
       ],
-      "reason": "aml_condition",
+      "reason": "AML_Condition_Onset",
+      "administration": true,
       "prescription": {
         "dosage": { "amount": 2, "frequency": 2, "period": 1, "unit": "days" },
         "duration": { "quantity": 28, "unit": "days" }
@@ -778,14 +790,16 @@
     },
     "Give_ATO": {
       "type": "MedicationOrder",
+      "assign_to_attribute": "ato_medication",
       "codes": [
         {
           "system": "RxNorm",
-          "code": "17419",
+          "code": 17419,
           "display": "arsenic trioxide 1 MG/ML Injection"
         }
       ],
-      "reason": "aml_condition",
+      "reason": "AML_Condition_Onset",
+      "administration": true,
       "prescription": {
         "dosage": { "amount": 1, "frequency": 1, "period": 1, "unit": "days" },
         "duration": { "quantity": 28, "unit": "days" }
@@ -795,14 +809,16 @@
 
     "Give_Cytarabine_FLT3": {
       "type": "MedicationOrder",
+      "assign_to_attribute": "cytarabine_medication",
       "codes": [
         {
           "system": "RxNorm",
-          "code": "197361",
+          "code": 197361,
           "display": "cytarabine 100 MG/mL Injectable Solution"
         }
       ],
-      "reason": "aml_condition",
+      "reason": "AML_Condition_Onset",
+      "administration": true,
       "prescription": {
         "dosage": { "amount": 1, "frequency": 1, "period": 1, "unit": "days" },
         "duration": { "quantity": 7, "unit": "days" }
@@ -811,14 +827,16 @@
     },
     "Give_Daunorubicin_FLT3": {
       "type": "MedicationOrder",
+      "assign_to_attribute": "daunorubicin_medication",
       "codes": [
         {
           "system": "RxNorm",
-          "code": "3002",
+          "code": 3002,
           "display": "daunorubicin"
         }
       ],
-      "reason": "aml_condition",
+      "reason": "AML_Condition_Onset",
+      "administration": true,
       "prescription": {
         "dosage": { "amount": 1, "frequency": 1, "period": 1, "unit": "days" },
         "duration": { "quantity": 3, "unit": "days" }
@@ -827,14 +845,16 @@
     },
     "Give_Midostaurin": {
       "type": "MedicationOrder",
+      "assign_to_attribute": "midostaurin_medication",
       "codes": [
         {
           "system": "RxNorm",
-          "code": "1860487",
+          "code": 1860487,
           "display": "midostaurin 25 MG Oral Capsule"
         }
       ],
-      "reason": "aml_condition",
+      "reason": "AML_Condition_Onset",
+      "administration": true,
       "prescription": {
         "dosage": { "amount": 2, "frequency": 2, "period": 1, "unit": "days" },
         "duration": { "quantity": 14, "unit": "days" }
@@ -844,14 +864,16 @@
 
     "Give_Cytarabine_NPM1": {
       "type": "MedicationOrder",
+      "assign_to_attribute": "cytarabine_medication",
       "codes": [
         {
           "system": "RxNorm",
-          "code": "197361",
+          "code": 197361,
           "display": "cytarabine 100 MG/mL Injectable Solution"
         }
       ],
-      "reason": "aml_condition",
+      "reason": "AML_Condition_Onset",
+      "administration": true,
       "prescription": {
         "dosage": { "amount": 1, "frequency": 1, "period": 1, "unit": "days" },
         "duration": { "quantity": 7, "unit": "days" }
@@ -860,14 +882,16 @@
     },
     "Give_Daunorubicin_NPM1": {
       "type": "MedicationOrder",
+      "assign_to_attribute": "daunorubicin_medication",
       "codes": [
         {
           "system": "RxNorm",
-          "code": "3002",
+          "code": 3002,
           "display": "daunorubicin"
         }
       ],
-      "reason": "aml_condition",
+      "reason": "AML_Condition_Onset",
+      "administration": true,
       "prescription": {
         "dosage": { "amount": 1, "frequency": 1, "period": 1, "unit": "days" },
         "duration": { "quantity": 3, "unit": "days" }
@@ -877,14 +901,16 @@
 
     "Give_Cytarabine_CBF": {
       "type": "MedicationOrder",
+      "assign_to_attribute": "cytarabine_medication",
       "codes": [
         {
           "system": "RxNorm",
-          "code": "197361",
+          "code": 197361,
           "display": "cytarabine 100 MG/mL Injectable Solution"
         }
       ],
-      "reason": "aml_condition",
+      "reason": "AML_Condition_Onset",
+      "administration": true,
       "prescription": {
         "dosage": { "amount": 1, "frequency": 1, "period": 1, "unit": "days" },
         "duration": { "quantity": 7, "unit": "days" }
@@ -893,14 +919,16 @@
     },
     "Give_Daunorubicin_CBF": {
       "type": "MedicationOrder",
+      "assign_to_attribute": "daunorubicin_medication",
       "codes": [
         {
           "system": "RxNorm",
-          "code": "3002",
+          "code": 3002,
           "display": "daunorubicin"
         }
       ],
-      "reason": "aml_condition",
+      "reason": "AML_Condition_Onset",
+      "administration": true,
       "prescription": {
         "dosage": { "amount": 1, "frequency": 1, "period": 1, "unit": "days" },
         "duration": { "quantity": 3, "unit": "days" }
@@ -909,14 +937,16 @@
     },
     "Give_Gemtuzumab": {
       "type": "MedicationOrder",
+      "assign_to_attribute": "gemtuzumab_medication",
       "codes": [
         {
           "system": "RxNorm",
-          "code": "1293705",
+          "code": 1293705,
           "display": "gemtuzumab ozogamicin"
         }
       ],
-      "reason": "aml_condition",
+      "reason": "AML_Condition_Onset",
+      "administration": true,
       "prescription": {
         "dosage": { "amount": 1, "frequency": 1, "period": 1, "unit": "days" },
         "duration": { "quantity": 1, "unit": "days" }
@@ -926,14 +956,16 @@
 
     "Give_Cytarabine_IDH": {
       "type": "MedicationOrder",
+      "assign_to_attribute": "cytarabine_medication",
       "codes": [
         {
           "system": "RxNorm",
-          "code": "197361",
+          "code": 197361,
           "display": "cytarabine 100 MG/mL Injectable Solution"
         }
       ],
-      "reason": "aml_condition",
+      "reason": "AML_Condition_Onset",
+      "administration": true,
       "prescription": {
         "dosage": { "amount": 1, "frequency": 1, "period": 1, "unit": "days" },
         "duration": { "quantity": 7, "unit": "days" }
@@ -942,14 +974,16 @@
     },
     "Give_Daunorubicin_IDH": {
       "type": "MedicationOrder",
+      "assign_to_attribute": "daunorubicin_medication",
       "codes": [
         {
           "system": "RxNorm",
-          "code": "3002",
+          "code": 3002,
           "display": "daunorubicin"
         }
       ],
-      "reason": "aml_condition",
+      "reason": "AML_Condition_Onset",
+      "administration": true,
       "prescription": {
         "dosage": { "amount": 1, "frequency": 1, "period": 1, "unit": "days" },
         "duration": { "quantity": 3, "unit": "days" }
@@ -958,14 +992,16 @@
     },
     "Give_Ivosidenib": {
       "type": "MedicationOrder",
+      "assign_to_attribute": "ivosidenib_medication",
       "codes": [
         {
           "system": "RxNorm",
-          "code": "1946840",
+          "code": 1946840,
           "display": "ivosidenib 250 MG Oral Tablet"
         }
       ],
-      "reason": "aml_condition",
+      "reason": "AML_Condition_Onset",
+      "administration": true,
       "prescription": {
         "dosage": { "amount": 1, "frequency": 1, "period": 1, "unit": "days" },
         "duration": { "quantity": 28, "unit": "days" }
@@ -975,14 +1011,16 @@
 
     "Give_Venetoclax": {
       "type": "MedicationOrder",
+      "assign_to_attribute": "venetoclax_medication",
       "codes": [
         {
           "system": "RxNorm",
-          "code": "1860491",
+          "code": 1860491,
           "display": "venetoclax 100 MG Oral Tablet"
         }
       ],
-      "reason": "aml_condition",
+      "reason": "AML_Condition_Onset",
+      "administration": true,
       "prescription": {
         "dosage": { "amount": 1, "frequency": 1, "period": 1, "unit": "days" },
         "duration": { "quantity": 28, "unit": "days" }
@@ -991,14 +1029,16 @@
     },
     "Give_Azacitidine": {
       "type": "MedicationOrder",
+      "assign_to_attribute": "azacitidine_medication",
       "codes": [
         {
           "system": "RxNorm",
-          "code": "114124",
+          "code": 114124,
           "display": "azacitidine 100 MG Injectable Solution"
         }
       ],
-      "reason": "aml_condition",
+      "reason": "AML_Condition_Onset",
+      "administration": true,
       "prescription": {
         "dosage": { "amount": 1, "frequency": 1, "period": 1, "unit": "days" },
         "duration": { "quantity": 7, "unit": "days" }
@@ -1016,20 +1056,22 @@
         }
       ],
       "duration": { "low": 120, "high": 300, "unit": "minutes" },
-      "reason": "aml_condition",
+      "reason": "AML_Condition_Onset",
       "direct_transition": "Antimicrobial_Prophylaxis"
     },
 
     "Antimicrobial_Prophylaxis": {
       "type": "MedicationOrder",
+      "assign_to_attribute": "levofloxacin_medication",
       "codes": [
         {
           "system": "RxNorm",
-          "code": "199885",
+          "code": 199885,
           "display": "levofloxacin 500 MG Oral Tablet"
         }
       ],
-      "reason": "aml_condition",
+      "reason": "AML_Condition_Onset",
+      "administration": true,
       "prescription": {
         "dosage": { "amount": 1, "frequency": 1, "period": 1, "unit": "days" },
         "duration": { "quantity": 14, "unit": "days" }
@@ -1038,14 +1080,16 @@
     },
     "Antifungal_Prophylaxis": {
       "type": "MedicationOrder",
+      "assign_to_attribute": "posaconazole_medication",
       "codes": [
         {
           "system": "RxNorm",
-          "code": "703569",
+          "code": 703569,
           "display": "posaconazole 40 MG/ML Oral Suspension"
         }
       ],
-      "reason": "aml_condition",
+      "reason": "AML_Condition_Onset",
+      "administration": true,
       "prescription": {
         "dosage": { "amount": 1, "frequency": 3, "period": 1, "unit": "days" },
         "duration": { "quantity": 14, "unit": "days" }
@@ -1054,14 +1098,16 @@
     },
     "Antiviral_Prophylaxis": {
       "type": "MedicationOrder",
+      "assign_to_attribute": "acyclovir_medication",
       "codes": [
         {
           "system": "RxNorm",
-          "code": "14581",
+          "code": 14581,
           "display": "acyclovir 400 MG Oral Tablet"
         }
       ],
-      "reason": "aml_condition",
+      "reason": "AML_Condition_Onset",
+      "administration": true,
       "prescription": {
         "dosage": { "amount": 1, "frequency": 2, "period": 1, "unit": "days" },
         "duration": { "quantity": 14, "unit": "days" }
@@ -1155,7 +1201,7 @@
         }
       ],
       "duration": { "low": 60, "high": 120, "unit": "minutes" },
-      "reason": "aml_condition",
+      "reason": "AML_Condition_Onset",
       "direct_transition": "MRD_Result_Observation"
     },
     "MRD_Result_Observation": {
@@ -1170,31 +1216,166 @@
         }
       ],
       "range": { "low": 0.001, "high": 5.0 },
+      "direct_transition": "End_Medications"
+    },
+
+    "End_Medications": {
+      "type": "Simple",
+      "remarks": ["End all active medications before closing conditions and encounter."],
+      "direct_transition": "End_Allopurinol"
+    },
+    "End_Allopurinol": {
+      "type": "MedicationEnd",
+      "medication_order": "Allopurinol_TLS_Prophylaxis",
+      "direct_transition": "End_Antimicrobial"
+    },
+    "End_Antimicrobial": {
+      "type": "MedicationEnd",
+      "medication_order": "Antimicrobial_Prophylaxis",
+      "direct_transition": "End_Antifungal"
+    },
+    "End_Antifungal": {
+      "type": "MedicationEnd",
+      "medication_order": "Antifungal_Prophylaxis",
+      "direct_transition": "End_Antiviral"
+    },
+    "End_Antiviral": {
+      "type": "MedicationEnd",
+      "medication_order": "Antiviral_Prophylaxis",
+      "direct_transition": "End_Induction_Meds"
+    },
+
+    "End_Induction_Meds": {
+      "type": "Simple",
+      "remarks": [
+        "End whichever subtype-specific induction medications were given.",
+        "We use referenced_by_attribute so only the ones that were set will be ended."
+      ],
+      "direct_transition": "End_Cytarabine_If_Set"
+    },
+    "End_Cytarabine_If_Set": {
+      "type": "MedicationEnd",
+      "referenced_by_attribute": "cytarabine_medication",
+      "direct_transition": "End_Daunorubicin_If_Set"
+    },
+    "End_Daunorubicin_If_Set": {
+      "type": "MedicationEnd",
+      "referenced_by_attribute": "daunorubicin_medication",
+      "direct_transition": "End_Targeted_If_Set"
+    },
+    "End_Targeted_If_Set": {
+      "type": "Simple",
+      "remarks": ["Branch to end whichever targeted agent was used for this subtype."],
+      "complex_transition": [
+        {
+          "condition": {
+            "condition_type": "Attribute",
+            "attribute": "aml_subtype",
+            "operator": "==",
+            "value": "APL_PML_RARA"
+          },
+          "transition": "End_ATRA"
+        },
+        {
+          "condition": {
+            "condition_type": "Attribute",
+            "attribute": "aml_subtype",
+            "operator": "==",
+            "value": "AML_FLT3_ITD"
+          },
+          "transition": "End_Midostaurin"
+        },
+        {
+          "condition": {
+            "condition_type": "Attribute",
+            "attribute": "aml_subtype",
+            "operator": "==",
+            "value": "AML_CBF_RUNX1_RUNX1T1"
+          },
+          "transition": "End_Gemtuzumab"
+        },
+        {
+          "condition": {
+            "condition_type": "Attribute",
+            "attribute": "aml_subtype",
+            "operator": "==",
+            "value": "AML_TP53_MDS"
+          },
+          "transition": "End_Venetoclax"
+        },
+        {
+          "condition": {
+            "condition_type": "Attribute",
+            "attribute": "aml_subtype",
+            "operator": "==",
+            "value": "AML_IDH"
+          },
+          "transition": "End_Ivosidenib"
+        },
+        {
+          "transition": "End_Complications"
+        }
+      ]
+    },
+    "End_ATRA": {
+      "type": "MedicationEnd",
+      "medication_order": "Give_ATRA",
+      "direct_transition": "End_ATO"
+    },
+    "End_ATO": {
+      "type": "MedicationEnd",
+      "medication_order": "Give_ATO",
+      "direct_transition": "End_Complications"
+    },
+    "End_Midostaurin": {
+      "type": "MedicationEnd",
+      "medication_order": "Give_Midostaurin",
+      "direct_transition": "End_Complications"
+    },
+    "End_Gemtuzumab": {
+      "type": "MedicationEnd",
+      "medication_order": "Give_Gemtuzumab",
+      "direct_transition": "End_Complications"
+    },
+    "End_Venetoclax": {
+      "type": "MedicationEnd",
+      "medication_order": "Give_Venetoclax",
+      "direct_transition": "End_Azacitidine"
+    },
+    "End_Azacitidine": {
+      "type": "MedicationEnd",
+      "medication_order": "Give_Azacitidine",
+      "direct_transition": "End_Complications"
+    },
+    "End_Ivosidenib": {
+      "type": "MedicationEnd",
+      "medication_order": "Give_Ivosidenib",
       "direct_transition": "End_Complications"
     },
 
     "End_Complications": {
       "type": "Simple",
+      "remarks": ["End complication conditions. ConditionEnd is safe even if condition was never set."],
       "direct_transition": "End_Febrile_Neutropenia"
     },
     "End_Febrile_Neutropenia": {
       "type": "ConditionEnd",
-      "condition_onset": "febrile_neutropenia_condition",
+      "condition_onset": "Febrile_Neutropenia_Onset",
       "direct_transition": "End_TLS"
     },
     "End_TLS": {
       "type": "ConditionEnd",
-      "condition_onset": "tls_condition",
+      "condition_onset": "Tumor_Lysis_Syndrome_Onset",
       "direct_transition": "End_DIC"
     },
     "End_DIC": {
       "type": "ConditionEnd",
-      "condition_onset": "dic_condition",
+      "condition_onset": "DIC_Onset",
       "direct_transition": "End_AML_Condition"
     },
     "End_AML_Condition": {
       "type": "ConditionEnd",
-      "condition_onset": "aml_condition",
+      "condition_onset": "AML_Condition_Onset",
       "direct_transition": "End_Encounter"
     },
 
