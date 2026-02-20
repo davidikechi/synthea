@@ -1,512 +1,152 @@
-# Synthea AML Module Modeling Guide (Beginner-Friendly)
+# Synthea AML Module Guide — Plain Language Edition
 
-This guide explains **how to model a Synthea JSON module** so it generates the CSV outputs you expect.
-It is focused on AML, including:
-
-- state-transition modeling basics,
-- multiple AML subtype paths,
-- medications, procedures, lab tests, observations,
-- genomics export behavior,
-- and exactly how to run generation with useful CLI arguments.
+This guide explains how Synthea creates fake patient records for Acute Myeloid Leukemia (AML). No prior experience required. We start with the basics and build up step by step.
 
 ---
 
-## 1) Mental model: Synthea module = state machine
+## What Is Synthea?
 
-A Synthea module (`*.json`) is a **directed state graph**.
-Each state does one thing (example: set an attribute, start a condition, write an observation, administer a medication), then transitions to another state.
+Synthea is a program that **makes up realistic-looking medical records** for fictional patients. Doctors and researchers use these fake records to test software and study diseases — without ever needing real patient data.
 
-At minimum, your module has:
+You tell Synthea:
+- How many patients to create
+- What disease to focus on
+- Where the patients "live" (state, city)
 
-- `Initial` state (entry point),
-- one or more clinical/action states,
-- `Terminal` state (end).
-
-Typical state keys used in AML modeling:
-
-- `Initial`
-- `SetAttribute`
-- `ConditionOnset`
-- `Encounter`
-- `Observation`
-- `Procedure`
-- `MedicationOrder` / `MedicationAdministration`
-- `Delay`
-- `Simple` / `Guard` logic with transitions
-- `Terminal`
+Synthea then produces output files — called **CSV files** — that look like real hospital records (diagnoses, lab results, medications, etc.).
 
 ---
 
-## 2) How CSVs are produced from states
+## What Is AML?
 
-Different states drive different CSV rows (if CSV export is enabled):
+**Acute Myeloid Leukemia (AML)** is a type of blood cancer. It affects the bone marrow, which is the spongy tissue inside your bones where blood cells are made. In AML, the bone marrow makes too many abnormal white blood cells.
 
-- `ConditionOnset` → `conditions.csv`
-- `Encounter`/`EncounterEnd` → `encounters.csv`
-- `Observation` (including lab-category) → `observations.csv`
-- `Procedure` → `procedures.csv`
-- `Medication*` states → `medications.csv`
-- genomics attributes (`genomics_alterations`) → `genomics.csv`
-
-For genomics specifically:
-
-- If you set `genomics_alterations` as a list of alteration objects on the person, export will write one row per alteration.
-- If `date_genomics` is omitted, exporter auto-generates a realistic date bounded by timeline constraints.
+AML is serious and is treated with chemotherapy. Some patients also receive a bone marrow transplant.
 
 ---
 
-## 3) Building blocks in small steps
+## Part 1 — How Synthea Knows What to Do: Modules
 
-Below is the suggested order to build an AML module.
+Synthea uses **modules** to decide what happens to each patient. A module is a JSON file that acts like a flowchart or a board game:
 
-### Step A: Start with a clean scaffold
+- The patient starts at a box called **`Initial`**
+- The module moves the patient from box to box
+- Each box ("state") does one thing — diagnose a disease, give a medication, record a lab test, etc.
+- The patient eventually reaches the **`Terminal`** box and the module ends
 
-```json
-{
-  "name": "AML Comprehensive Example",
-  "remarks": ["Example AML module with subtype branching and genomics"],
-  "gmf_version": 2,
-  "states": {
-    "Initial": {
-      "type": "Initial",
-      "direct_transition": "Assign_AML_Subtype"
-    },
-    "Terminal": {
-      "type": "Terminal"
-    }
-  }
-}
-```
-
-### Step B: Assign subtype (attribute + branching)
-
-Use `SetAttribute` to mark subtype and branch flows with distributions.
-
-Example subtypes:
-
-- `AML_FLT3_ITD`
-- `AML_NPM1`
-- `APL_PML_RARA` (acute promyelocytic leukemia subtype)
-
-### Step C: Onset condition and open a treatment encounter
-
-Use `ConditionOnset` for AML diagnosis, then an inpatient encounter.
-
-### Step D: Add interventions per subtype
-
-Per branch, add realistic med/procedure/lab/observation states.
-
-### Step E: Capture genomics
-
-Set `genomics_alterations` only after AML has been diagnosed (after `ConditionOnset`), once subtype is known or testing is performed.
+Think of it like a Choose-Your-Own-Adventure book, but for medical histories.
 
 ---
 
-## 4) Full AML example with subtypes, meds, procedures, labs, observations, genomics
+## Part 2 — The Two AML Files (and Why They Are Different)
 
-> Notes:
-> - This is an instructional example. You can split it into submodules later.
-> - Codes are illustrative; replace with your preferred vocabulary strategy.
+There are two JSON files related to AML:
 
-```json
-{
-  "name": "AML Comprehensive Example",
-  "gmf_version": 2,
-  "states": {
-    "Initial": {
-      "type": "Initial",
-      "direct_transition": "Assign_AML_Subtype"
-    },
+| File | What it is | Runs as a module? |
+|------|-----------|-------------------|
+| `acute_myeloid_leukemia.json` | The real AML simulation — it moves patients through diagnosis, chemo, and complications | **Yes** |
+| `aml_disease_model.json` | A reference document describing AML subtypes, genes, and treatments | **No** |
 
-    "Assign_AML_Subtype": {
-      "type": "Simple",
-      "distributed_transition": [
-        {"transition": "Set_Subtype_FLT3", "distribution": 0.45},
-        {"transition": "Set_Subtype_NPM1", "distribution": 0.35},
-        {"transition": "Set_Subtype_APL", "distribution": 0.20}
-      ]
-    },
+**`aml_disease_model.json` is like a textbook page.** It lists facts about AML (gene mutations, drug names, lab tests). It is NOT a simulation. It does not generate any CSV rows on its own.
 
-    "Set_Subtype_FLT3": {
-      "type": "SetAttribute",
-      "attribute": "aml_subtype",
-      "value": "AML_FLT3_ITD",
-      "direct_transition": "AML_Condition_Onset"
-    },
-    "Set_Subtype_NPM1": {
-      "type": "SetAttribute",
-      "attribute": "aml_subtype",
-      "value": "AML_NPM1",
-      "direct_transition": "AML_Condition_Onset"
-    },
-    "Set_Subtype_APL": {
-      "type": "SetAttribute",
-      "attribute": "aml_subtype",
-      "value": "APL_PML_RARA",
-      "direct_transition": "AML_Condition_Onset"
-    },
-
-    "AML_Condition_Onset": {
-      "type": "ConditionOnset",
-      "codes": [
-        {
-          "system": "SNOMED-CT",
-          "code": "91861009",
-          "display": "Acute myeloid leukemia (disorder)"
-        }
-      ],
-      "direct_transition": "Inpatient_Encounter"
-    },
-
-    "Inpatient_Encounter": {
-      "type": "Encounter",
-      "encounter_class": "inpatient",
-      "codes": [
-        {
-          "system": "SNOMED-CT",
-          "code": "183807002",
-          "display": "Inpatient stay"
-        }
-      ],
-      "direct_transition": "CBC_Lab"
-    },
-
-    "CBC_Lab": {
-      "type": "Observation",
-      "category": "laboratory",
-      "unit": "10*3/uL",
-      "codes": [
-        {"system": "LOINC", "code": "26464-8", "display": "Leukocytes [#/volume] in Blood"}
-      ],
-      "value": 22.5,
-      "direct_transition": "Blast_Observation"
-    },
-
-    "Blast_Observation": {
-      "type": "Observation",
-      "category": "laboratory",
-      "unit": "%",
-      "codes": [
-        {"system": "LOINC", "code": "709-6", "display": "Blasts/100 leukocytes in Blood"}
-      ],
-      "value": 38,
-      "direct_transition": "Bone_Marrow_Biopsy"
-    },
-
-    "Bone_Marrow_Biopsy": {
-      "type": "Procedure",
-      "codes": [
-        {
-          "system": "SNOMED-CT",
-          "code": "86273004",
-          "display": "Biopsy of bone marrow"
-        }
-      ],
-      "direct_transition": "Capture_Genomics"
-    },
-
-    "Capture_Genomics": {
-      "type": "SetAttribute",
-      "attribute": "genomics_alterations",
-      "value": [
-        {
-          "method_genomics": "NGS",
-          "source_genomics": "Bone marrow",
-          "alteration_type": "SNV",
-          "gene": "FLT3",
-          "alteration_status": "Pathogenic",
-          "hgvs_coding": "c.2503G>T",
-          "hgvs_protein": "p.Asp835Tyr",
-          "genome_version": "GRCh38",
-          "vaf": 0.42
-        },
-        {
-          "method_genomics": "NGS",
-          "source_genomics": "Bone marrow",
-          "alteration_type": "SNV",
-          "gene": "NPM1",
-          "alteration_status": "Pathogenic",
-          "hgvs_coding": "c.860_863dup",
-          "hgvs_protein": "p.Trp288CysfsTer12",
-          "genome_version": "GRCh38",
-          "vaf": 0.35
-        }
-      ],
-      "direct_transition": "Subtype_Therapy_Branch"
-    },
-
-    "Subtype_Therapy_Branch": {
-      "type": "Simple",
-      "complex_transition": [
-        {
-          "condition": {
-            "condition_type": "Attribute",
-            "attribute": "aml_subtype",
-            "operator": "=",
-            "value": "AML_FLT3_ITD"
-          },
-          "transition": "Give_Cytarabine"
-        },
-        {
-          "condition": {
-            "condition_type": "Attribute",
-            "attribute": "aml_subtype",
-            "operator": "=",
-            "value": "AML_NPM1"
-          },
-          "transition": "Give_Daunorubicin"
-        },
-        {
-          "condition": {
-            "condition_type": "Attribute",
-            "attribute": "aml_subtype",
-            "operator": "=",
-            "value": "APL_PML_RARA"
-          },
-          "transition": "Give_ATRA"
-        }
-      ]
-    },
-
-    "Give_Cytarabine": {
-      "type": "MedicationOrder",
-      "codes": [
-        {"system": "RxNorm", "code": "197361", "display": "cytarabine 100 MG Injection"}
-      ],
-      "reason": "AML",
-      "direct_transition": "Give_Midostaurin"
-    },
-    "Give_Midostaurin": {
-      "type": "MedicationOrder",
-      "codes": [
-        {"system": "RxNorm", "code": "2056826", "display": "midostaurin 25 MG Oral Capsule"}
-      ],
-      "reason": "AML_FLT3_ITD",
-      "direct_transition": "Response_Observation"
-    },
-
-    "Give_Daunorubicin": {
-      "type": "MedicationOrder",
-      "codes": [
-        {"system": "RxNorm", "code": "197519", "display": "daunorubicin 5 MG/ML Injection"}
-      ],
-      "reason": "AML",
-      "direct_transition": "Give_Cytarabine_NPM1"
-    },
-    "Give_Cytarabine_NPM1": {
-      "type": "MedicationOrder",
-      "codes": [
-        {"system": "RxNorm", "code": "197361", "display": "cytarabine 100 MG Injection"}
-      ],
-      "reason": "AML_NPM1",
-      "direct_transition": "Response_Observation"
-    },
-
-    "Give_ATRA": {
-      "type": "MedicationOrder",
-      "codes": [
-        {"system": "RxNorm", "code": "83367", "display": "tretinoin 10 MG Oral Capsule"}
-      ],
-      "reason": "APL",
-      "direct_transition": "Give_Arsenic"
-    },
-    "Give_Arsenic": {
-      "type": "MedicationOrder",
-      "codes": [
-        {"system": "RxNorm", "code": "115698", "display": "arsenic trioxide 1 MG/ML Injection"}
-      ],
-      "reason": "APL",
-      "direct_transition": "Response_Observation"
-    },
-
-    "Response_Observation": {
-      "type": "Observation",
-      "category": "survey",
-      "unit": "%",
-      "codes": [
-        {"system": "LOINC", "code": "30451-9", "display": "Disease response assessment"}
-      ],
-      "value": 60,
-      "direct_transition": "Neutropenia_Check"
-    },
-
-    "Neutropenia_Check": {
-      "type": "Observation",
-      "category": "laboratory",
-      "unit": "10*3/uL",
-      "codes": [
-        {"system": "LOINC", "code": "751-8", "display": "Neutrophils [#/volume] in Blood"}
-      ],
-      "value": 0.7,
-      "direct_transition": "Encounter_End"
-    },
-
-    "Encounter_End": {
-      "type": "EncounterEnd",
-      "direct_transition": "Terminal"
-    },
-
-    "Terminal": {
-      "type": "Terminal"
-    }
-  }
-}
-```
+**`acute_myeloid_leukemia.json` is the actual simulation.** This is the module that runs patients through a clinical story and produces output.
 
 ---
 
-## 5) Why this model works
+## Part 3 — How States Produce CSV Output
 
-This example intentionally demonstrates:
+When a state in a module runs, it can write a row to a CSV file:
 
-1. **Subtype branching** (`distributed_transition` + subtype attribute).
-2. **Condition registration** (AML onset).
-3. **Encounter context** (clinical events in visit).
-4. **Labs/observations** (CBC, blasts, ANC, response).
-5. **Procedures** (bone marrow biopsy).
-6. **Multiple medications** (different regimen per subtype).
-7. **Genomics payload** (`genomics_alterations`) used by CSV genomics export.
-8. **Predictable transitions** (clear `direct_transition` chain).
+| State type | CSV file it writes to |
+|------------|----------------------|
+| `ConditionOnset` | `conditions.csv` |
+| `Encounter` | `encounters.csv` |
+| `Observation` | `observations.csv` |
+| `Procedure` | `procedures.csv` |
+| `MedicationOrder` | `medications.csv` |
+| `SetAttribute` with `genomics_alterations` | `genomics.csv` |
 
----
-
-## 6) Modeling genomics correctly
-
-### Required pattern
-
-Use a `SetAttribute` like:
-
-- `attribute`: `genomics_alterations`
-- `value`: list of objects (one row per genomic alteration)
-
-### Typical fields in each alteration object
-
-- `date_genomics` *(optional now; exporter can generate)*
-- `method_genomics`
-- `source_genomics`
-- `alteration_type`
-- `gene`
-- `gene_other`
-- `fusion`
-- `structural_event`
-- `alteration_status`
-- `chromosome`
-- `hgvs_genome`
-- `hgvs_coding`
-- `hgvs_protein`
-- `genome_version`
-- `vaf`
-- `abnormal_cells_karyo`
-- `abnormal_cells_fish`
-- `external_db_id`
-
-### Date behavior recommendation
-
-If your upstream data source does not provide genomic date, omit `date_genomics`.
-The exporter will generate it with realistic bounds. If a date is provided, it is normalized/clamped to the same timeline window so it does not land before condition onset/birth or after death/export time.
+If a module has no clinical states (just `Initial → Terminal`), it writes **nothing**. That is why `aml_disease_model.json` produces no output — it has no clinical states.
 
 ---
 
-## 7) Running Synthea for AML modules
+## Part 4 — How to Run the AML Simulation
 
-You can run the AML launcher using `--aml`.
-
-## Basic command
+### The easiest way — use the `--aml` flag
 
 ```bash
 run_synthea --aml -p 100 Massachusetts Bedford --exporter.csv.export=true
 ```
 
-## Common arguments and what they do
+This automatically runs the correct AML module (`acute_myeloid_leukemia`) for 100 patients.
 
-- `--aml`
-  - Runs the AML-focused app entrypoint.
-  - Ensures `acute_myeloid_leukemia` module is enabled.
-
-- `-p <number>`
-  - Population size (number of synthetic people).
-  - Example: `-p 1000`.
-
-- `<State> <City>`
-  - Geographic target used for demographics/providers.
-  - Example: `Massachusetts Bedford`.
-
-- `-s <seed>`
-  - Random seed for reproducibility.
-  - Same seed + same config typically gives same synthetic cohort pattern.
-
-- `-a <minAge-maxAge>`
-  - Age filter for generated population.
-  - Example: `-a 5-21` for pediatric-focused AML simulations.
-
-- `-g <M|F>`
-  - Force gender selection.
-
-- `--exporter.csv.export=true`
-  - Enables CSV export files.
-
-- `--exporter.baseDirectory=<path>`
-  - Choose output directory.
-  - Useful for test runs and comparisons.
-
-- `--exporter.csv.included_files=<csv list>`
-  - Optional. Restrict output to certain CSVs.
-  - Example: `patients.csv,conditions.csv,medications.csv,observations.csv,procedures.csv,genomics.csv`.
-
-## Example reproducible run
+### Using `-class aml` (same thing, different syntax)
 
 ```bash
-run_synthea --aml -p 200 -s 424242 -a 10-21 Massachusetts Bedford \
-  --exporter.csv.export=true \
-  --exporter.baseDirectory=./output_aml_example
+run_synthea -class aml -p 100 Massachusetts Bedford --exporter.csv.export=true
 ```
 
-## Verifying generated CSVs
+### What each part means
+
+| Argument | What it does |
+|----------|-------------|
+| `--aml` or `-class aml` | Tells Synthea to use the AML launcher |
+| `-p 100` | Create 100 patients |
+| `Massachusetts Bedford` | Set the location |
+| `--exporter.csv.export=true` | Turn on CSV file output |
+| `-s 42` | Set a random seed — same seed = same patients every time |
+| `-a 5-21` | Only generate patients aged 5–21 |
+| `-g M` or `-g F` | Only generate male or female patients |
+| `--exporter.baseDirectory=./output` | Where to save the files |
+
+### Specifying a module with `-m`
+
+You can also pass a module name directly:
 
 ```bash
-ls -1 ./output_aml_example/csv
+run_synthea -class aml -m aml_model -p 100 Massachusetts Bedford --exporter.csv.export=true
 ```
 
-At minimum for this modeling style, inspect:
-
-- `patients.csv`
-- `conditions.csv`
-- `encounters.csv`
-- `medications.csv`
-- `procedures.csv`
-- `observations.csv`
-- `genomics.csv`
+The names `aml_model` and `aml_disease_model` are both understood as shorthand for the real executable module `acute_myeloid_leukemia`. Synthea automatically maps them for you.
 
 ---
 
-## 8) Practical tips for realistic AML modeling
+## Part 5 — What CSVs to Expect
 
-1. **Separate diagnosis and treatment phases**
-   - Keep onset, workup, induction, consolidation in distinct state groups.
+After running, look in your output folder:
 
-2. **Use delays intentionally**
-   - Add `Delay` states between workup and treatment to model clinical timing.
+```
+output/
+  csv/
+    patients.csv
+    conditions.csv
+    encounters.csv
+    medications.csv
+    procedures.csv
+    observations.csv
+    genomics.csv
+```
 
-3. **Avoid giant monolithic states**
-   - One clinical intent per state keeps debugging easy.
+### What each file contains
 
-4. **Use attributes for decisions**
-   - Store subtype/risk flags in attributes and branch using conditions.
-
-5. **Validate by CSV, not by eyeballing module only**
-   - Always run a small population and check resulting files.
-
-6. **Start deterministic, then add variability**
-   - Start with direct transitions, then introduce distributions after validation.
+- **`patients.csv`** — One row per fake patient (age, gender, birthdate, etc.)
+- **`conditions.csv`** — Diagnoses (e.g., AML was diagnosed on a certain date)
+- **`encounters.csv`** — Hospital visits
+- **`medications.csv`** — Drugs given (e.g., levofloxacin, chemotherapy)
+- **`procedures.csv`** — Medical procedures (e.g., bone marrow biopsy)
+- **`observations.csv`** — Lab results and measurements (e.g., neutrophil count)
+- **`genomics.csv`** — Gene mutation data (only present if the module sets `genomics_alterations`)
 
 ---
 
-## 9) Minimal genomics-only snippet (drop-in)
+## Part 6 — How to Add Genomics to a Module
 
-If you already have AML flow and just want genomics export:
+**Genomics data** (gene mutations found in the cancer) goes into `genomics.csv`. To make this work, the module must set a special variable called `genomics_alterations` using a `SetAttribute` state.
+
+### Example state
 
 ```json
-"Capture_AML_Genomics": {
+"Capture_Genomics": {
   "type": "SetAttribute",
   "attribute": "genomics_alterations",
   "value": [
@@ -526,27 +166,189 @@ If you already have AML flow and just want genomics export:
 }
 ```
 
-Then route your AML flow through `Capture_AML_Genomics`.
+### What each field means
+
+| Field | Meaning |
+|-------|---------|
+| `method_genomics` | How the gene was tested (e.g., `"NGS"` = next-generation sequencing) |
+| `source_genomics` | Where the sample came from (e.g., `"Bone marrow"`) |
+| `alteration_type` | Type of mutation (e.g., `"SNV"` = single nucleotide variant) |
+| `gene` | Which gene has the mutation (e.g., `"FLT3"`, `"NPM1"`) |
+| `alteration_status` | Whether it is harmful (`"Pathogenic"`) |
+| `hgvs_coding` | Scientific notation for the DNA change |
+| `hgvs_protein` | Scientific notation for the protein change |
+| `genome_version` | Which version of the human genome map was used |
+| `vaf` | Variant allele frequency — roughly, what fraction of cells have this mutation |
+
+**Important:** Place `Capture_Genomics` **after** the AML diagnosis state, not before. You can only report a gene mutation after the cancer is diagnosed.
+
+If you leave out `date_genomics`, Synthea automatically picks a realistic date based on when the patient was diagnosed.
 
 ---
 
-## 10) Checklist before calling model "done"
+## Part 7 — A Complete Simple AML Module Example
 
-- [ ] AML condition appears in `conditions.csv`
-- [ ] subtype branching works (inspect attribute-driven branches in debug runs)
-- [ ] meds/procedures/labs/observations appear in corresponding CSVs
-- [ ] `genomics.csv` has rows with expected genes/fields
-- [ ] genomic dates are present and clinically bounded
-- [ ] run is reproducible with fixed `-s` seed
+Below is a minimal but working AML module. It:
+1. Assigns a random AML subtype
+2. Records the diagnosis
+3. Opens a hospital visit
+4. Runs a lab test
+5. Gives a medication
+6. Records genomic findings
+7. Ends the visit
+
+```json
+{
+  "name": "AML Simple Example",
+  "gmf_version": 2,
+  "states": {
+    "Initial": {
+      "type": "Initial",
+      "direct_transition": "Assign_Subtype"
+    },
+
+    "Assign_Subtype": {
+      "type": "Simple",
+      "distributed_transition": [
+        {"transition": "Set_FLT3",  "distribution": 0.45},
+        {"transition": "Set_NPM1",  "distribution": 0.35},
+        {"transition": "Set_APL",   "distribution": 0.20}
+      ]
+    },
+
+    "Set_FLT3": {
+      "type": "SetAttribute",
+      "attribute": "aml_subtype",
+      "value": "AML_FLT3_ITD",
+      "direct_transition": "Diagnose_AML"
+    },
+    "Set_NPM1": {
+      "type": "SetAttribute",
+      "attribute": "aml_subtype",
+      "value": "AML_NPM1",
+      "direct_transition": "Diagnose_AML"
+    },
+    "Set_APL": {
+      "type": "SetAttribute",
+      "attribute": "aml_subtype",
+      "value": "APL_PML_RARA",
+      "direct_transition": "Diagnose_AML"
+    },
+
+    "Diagnose_AML": {
+      "type": "ConditionOnset",
+      "codes": [
+        {
+          "system": "SNOMED-CT",
+          "code": "91861009",
+          "display": "Acute myeloid leukemia (disorder)"
+        }
+      ],
+      "direct_transition": "Hospital_Visit"
+    },
+
+    "Hospital_Visit": {
+      "type": "Encounter",
+      "encounter_class": "inpatient",
+      "codes": [
+        {
+          "system": "SNOMED-CT",
+          "code": "183807002",
+          "display": "Inpatient stay"
+        }
+      ],
+      "direct_transition": "Blast_Lab"
+    },
+
+    "Blast_Lab": {
+      "type": "Observation",
+      "category": "laboratory",
+      "unit": "%",
+      "codes": [
+        {"system": "LOINC", "code": "709-6", "display": "Blasts/100 leukocytes in Blood"}
+      ],
+      "value": 38,
+      "direct_transition": "Give_Chemo"
+    },
+
+    "Give_Chemo": {
+      "type": "MedicationOrder",
+      "codes": [
+        {"system": "RxNorm", "code": "197361", "display": "cytarabine 100 MG Injection"}
+      ],
+      "direct_transition": "Capture_Genomics"
+    },
+
+    "Capture_Genomics": {
+      "type": "SetAttribute",
+      "attribute": "genomics_alterations",
+      "value": [
+        {
+          "method_genomics": "NGS",
+          "source_genomics": "Bone marrow",
+          "alteration_type": "SNV",
+          "gene": "FLT3",
+          "alteration_status": "Pathogenic",
+          "hgvs_coding": "c.2503G>T",
+          "hgvs_protein": "p.Asp835Tyr",
+          "genome_version": "GRCh38",
+          "vaf": 0.42
+        }
+      ],
+      "direct_transition": "End_Visit"
+    },
+
+    "End_Visit": {
+      "type": "EncounterEnd",
+      "direct_transition": "Terminal"
+    },
+
+    "Terminal": {
+      "type": "Terminal"
+    }
+  }
+}
+```
 
 ---
 
-If you want, next step can be to split this single-module example into a cleaner
-production layout:
+## Part 8 — Checklist: Is My Module Working?
 
-- `aml_core.json`
-- `aml_subtypes.json`
-- `aml_supportive_care.json`
-- `aml_genomics.json`
+Run a small test first:
 
-so each part is easier to maintain and test.
+```bash
+run_synthea -class aml -s 1 -p 10 Massachusetts Bedford --exporter.csv.export=true
+```
+
+Then check each file:
+
+- [ ] `patients.csv` has 10 rows
+- [ ] `conditions.csv` has rows with AML diagnosis codes
+- [ ] `encounters.csv` has inpatient visit rows
+- [ ] `medications.csv` has chemotherapy drug rows
+- [ ] `observations.csv` has lab result rows
+- [ ] `genomics.csv` has gene mutation rows
+- [ ] Running again with `-s 1` gives the same results (reproducibility check)
+
+---
+
+## Part 9 — Common Mistakes and How to Fix Them
+
+| Problem | Likely cause | Fix |
+|---------|-------------|-----|
+| No CSV output at all | CSV export is off | Add `--exporter.csv.export=true` |
+| `genomics.csv` is empty | Module never sets `genomics_alterations` | Add a `SetAttribute` state for genomics |
+| Wrong module running | Using a reference file instead of the simulation | Use `acute_myeloid_leukemia` or pass `-m aml_model` via the AML launcher |
+| Same output every run | That's intentional with a fixed `-s` seed | Remove `-s` or change the number for variety |
+| Module does nothing | `Initial → Terminal` with no clinical states | Add `ConditionOnset`, `Encounter`, and other states |
+
+---
+
+## Part 10 — Tips for Building Your Own AML Module
+
+1. **Start small.** Begin with `Initial → Diagnose → Encounter → Terminal`. Add more states one at a time.
+2. **One action per state.** Each state should do exactly one thing (one drug, one lab, one observation). This makes debugging easy.
+3. **Put genomics after diagnosis.** Always place the `genomics_alterations` attribute after `ConditionOnset`.
+4. **Use the seed `-s` when testing.** A fixed seed means you get the same patients every run, so you can compare outputs easily.
+5. **Check the CSV files, not just the module.** The module might look right but still produce no output if a state type is wrong.
+6. **Use attributes for branching.** Store the subtype in a variable (`aml_subtype`) and branch based on it using `complex_transition`.

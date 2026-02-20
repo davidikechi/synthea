@@ -373,8 +373,10 @@ public class AppTest {
   }
 
   @Test
-  public void testAcuteMyeloidLeukemiaAppRespectsExplicitModuleFilter() throws Exception {
+  public void testAcuteMyeloidLeukemiaAppResolvesAmlDiseaseModelAlias() throws Exception {
     TestHelper.exportOff();
+    // aml_disease_model is a knowledge-model document, not a runnable module.
+    // When passed via -m it should be remapped to the executable module.
     String[] args = {"-s", "0", "-p", "0", "-m", "aml_disease_model"};
 
     final PrintStream original = System.out;
@@ -386,8 +388,27 @@ public class AppTest {
     String output = out.toString();
 
     Assert.assertTrue(output.contains("Modules:"));
-    Assert.assertTrue(output.contains("aml_disease_model"));
-    Assert.assertFalse(output.contains("acute_myeloid_leukemia"));
+    Assert.assertTrue(output.contains("acute_myeloid_leukemia"));
+
+    System.setOut(original);
+  }
+
+  @Test
+  public void testAcuteMyeloidLeukemiaAppResolvesAmlModelAlias() throws Exception {
+    TestHelper.exportOff();
+    // aml_model is a short alias that should be remapped to the executable module.
+    String[] args = {"-s", "0", "-p", "0", "-m", "aml_model"};
+
+    final PrintStream original = System.out;
+    final ByteArrayOutputStream out = new ByteArrayOutputStream();
+    final PrintStream print = new PrintStream(out, true);
+    System.setOut(print);
+    AcuteMyeloidLeukemiaApp.main(args);
+    out.flush();
+    String output = out.toString();
+
+    Assert.assertTrue(output.contains("Modules:"));
+    Assert.assertTrue(output.contains("acute_myeloid_leukemia"));
 
     System.setOut(original);
   }
