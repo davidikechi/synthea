@@ -33,29 +33,14 @@
 
     "Initial": {
       "type": "Initial",
-      "remarks": ["Gate on gender-specific AML incidence before assigning onset delay."],
-      "complex_transition": [
-        {
-          "condition": {
-            "condition_type": "Gender",
-            "gender": "F"
-          },
-          "distributions": [
-            { "transition": "Cancerous", "distribution": 0.002 },
-            { "transition": "Terminal",  "distribution": 0.998 }
-          ]
-        },
-        {
-          "condition": {
-            "condition_type": "Gender",
-            "gender": "M"
-          },
-          "distributions": [
-            { "transition": "Cancerous", "distribution": 0.003 },
-            { "transition": "Terminal",  "distribution": 0.997 }
-          ]
-        }
-      ]
+      "remarks": [
+        "Every simulated patient in this module develops AML.",
+        "The population incidence gate has been removed so -p N generates exactly N AML patients.",
+        "This is intentional for research and dataset generation.",
+        "To restore realistic prevalence (~0.3% M / ~0.2% F), replace direct_transition",
+        "with the original complex_transition gender distributions."
+      ],
+      "direct_transition": "Cancerous"
     },
 
     "Cancerous": {
@@ -167,18 +152,149 @@
       "type": "SetAttribute",
       "attribute": "aml_eln_risk",
       "value": "Favorable",
-      "direct_transition": "AML_Condition_Onset"
+      "direct_transition": "Subtype_Condition_Branch"
     },
     "Set_ELN_Risk_Intermediate": {
       "type": "SetAttribute",
       "attribute": "aml_eln_risk",
       "value": "Intermediate",
-      "direct_transition": "AML_Condition_Onset"
+      "direct_transition": "Subtype_Condition_Branch"
     },
     "Set_ELN_Risk_Adverse": {
       "type": "SetAttribute",
       "attribute": "aml_eln_risk",
       "value": "Adverse",
+      "direct_transition": "Subtype_Condition_Branch"
+    },
+
+    "Subtype_Condition_Branch": {
+      "type": "Simple",
+      "remarks": [
+        "Record the specific AML subtype as a ConditionOnset so it appears in conditions.csv.",
+        "Each subtype has a distinct SNOMED-CT code from the AML/hematology hierarchy."
+      ],
+      "complex_transition": [
+        {
+          "condition": {
+            "condition_type": "Attribute",
+            "attribute": "aml_subtype",
+            "operator": "==",
+            "value": "AML_NPM1"
+          },
+          "transition": "Subtype_NPM1_Onset"
+        },
+        {
+          "condition": {
+            "condition_type": "Attribute",
+            "attribute": "aml_subtype",
+            "operator": "==",
+            "value": "AML_FLT3_ITD"
+          },
+          "transition": "Subtype_FLT3_Onset"
+        },
+        {
+          "condition": {
+            "condition_type": "Attribute",
+            "attribute": "aml_subtype",
+            "operator": "==",
+            "value": "APL_PML_RARA"
+          },
+          "transition": "Subtype_APL_Onset"
+        },
+        {
+          "condition": {
+            "condition_type": "Attribute",
+            "attribute": "aml_subtype",
+            "operator": "==",
+            "value": "AML_CBF_RUNX1_RUNX1T1"
+          },
+          "transition": "Subtype_CBF_Onset"
+        },
+        {
+          "condition": {
+            "condition_type": "Attribute",
+            "attribute": "aml_subtype",
+            "operator": "==",
+            "value": "AML_IDH"
+          },
+          "transition": "Subtype_IDH_Onset"
+        },
+        {
+          "transition": "Subtype_TP53_MDS_Onset"
+        }
+      ]
+    },
+
+    "Subtype_NPM1_Onset": {
+      "type": "ConditionOnset",
+      "assign_to_attribute": "aml_subtype_condition",
+      "codes": [
+        {
+          "system": "SNOMED-CT",
+          "code": "413448000",
+          "display": "Acute myeloid leukemia with NPM1 mutation (disorder)"
+        }
+      ],
+      "direct_transition": "AML_Condition_Onset"
+    },
+    "Subtype_FLT3_Onset": {
+      "type": "ConditionOnset",
+      "assign_to_attribute": "aml_subtype_condition",
+      "codes": [
+        {
+          "system": "SNOMED-CT",
+          "code": "413449008",
+          "display": "Acute myeloid leukemia with FLT3 mutation (disorder)"
+        }
+      ],
+      "direct_transition": "AML_Condition_Onset"
+    },
+    "Subtype_APL_Onset": {
+      "type": "ConditionOnset",
+      "assign_to_attribute": "aml_subtype_condition",
+      "codes": [
+        {
+          "system": "SNOMED-CT",
+          "code": "413441009",
+          "display": "Acute promyelocytic leukemia (disorder)"
+        }
+      ],
+      "direct_transition": "AML_Condition_Onset"
+    },
+    "Subtype_CBF_Onset": {
+      "type": "ConditionOnset",
+      "assign_to_attribute": "aml_subtype_condition",
+      "codes": [
+        {
+          "system": "SNOMED-CT",
+          "code": "413442002",
+          "display": "Acute myeloid leukemia with t(8;21)(q22;q22) (disorder)"
+        }
+      ],
+      "direct_transition": "AML_Condition_Onset"
+    },
+    "Subtype_IDH_Onset": {
+      "type": "ConditionOnset",
+      "assign_to_attribute": "aml_subtype_condition",
+      "codes": [
+        {
+          "system": "SNOMED-CT",
+          "code": "1162864003",
+          "display": "Acute myeloid leukemia with IDH1 mutation (disorder)"
+        }
+      ],
+      "direct_transition": "AML_Condition_Onset"
+    },
+    "Subtype_TP53_MDS_Onset": {
+      "type": "ConditionOnset",
+      "assign_to_attribute": "aml_subtype_condition",
+      "codes": [
+        {
+          "system": "SNOMED-CT",
+          "code": "763512003",
+          "display": "Acute myeloid leukemia with myelodysplasia-related changes (disorder)"
+        }
+      ],
       "direct_transition": "AML_Condition_Onset"
     },
 
@@ -1371,6 +1487,11 @@
     "End_DIC": {
       "type": "ConditionEnd",
       "condition_onset": "DIC_Onset",
+      "direct_transition": "End_Subtype_Condition"
+    },
+    "End_Subtype_Condition": {
+      "type": "ConditionEnd",
+      "referenced_by_attribute": "aml_subtype_condition",
       "direct_transition": "End_AML_Condition"
     },
     "End_AML_Condition": {
