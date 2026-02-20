@@ -33,29 +33,14 @@
 
     "Initial": {
       "type": "Initial",
-      "remarks": ["Gate on gender-specific AML incidence before assigning onset delay."],
-      "complex_transition": [
-        {
-          "condition": {
-            "condition_type": "Gender",
-            "gender": "F"
-          },
-          "distributions": [
-            { "transition": "Cancerous", "distribution": 0.002 },
-            { "transition": "Terminal",  "distribution": 0.998 }
-          ]
-        },
-        {
-          "condition": {
-            "condition_type": "Gender",
-            "gender": "M"
-          },
-          "distributions": [
-            { "transition": "Cancerous", "distribution": 0.003 },
-            { "transition": "Terminal",  "distribution": 0.997 }
-          ]
-        }
-      ]
+      "remarks": [
+        "Every simulated patient in this module develops AML.",
+        "The population incidence gate has been removed so -p N generates exactly N AML patients.",
+        "This is intentional for research and dataset generation.",
+        "To restore realistic prevalence (~0.3% M / ~0.2% F), replace direct_transition",
+        "with the original complex_transition gender distributions."
+      ],
+      "direct_transition": "Cancerous"
     },
 
     "Cancerous": {
