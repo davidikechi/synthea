@@ -1,55 +1,72 @@
-# AML Synthea Module — Technical Reference
+# Understanding the AML Synthea Module — A Plain-English Guide
 
-This document explains the full architecture of the AML simulation modules in this repository,
-how every state type works, how the `aml_disease_model.json` module is structured from top to
-bottom, and how to set up, run, and extend it.
-
----
-
-## Contents
-
-1. [What Synthea Does](#1-what-synthea-does)
-2. [The Generic Module Framework — Core Concepts](#2-the-generic-module-framework--core-concepts)
-3. [Every State Type Used in the AML Model](#3-every-state-type-used-in-the-aml-model)
-4. [How Transitions Work](#4-how-transitions-work)
-5. [How Codes and Ontologies Are Used](#5-how-codes-and-ontologies-are-used)
-6. [The Two AML Modules in This Repository](#6-the-two-aml-modules-in-this-repository)
-7. [aml\_disease\_model.json — Full Walkthrough](#7-aml_disease_modeljson--full-walkthrough)
-8. [Setting Up and Running the Model](#8-setting-up-and-running-the-model)
-9. [Expected CSV Output](#9-expected-csv-output)
-10. [How to Extend the Model](#10-how-to-extend-the-model)
-11. [Troubleshooting](#11-troubleshooting)
+This guide explains how the AML (Acute Myeloid Leukemia) simulation works in this project.
+You do not need a medical or programming background to read it — but some basic biology and
+computer-science vocabulary will help along the way.
 
 ---
 
-## 1. What Synthea Does
+## Table of Contents
 
-Synthea is a synthetic patient generator. It simulates realistic but entirely fictional
-patient life histories — including diagnoses, laboratory results, medications, procedures,
-vital signs, and genomic findings — and writes them to standard output formats (CSV, FHIR,
-C-CDA).
-
-The key design principle is **reproducibility**: given the same random seed (`-s`), the same
-configuration, and the same modules, Synthea will always produce the same cohort. This makes
-it suitable for testing software pipelines, building reference datasets, and evaluating
-research hypotheses without ever touching real patient data.
-
-Synthea generates each patient by running a set of **modules** in parallel. Each module is
-responsible for one aspect of the patient's health history. Modules fire independently; a
-patient's AML module runs at the same time as their lifecycle module, cardiovascular module,
-and so on.
+1. [What is Synthea and why does it exist?](#1-what-is-synthea-and-why-does-it-exist)
+2. [What is a module?](#2-what-is-a-module)
+3. [How does a module move a patient forward? (States and Transitions)](#3-how-does-a-module-move-a-patient-forward-states-and-transitions)
+4. [The building blocks — every state type explained](#4-the-building-blocks--every-state-type-explained)
+5. [How codes and labels are used](#5-how-codes-and-labels-are-used)
+6. [The two AML modules in this project](#6-the-two-aml-modules-in-this-project)
+7. [Walking through aml_disease_model.json from top to bottom](#7-walking-through-aml_disease_modeljson-from-top-to-bottom)
+8. [How to run the model and what commands to use](#8-how-to-run-the-model-and-what-commands-to-use)
+9. [What files does the model produce?](#9-what-files-does-the-model-produce)
+10. [How to add something new to the model](#10-how-to-add-something-new-to-the-model)
+11. [Common problems and how to fix them](#11-common-problems-and-how-to-fix-them)
 
 ---
 
-## 2. The Generic Module Framework — Core Concepts
+## 1. What is Synthea and why does it exist?
 
-### 2.1 A module is a state machine
+**Synthea** is a computer program that creates *fake but realistic* patient medical records.
+Think of it as a patient-history generator — it invents thousands of fictional people and
+writes out their entire medical story: what diseases they got, what tests were run, what
+medicines they took, and so on.
 
-Every `.json` module file describes a **directed state graph**. Each patient starts at the
-`Initial` state and moves forward one state at a time. States never loop back by default —
-the graph is acyclic.
+**Why do this?** Real patient data is private and protected by law. But medical researchers,
+software developers, and students still need realistic data to test their tools and ideas.
+Synthea solves this by producing data that *looks* real without containing any actual
+person's information.
 
-The minimum valid module has exactly two states:
+**What does it produce?** Synthea writes standard output files — spreadsheets (CSV) and
+healthcare-specific formats (FHIR). Every row in those spreadsheets came from the rules
+written in the module files.
+
+**Is it random?** Partly. Synthea uses controlled randomness: if you give it the same
+starting number (called a *seed*), it will always produce exactly the same patients. That
+makes experiments repeatable.
+
+---
+
+## 2. What is a module?
+
+A **module** is a rulebook written in a file ending in `.json`. It describes one piece of a
+patient's health story. There is one module for heart disease, one for diabetes, one for
+AML, and so on. All modules run at the same time for every patient, so each patient can
+have multiple conditions.
+
+The module file is structured like this:
+
+```
+{
+  "name": "Name of the module",
+  "gmf_version": 2,
+  "states": {
+    ... all the states ...
+  }
+}
+```
+
+The most important part is `"states"` — a list of named steps. A patient starts at the
+first step and moves through the list one step at a time until they reach the end.
+
+**The minimum valid module looks like this:**
 
 ```json
 {
@@ -67,88 +84,99 @@ The minimum valid module has exactly two states:
 }
 ```
 
-This module does nothing — patients pass through immediately. **A module that only contains
-`Initial` and `Terminal` produces zero rows in any CSV file.** Every meaningful state must
-appear between them.
-
-### 2.2 The module file structure
-
-| Top-level key   | Required | Purpose |
-|-----------------|----------|---------|
-| `"name"`        | Yes      | Human-readable module name (appears in logs and `Modules:` output) |
-| `"gmf_version"` | Yes      | Must be `2` for current Synthea |
-| `"states"`      | Yes      | Object whose keys are state names and values are state definitions |
-| `"remarks"`     | No       | Array of documentation strings; ignored at runtime |
-
-### 2.3 Attributes — the patient's memory
-
-**Attributes** are named variables stored on each patient. They persist for the patient's
-entire simulation. They are how states communicate with each other — one state writes a value,
-a later state reads it to decide what to do.
-
-```json
-"Set_Subtype_FLT3_ITD": {
-  "type": "SetAttribute",
-  "attribute": "aml_subtype",
-  "value": "AML_FLT3_ITD",
-  "direct_transition": "Set_ELN_Risk_Intermediate"
-}
-```
-
-Later states read `aml_subtype` in `complex_transition` conditions to route the patient to
-the correct treatment branch. Attributes never appear directly in CSV output — they are
-internal state.
-
-There are two special attributes that **do** affect CSV output:
-
-| Attribute | Effect |
-|-----------|--------|
-| `"genomics_alterations"` | When set to a list of alteration objects, the CSV exporter writes one row per alteration to `genomics.csv` |
-| `"cause_of_death"` | Referenced by `Death` states |
-
-### 2.4 `assign_to_attribute` — saving a condition or medication reference
-
-`ConditionOnset` and `MedicationOrder` states accept an optional `"assign_to_attribute"` key.
-This saves a reference to the condition or medication so it can be ended later by
-`ConditionEnd` or `MedicationEnd` using `"condition_onset"` or `"medication_order"`.
-
-```json
-"AML_Condition_Onset": {
-  "type": "ConditionOnset",
-  "assign_to_attribute": "aml_condition",   ← saves reference here
-  ...
-}
-
-"End_AML_Condition": {
-  "type": "ConditionEnd",
-  "condition_onset": "aml_condition",        ← resolves that reference
-  ...
-}
-```
-
-If you forget to end a condition, it will remain open in the patient record indefinitely,
-which causes it to appear as "active" in `conditions.csv`.
+This module does nothing — the patient enters and immediately exits. Every real module adds
+meaningful steps between `Initial` and `Terminal`.
 
 ---
 
-## 3. Every State Type Used in the AML Model
+## 3. How does a module move a patient forward? (States and Transitions)
 
-### 3.1 `Initial`
+Imagine a patient walking through a hospital corridor. At each door they can:
 
-The mandatory entry point. Every module has exactly one. It does no clinical work — it only
-fires a transition.
+- **Always go through the same door** — this is a `direct_transition`
+- **Randomly go through one of several doors** (like a coin flip) — this is a
+  `distributed_transition`
+- **Choose a door based on a condition** ("only go left if you have a fever") — this is a
+  `complex_transition`
+
+### direct_transition
+
+The patient always goes to exactly one next step:
+
+```json
+"direct_transition": "Next_Step_Name"
+```
+
+### distributed_transition
+
+The patient randomly goes to one of several steps. The numbers must add up to exactly 1.0
+(meaning 100%):
+
+```json
+"distributed_transition": [
+  { "transition": "Step_A", "distribution": 0.27 },
+  { "transition": "Step_B", "distribution": 0.25 },
+  { "transition": "Step_C", "distribution": 0.48 }
+]
+```
+
+In this example: 27% of patients go to Step_A, 25% to Step_B, and 48% to Step_C.
+
+### complex_transition
+
+The module checks a condition and routes the patient based on what is true. The first
+matching condition wins. An entry without a condition is the fallback (default):
+
+```json
+"complex_transition": [
+  {
+    "condition": {
+      "condition_type": "Attribute",
+      "attribute": "aml_subtype",
+      "operator": "==",
+      "value": "AML_NPM1"
+    },
+    "transition": "NPM1_Branch"
+  },
+  {
+    "transition": "Default_Branch"
+  }
+]
+```
+
+### Patient attributes — the patient's memory
+
+**Attributes** are like sticky notes on a patient. A step can write a note (like `aml_subtype = AML_NPM1`)
+and a later step can read that note to decide what to do. Attributes exist only inside the
+simulation — they do not appear in the output spreadsheets on their own.
+
+Two special attributes *do* affect the output:
+
+| Attribute | What it does |
+|-----------|--------------|
+| `genomics_alterations` | When set to a list of genetic changes, those changes are written to `genomics.csv` |
+| `cause_of_death` | Used by steps that record a patient's death |
+
+---
+
+## 4. The building blocks — every state type explained
+
+### Initial
+
+Every module has exactly one. It is the entry point — nothing happens here, it just points
+to the next step.
 
 ```json
 "Initial": {
   "type": "Initial",
-  "complex_transition": [ ... ]
+  "direct_transition": "First_Real_Step"
 }
 ```
 
-### 3.2 `Terminal`
+### Terminal
 
-The mandatory exit point. Once a patient reaches `Terminal`, this module is done for that
-patient. No further states fire.
+Every module has exactly one. It is the exit point. Once a patient reaches this step, the
+module is finished for that patient.
 
 ```json
 "Terminal": {
@@ -156,86 +184,68 @@ patient. No further states fire.
 }
 ```
 
-### 3.3 `Simple`
+### Simple
 
-A routing-only state. It does no clinical work. Its entire purpose is to hold a transition
-— typically a `distributed_transition` or `complex_transition` — when you want branching
-logic that doesn't belong inside a clinical state.
+A routing-only step. It does no medical work — its only purpose is to hold a transition
+(usually a `distributed_transition` or `complex_transition`) that does not belong inside a
+medical step.
 
 ```json
 "Assign_AML_Subtype": {
   "type": "Simple",
   "distributed_transition": [
     { "transition": "Set_Subtype_NPM1",    "distribution": 0.27 },
-    { "transition": "Set_Subtype_FLT3_ITD","distribution": 0.25 },
-    { "transition": "Set_Subtype_APL",     "distribution": 0.10 },
-    { "transition": "Set_Subtype_CBF",     "distribution": 0.08 },
-    { "transition": "Set_Subtype_IDH",     "distribution": 0.10 },
-    { "transition": "Set_Subtype_TP53_MDS","distribution": 0.20 }
+    { "transition": "Set_Subtype_FLT3_ITD","distribution": 0.25 }
   ]
 }
 ```
 
-### 3.4 `SetAttribute`
+### SetAttribute
 
-Sets a named attribute on the patient. Produces **no CSV output** unless the attribute is
-`"genomics_alterations"`.
+Writes a value to the patient's memory (an attribute). By itself it does not create any row
+in the output spreadsheets — unless the attribute name is `genomics_alterations`.
 
 ```json
 "Set_Subtype_NPM1": {
   "type": "SetAttribute",
   "attribute": "aml_subtype",
   "value": "AML_NPM1",
-  "direct_transition": "Set_ELN_Risk_Favorable"
+  "direct_transition": "Next_Step"
 }
 ```
 
-**Special case — genomics:** When `"attribute"` is `"genomics_alterations"` and `"value"` is
-a list of alteration objects, the CSV exporter reads this and writes one row per object to
-`genomics.csv`. See [Section 7.6](#76-genomic-alterations) for details.
+**Special case:** When `attribute` is `genomics_alterations` and `value` is a list of
+genetic-change objects, the spreadsheet exporter reads this list and writes one row per
+object into `genomics.csv`.
 
-### 3.5 `Delay`
+### Delay
 
-Advances simulated time without doing any clinical work. Used to model onset age (the patient
-ages before diagnosis) or gaps between care phases.
+Moves simulated time forward without doing any medical work. Used to model the patient
+ageing before diagnosis, or waiting between hospital visits.
 
 ```json
 "Delay_5": {
   "type": "Delay",
   "exact": { "quantity": 5, "unit": "years" },
-  "direct_transition": "Assign_AML_Subtype"
+  "direct_transition": "Next_Step"
 }
 ```
 
-Time units: `"years"`, `"months"`, `"weeks"`, `"days"`, `"hours"`, `"minutes"`.
+Time units available: `"years"`, `"months"`, `"weeks"`, `"days"`, `"hours"`, `"minutes"`.
 
-For a random delay with a range, use `"range"`:
+You can also use a random range:
 
 ```json
 "Wait_For_Results": {
   "type": "Delay",
   "range": { "low": 3, "high": 7, "unit": "days" },
-  "direct_transition": "Next_State"
+  "direct_transition": "Next_Step"
 }
 ```
 
-For a Gaussian delay (mean ± standard deviation), use `"distribution"`:
+### ConditionOnset
 
-```json
-"Pre_Treatment_Wait": {
-  "type": "Delay",
-  "distribution": {
-    "kind": "GAUSSIAN",
-    "parameters": { "mean": 180, "standardDeviation": 60 }
-  },
-  "unit": "minutes",
-  "direct_transition": "Next_State"
-}
-```
-
-### 3.6 `ConditionOnset`
-
-Records a diagnosis on the patient. Writes a row to `conditions.csv`.
+Records a new diagnosis on the patient. This writes a row to `conditions.csv`.
 
 ```json
 "AML_Condition_Onset": {
@@ -252,39 +262,35 @@ Records a diagnosis on the patient. Writes a row to `conditions.csv`.
 }
 ```
 
-Key fields:
+`assign_to_attribute` saves a reference to this condition so it can be closed later by a
+`ConditionEnd` step. If you forget to close a condition, it will show as still active in
+the output.
 
-| Field | Required | Notes |
-|-------|----------|-------|
-| `"codes"` | Yes | Array of ontology codes; at least one required |
-| `"assign_to_attribute"` | Recommended | Saves reference so the condition can be ended later |
-| `"target_encounter"` | No | Associates the onset with a specific encounter state by name |
+### ConditionEnd
 
-### 3.7 `ConditionEnd`
-
-Resolves an active condition. Updates `conditions.csv` with an end date.
+Closes an active condition. Updates `conditions.csv` with an end date.
 
 ```json
 "End_AML_Condition": {
   "type": "ConditionEnd",
-  "condition_onset": "aml_condition",
+  "condition_onset": "AML_Condition_Onset",
   "direct_transition": "End_Encounter"
 }
 ```
 
-The `"condition_onset"` value must match the `"assign_to_attribute"` value used in the
-corresponding `ConditionOnset` state.
+The value of `"condition_onset"` must match the **state name** of the `ConditionOnset`
+that opened this condition.
 
-### 3.8 `Encounter`
+### Encounter
 
-Opens a clinical encounter (visit). **All clinical events between an `Encounter` and its
-matching `EncounterEnd` are associated with that visit.** Writes a row to `encounters.csv`.
+Opens a hospital visit. All medical steps between an `Encounter` and its matching
+`EncounterEnd` are linked to that visit. Writes a row to `encounters.csv`.
 
 ```json
 "Inpatient_Encounter": {
   "type": "Encounter",
   "encounter_class": "inpatient",
-  "reason": "aml_condition",
+  "reason": "AML_Condition_Onset",
   "codes": [
     {
       "system": "SNOMED-CT",
@@ -296,15 +302,13 @@ matching `EncounterEnd` are associated with that visit.** Writes a row to `encou
 }
 ```
 
-`"encounter_class"` values: `"inpatient"`, `"ambulatory"`, `"emergency"`, `"wellness"`,
+Encounter class options: `"inpatient"`, `"ambulatory"`, `"emergency"`, `"wellness"`,
 `"urgentcare"`.
 
-`"reason"` should be the attribute name of the condition that prompted this visit
-(set via `assign_to_attribute` on the `ConditionOnset`).
+### EncounterEnd
 
-### 3.9 `EncounterEnd`
-
-Closes the current encounter. Can include a discharge disposition.
+Closes the current hospital visit. Can record how the patient left (discharge to home,
+transfer, etc.).
 
 ```json
 "End_Encounter": {
@@ -318,12 +322,12 @@ Closes the current encounter. Can include a discharge disposition.
 }
 ```
 
-### 3.10 `Observation`
+### Observation
 
-Records a measurement — lab result, vital sign, or molecular test result. Writes a row to
-`observations.csv`.
+Records a measurement — a lab test result, a vital sign, or a molecular test. Writes a row
+to `observations.csv`.
 
-**Numeric observation with a random range:**
+**Numeric observation with a random range (e.g., white blood cell count):**
 
 ```json
 "CBC_WBC": {
@@ -338,47 +342,42 @@ Records a measurement — lab result, vital sign, or molecular test result. Writ
     }
   ],
   "range": { "low": 3.0, "high": 120.0 },
-  "direct_transition": "CBC_Hemoglobin"
+  "direct_transition": "Next_Step"
 }
 ```
 
-**Qualitative (coded) observation:**
+**Qualitative (positive/negative) observation:**
 
 ```json
 "FLT3_ITD_Observation": {
   "type": "Observation",
   "category": "laboratory",
   "unit": "{Qualitative}",
-  "codes": [
-    {
-      "system": "LOINC",
-      "code": "85176-4",
-      "display": "FLT3 gene internal tandem duplication [Presence] in Blood or Tissue by Molecular genetics method"
-    }
-  ],
+  "codes": [...],
   "value_code": {
     "system": "SNOMED-CT",
     "code": "10828004",
     "display": "Positive (qualifier value)"
   },
-  "direct_transition": "Genomics_FLT3_ITD"
+  "direct_transition": "Next_Step"
 }
 ```
 
-Key fields:
+Key fields for Observation:
 
 | Field | Required | Notes |
 |-------|----------|-------|
-| `"category"` | Yes | `"laboratory"`, `"vital-signs"`, `"survey"`, `"imaging"` |
-| `"unit"` | Yes | UCUM unit string; use `"{Qualitative}"` for coded results |
-| `"codes"` | Yes | LOINC is strongly preferred for observations |
-| `"range"` | One of | Random numeric value between `low` and `high` |
-| `"exact"` | One of | Fixed numeric value |
-| `"value_code"` | One of | Coded result (Positive/Negative/etc.) |
+| `category` | Yes | `"laboratory"`, `"vital-signs"`, `"survey"`, `"imaging"` |
+| `unit` | Yes | Use UCUM unit string; use `"{Qualitative}"` for positive/negative results |
+| `codes` | Yes | LOINC codes are standard for observations |
+| `range` | One of | Random numeric value between `low` and `high` |
+| `exact` | One of | Fixed numeric value |
+| `value_code` | One of | Coded result (Positive, Negative, etc.) |
 
-### 3.11 `Procedure`
+### Procedure
 
-Records a clinical procedure. Writes a row to `procedures.csv`.
+Records a clinical procedure (a test, surgery, or treatment done to the patient). Writes a
+row to `procedures.csv`.
 
 ```json
 "Bone_Marrow_Biopsy": {
@@ -391,149 +390,60 @@ Records a clinical procedure. Writes a row to `procedures.csv`.
     }
   ],
   "duration": { "low": 30, "high": 60, "unit": "minutes" },
-  "reason": "aml_condition",
-  "direct_transition": "BM_Blast_Percentage"
+  "reason": "AML_Condition_Onset",
+  "direct_transition": "Next_Step"
 }
 ```
 
-`"reason"` is the attribute name of the condition that prompted the procedure.
-`"duration"` advances simulated time by a random amount in the given range.
+`"reason"` should be the **state name** of the `ConditionOnset` that caused this procedure.
 
-### 3.12 `MedicationOrder`
+### MedicationOrder
 
 Prescribes a medication. Writes a row to `medications.csv`.
 
 ```json
 "Give_ATRA": {
   "type": "MedicationOrder",
+  "assign_to_attribute": "atra_medication",
   "codes": [
     {
       "system": "RxNorm",
-      "code": "83367",
+      "code": 83367,
       "display": "tretinoin 10 MG Oral Capsule"
     }
   ],
-  "reason": "aml_condition",
+  "reason": "AML_Condition_Onset",
   "prescription": {
     "dosage": { "amount": 2, "frequency": 2, "period": 1, "unit": "days" },
     "duration": { "quantity": 28, "unit": "days" }
   },
-  "direct_transition": "Give_ATO"
+  "direct_transition": "Next_Step"
 }
 ```
 
-`"assign_to_attribute"` can be used to save a reference for later `MedicationEnd`.
+### MedicationEnd
 
-### 3.13 `MedicationEnd`
-
-Ends an active medication order. Updates `medications.csv` with a stop date.
+Stops an active medication. Updates `medications.csv` with a stop date.
 
 ```json
-"End_Levofloxacin": {
+"End_ATRA": {
   "type": "MedicationEnd",
-  "medication_order": "levofloxacin_med",
-  "direct_transition": "End_AML"
+  "medication_order": "Give_ATRA",
+  "direct_transition": "Next_Step"
 }
 ```
 
----
-
-## 4. How Transitions Work
-
-### 4.1 `direct_transition`
-
-The simplest case: always go to exactly one named state.
-
-```json
-"direct_transition": "Next_State"
-```
-
-### 4.2 `distributed_transition`
-
-Choose one of several states randomly according to probabilities. Probabilities must sum to
-exactly `1.0`.
-
-```json
-"distributed_transition": [
-  { "transition": "Set_Subtype_NPM1",    "distribution": 0.27 },
-  { "transition": "Set_Subtype_FLT3_ITD","distribution": 0.25 },
-  { "transition": "Set_Subtype_APL",     "distribution": 0.10 },
-  { "transition": "Set_Subtype_CBF",     "distribution": 0.08 },
-  { "transition": "Set_Subtype_IDH",     "distribution": 0.10 },
-  { "transition": "Set_Subtype_TP53_MDS","distribution": 0.20 }
-]
-```
-
-### 4.3 `complex_transition`
-
-The most powerful transition type. Each entry has a `"condition"` and a target. The first
-condition that evaluates to `true` wins. An entry with no `"condition"` is a catch-all
-default and must appear last.
-
-```json
-"complex_transition": [
-  {
-    "condition": {
-      "condition_type": "Attribute",
-      "attribute": "aml_subtype",
-      "operator": "==",
-      "value": "APL_PML_RARA"
-    },
-    "transition": "RT_PCR_PML_RARA"
-  },
-  {
-    "condition": {
-      "condition_type": "Attribute",
-      "attribute": "aml_subtype",
-      "operator": "==",
-      "value": "AML_FLT3_ITD"
-    },
-    "transition": "FLT3_ITD_Observation"
-  },
-  {
-    "transition": "Genomics_TP53_MDS"   ← default, no condition
-  }
-]
-```
-
-`complex_transition` can also carry `"distributions"` (not `"transition"`) on each entry,
-making each branch itself probabilistic. This is how the incidence gate works:
-
-```json
-"complex_transition": [
-  {
-    "condition": { "condition_type": "Gender", "gender": "F" },
-    "distributions": [
-      { "transition": "Cancerous", "distribution": 0.002 },
-      { "transition": "Terminal",  "distribution": 0.998 }
-    ]
-  },
-  {
-    "condition": { "condition_type": "Gender", "gender": "M" },
-    "distributions": [
-      { "transition": "Cancerous", "distribution": 0.003 },
-      { "transition": "Terminal",  "distribution": 0.997 }
-    ]
-  }
-]
-```
-
-### 4.4 Condition types in transitions
-
-| `condition_type` | What it checks |
-|-----------------|----------------|
-| `"Gender"` | `"gender": "M"` or `"F"` |
-| `"Attribute"` | Named attribute with `operator` and `value`. Operators: `"=="`, `"!="`, `"<"`, `">"`, `"<="`, `">="`, `"is nil"`, `"is not nil"` |
-| `"Age"` | `"operator"` and `"quantity"` / `"unit"` |
-| `"Active Condition"` | Whether a condition with given codes is currently active |
-| `"Active Medication"` | Whether a medication with given codes is currently active |
+`"medication_order"` must match the **state name** of the `MedicationOrder` step that
+prescribed the drug.
 
 ---
 
-## 5. How Codes and Ontologies Are Used
+## 5. How codes and labels are used
 
-Every clinical state that produces CSV output uses at least one ontology code. Codes are
-always an array, allowing multiple vocabulary entries for the same concept.
+Every clinical step that produces output uses at least one code. A code is a standard
+number from an international vocabulary that uniquely identifies a concept — a disease, a
+test, a drug, or a procedure. Using these standard codes means the synthetic data can work
+with real hospital systems.
 
 ```json
 "codes": [
@@ -545,103 +455,84 @@ always an array, allowing multiple vocabulary entries for the same concept.
 ]
 ```
 
-### Code systems used in `aml_disease_model.json`
+### Which vocabulary is used for what?
 
-| System | Used for | Example |
-|--------|----------|---------|
-| **SNOMED-CT** | Conditions, procedures, encounter types, qualitative result values | `91861009` = AML disorder |
-| **LOINC** | All observations and lab tests | `6690-2` = WBC count |
-| **RxNorm** | All medications | `83367` = tretinoin 10 MG |
-| **NUBC** | Discharge dispositions | `"1"` = Discharge to Home |
-
-### Why LOINC for observations?
-
-LOINC (Logical Observation Identifiers Names and Codes) is the international standard for
-laboratory and clinical observations. Synthea's CSV exporter and FHIR exporter both propagate
-LOINC codes into output records. Using LOINC codes means your synthetic data is
-interoperable with real-world lab systems and FHIR servers.
-
-### Why SNOMED-CT for conditions and procedures?
-
-SNOMED-CT is the standard used by clinical decision support systems, EHRs, and FHIR resources
-for diagnoses and procedure records. Conditions in `conditions.csv` carry the SNOMED-CT code
-from the `ConditionOnset` state.
-
-### Why RxNorm for medications?
-
-RxNorm is the US standard drug vocabulary. Synthea's medication export uses RxNorm codes to
-identify specific drug products and routes.
+| Vocabulary | Used for | Real-world example |
+|------------|----------|--------------------|
+| **SNOMED-CT** | Conditions, procedures, encounters, qualitative results | `91861009` = AML disorder |
+| **LOINC** | All lab tests and observations | `6690-2` = White blood cell count |
+| **RxNorm** | All medications | `83367` = tretinoin 10 mg capsule |
+| **NUBC** | Discharge codes | `"1"` = Discharge to Home |
 
 ---
 
-## 6. The Two AML Modules in This Repository
+## 6. The two AML modules in this project
 
-| File | Path | Purpose | Produces CSV? |
-|------|------|---------|---------------|
-| `acute_myeloid_leukemia.json` | `src/main/resources/modules/` | PCOR research module: models levofloxacin prophylaxis in patients ≤21 years; febrile neutropenia; ICU transfer; mortality | Yes |
-| `aml_disease_model.json` | `src/main/resources/modules/` | Full WHO-HAEM5 / ELN-2022 disease model: 6 subtypes, complete diagnostic workup, subtype-specific therapies, genomics, complications, MRD | Yes |
+| File | Folder | What it does | Produces CSV output? |
+|------|--------|--------------|-----------------------|
+| `acute_myeloid_leukemia.json` | `src/main/resources/modules/` | PCOR research module. Focuses on levofloxacin antibiotic use in young AML patients, febrile neutropenia, ICU transfer, and death outcomes. | Yes |
+| `aml_disease_model.json` | `src/main/resources/modules/` | Full disease model. Covers all six major AML subtypes, complete diagnostic tests, subtype-specific drug treatments, genomic alterations, and complications. | Yes |
 
-Both files are **runnable Synthea modules** — they have `"states"` with `Initial` through
-`Terminal`, and both must be present in the `modules/` folder to be loadable.
-
-A **reference-only knowledge document** (`aml_disease_model.json` as it originally existed
-before this work) cannot live in `modules/` because the Synthea module loader calls
-`definition.get("states").getAsJsonObject()` unconditionally on every `.json` file it finds
-there — a file without a `"states"` key causes a `NullPointerException` at startup.
+Both are real, runnable Synthea modules. Both must be present in the `modules/` folder.
 
 ### Which module runs when?
 
-When you use the `--aml` flag or `-class aml`, `AcuteMyeloidLeukemiaApp` is the launcher.
+The **AcuteMyeloidLeukemiaApp** launcher controls this:
 
-- If you pass **no `-m` flag**, the launcher injects `-m acute_myeloid_leukemia` automatically.
-- If you pass `-m aml_model` or `-m aml_disease_model`, the launcher **remaps** these aliases
-  to `acute_myeloid_leukemia`.
-- If you pass `-m aml_disease_model` directly and want the new full model to run, **use the
-  base `App` launcher** (no `--aml` flag):
-  ```bash
-  ./run_synthea -m aml_disease_model -p 100 Massachusetts Bedford \
-    --exporter.csv.export=true
-  ```
+| What you type | What actually runs |
+|---------------|--------------------|
+| No `-m` flag at all | `acute_myeloid_leukemia` (default) |
+| `-m aml_model` | `aml_disease_model` (alias resolves correctly) |
+| `-m aml_disease_model` | `aml_disease_model` (canonical name) |
+| `-m acute_myeloid_leukemia` | `acute_myeloid_leukemia` |
 
-To run **both modules together** (full cohort gets both clinical pathways):
+To run the **full disease model** directly with the base launcher (not the AML-specific one):
 
 ```bash
-./run_synthea -m "acute_myeloid_leukemia:aml_disease_model" -p 100 \
-  Massachusetts Bedford --exporter.csv.export=true
+./run_synthea -m aml_disease_model -p 100 Massachusetts Bedford \
+  --exporter.csv.export=true
 ```
 
-(Use `:` as the separator on Linux/macOS, `;` on Windows.)
+To run **both modules together**:
+
+```bash
+# Linux / macOS (colon separator)
+./run_synthea -m "acute_myeloid_leukemia:aml_disease_model" -p 100 Massachusetts Bedford \
+  --exporter.csv.export=true
+
+# Windows (semicolon separator)
+./run_synthea -m "acute_myeloid_leukemia;aml_disease_model" -p 100 Massachusetts Bedford \
+  --exporter.csv.export=true
+```
 
 ---
 
-## 7. `aml_disease_model.json` — Full Walkthrough
+## 7. Walking through aml_disease_model.json from top to bottom
 
-The module is structured in six sequential phases. Every patient who gets AML passes through
-all six in order.
+The module is organized in six phases. Every patient who gets AML passes through all six.
 
 ```
 Initial
-  └── Incidence Gate (gender probability)
+  └── Incidence Gate (gender probability — most patients exit here)
         └── Cancerous
-              └── Onset Delay (age 0–21)
-                    └── Assign_AML_Subtype (6 branches)
-                          └── Set ELN Risk
-                                └── AML_Condition_Onset
-                                      └── Inpatient_Encounter
-                                            ├── Phase 1: CBC + Chemistry Labs
-                                            ├── Phase 2: Diagnostic Procedures
-                                            ├── Phase 3: Subtype Assays + Genomics
-                                            ├── Phase 4: Induction Therapy (subtype-specific)
-                                            ├── Phase 5: Supportive Care
-                                            ├── Phase 6: Post-Induction Assessment + Complications
-                                            └── End_Encounter → Terminal
+              └── Onset Delay (patient ages 0–21 years before getting AML)
+                    └── Assign AML Subtype (6 branches — one per cancer type)
+                          └── Set ELN Risk (Favorable / Intermediate / Adverse)
+                                └── AML Condition Onset
+                                      └── Inpatient Encounter opens
+                                            ├── Phase 1: Blood and chemistry tests
+                                            ├── Phase 2: Bone marrow procedures
+                                            ├── Phase 3: Genetic tests + Genomics
+                                            ├── Phase 4: Chemotherapy drugs
+                                            ├── Phase 5: Supportive antibiotics / antivirals
+                                            ├── Phase 6: Complication check + MRD test
+                                            └── Encounter closes → Terminal
 ```
 
-### 7.1 Incidence gate and onset delay
+### Phase 0 — The incidence gate
 
-**Why this is needed:** Synthea runs every module on every patient. If there is no gate,
-every patient gets AML, which is not realistic. The gate gives 0.2% of females and 0.3% of
-males an AML diagnosis, consistent with ACS Cancer Facts & Figures 2022.
+Not everyone gets AML. In real life, about 0.2% of females and 0.3% of males develop it.
+The gate replicates this: most patients pass straight to `Terminal` without getting AML.
 
 ```json
 "Initial": {
@@ -654,133 +545,94 @@ males an AML diagnosis, consistent with ACS Cancer Facts & Figures 2022.
         { "transition": "Terminal",  "distribution": 0.998 }
       ]
     },
-    {
-      "condition": { "condition_type": "Gender", "gender": "M" },
-      "distributions": [
-        { "transition": "Cancerous", "distribution": 0.003 },
-        { "transition": "Terminal",  "distribution": 0.997 }
-      ]
-    }
+    ...
   ]
 }
 ```
 
-Once a patient clears the incidence gate, they enter `Cancerous`, which uses a
-`distributed_transition` across 22 Delay states (`Delay_0` through `Delay_21`) to simulate
-AML onset at various ages. Each delay advances simulated time by the stated number of years
-before reaching `Assign_AML_Subtype`.
+> **Tip for testing:** Because so few patients get AML, you need a large population
+> (`-p 5000` or more) to see any AML cases in the output. To test with smaller numbers,
+> use `-a 0-21` to restrict to the age window, or use the `aml_disease_model` module
+> directly (it removes the gate so every patient gets AML).
 
-> **Practical note for testing:** The incidence gate means you need a large population
-> (`-p 5000` or more) to see AML patients in the output. For focused testing, bypass the
-> gate by generating a population with a pre-specified seed and filtering output, or set
-> `-a 0-21` to restrict to the age window.
+### Phase 0b — Age at onset
 
-### 7.2 Subtype assignment and ELN risk classification
+AML onset is spread across ages 0–21 years using 22 `Delay` states. Each patient randomly
+waits 0, 1, 2, … or 21 years before getting their diagnosis, simulating different ages of
+onset.
+
+### Phase 1 — Subtype assignment and risk classification
 
 Two attributes are set for every patient who gets AML:
 
-| Attribute | Values | Purpose |
-|-----------|--------|---------|
-| `aml_subtype` | `AML_NPM1`, `AML_FLT3_ITD`, `APL_PML_RARA`, `AML_CBF_RUNX1_RUNX1T1`, `AML_IDH`, `AML_TP53_MDS` | Drives all downstream branching |
-| `aml_eln_risk` | `Favorable`, `Intermediate`, `Adverse` | ELN-2022 risk category |
+| Attribute | Possible values | Purpose |
+|-----------|-----------------|---------|
+| `aml_subtype` | `AML_NPM1`, `AML_FLT3_ITD`, `APL_PML_RARA`, `AML_CBF_RUNX1_RUNX1T1`, `AML_IDH`, `AML_TP53_MDS` | Controls all later branching |
+| `aml_eln_risk` | `Favorable`, `Intermediate`, `Adverse` | Standard oncology risk category |
 
-Subtype proportions (from `Assign_AML_Subtype`):
+How patients are distributed across subtypes:
 
-| Subtype | Proportion | ELN-2022 risk | Defining lesion |
-|---------|-----------|---------------|-----------------|
-| `AML_NPM1` | 27% | Favorable | NPM1 insertion c.860_863dup |
-| `AML_FLT3_ITD` | 25% | Intermediate | FLT3-ITD insertion |
-| `AML_TP53_MDS` | 20% | Adverse | TP53 SNV + ASXL1 frameshift |
-| `APL_PML_RARA` | 10% | Favorable | PML::RARA fusion t(15;17) |
-| `AML_IDH` | 10% | Intermediate | IDH1 p.Arg132Cys SNV |
-| `AML_CBF_RUNX1_RUNX1T1` | 8% | Favorable | RUNX1::RUNX1T1 fusion t(8;21) |
+| Subtype | % of AML patients | Risk level | Key genetic change |
+|---------|--------------------|------------|--------------------|
+| `AML_NPM1` | 27% | Favorable | NPM1 gene insertion |
+| `AML_FLT3_ITD` | 25% | Intermediate | FLT3 gene duplication |
+| `AML_TP53_MDS` | 20% | Adverse | TP53 gene mutation |
+| `APL_PML_RARA` | 10% | Favorable | PML–RARA gene fusion |
+| `AML_IDH` | 10% | Intermediate | IDH1 gene mutation |
+| `AML_CBF_RUNX1_RUNX1T1` | 8% | Favorable | RUNX1–RUNX1T1 fusion |
 
-### 7.3 Condition onset and encounter
+### Phase 2 — Condition onset and hospital admission
 
-After subtype and risk are set, a single `ConditionOnset` fires with SNOMED-CT code
-`91861009` (Acute myeloid leukemia). The condition reference is saved to `aml_condition`.
+After the subtype is assigned, the module records two things:
 
-An inpatient encounter opens immediately after. All subsequent states — labs, procedures,
-medications, observations — are associated with this encounter until `End_Encounter` fires.
+1. A `ConditionOnset` for the **specific subtype** (e.g., "AML with NPM1 mutation") —
+   this appears in `conditions.csv` with a subtype-specific SNOMED code.
+2. A `ConditionOnset` for the **general AML diagnosis** (SNOMED `91861009`) — this also
+   appears in `conditions.csv`.
 
-### 7.4 Phase 1 — CBC and chemistry laboratory panel
+Then the patient is admitted to hospital (`Inpatient_Encounter` opens). Everything from
+this point until `End_Encounter` is linked to this visit.
 
-All patients receive the same initial lab workup regardless of subtype. Every state here is
-an `Observation` of category `"laboratory"` with a LOINC code and a random range reflecting
-typical AML presentation values.
+### Phase 3 — Blood tests and bone marrow workup
 
-| State | LOINC | Unit | Range | Clinical rationale |
-|-------|-------|------|-------|--------------------|
-| `CBC_WBC` | `6690-2` | 10\*3/uL | 3–120 | WBC elevated in most AML; range spans hypocellular to hyperleukocytic |
-| `CBC_Hemoglobin` | `718-7` | g/dL | 6–10.5 | Anaemia from marrow failure |
-| `CBC_Platelets` | `777-3` | 10\*3/uL | 10–100 | Thrombocytopaenia from marrow displacement |
-| `CBC_ANC` | `751-8` | 10\*3/uL | 0.1–1.0 | Severe neutropaenia; defines infection risk |
-| `Peripheral_Blood_Blasts` | `709-6` | % | 20–80 | ≥20% blasts required for AML diagnosis |
-| `LDH_Chemistry` | `14804-9` | U/L | 300–2000 | Elevated from rapid cell turnover |
-| `Creatinine_Chemistry` | `2160-0` | mg/dL | 0.4–1.2 | Baseline renal function before nephrotoxic drugs |
-| `Uric_Acid_Chemistry` | `3084-1` | mg/dL | 4–12 | Pre-treatment TLS risk assessment |
+All patients get the same initial tests regardless of subtype:
 
-### 7.5 Phase 2 — Diagnostic procedures and bone marrow workup
+| What | Type | Code (LOINC) | Normal range |
+|------|------|------|-------------|
+| White blood cell count | Lab | `6690-2` | 3–120 ×10³/µL |
+| Haemoglobin | Lab | `718-7` | 6–10.5 g/dL |
+| Platelets | Lab | `777-3` | 10–100 ×10³/µL |
+| Neutrophil count (ANC) | Lab | `751-8` | 0.1–1.0 ×10³/µL |
+| Blood blast percentage | Lab | `709-6` | 20–80% |
+| LDH (enzyme) | Lab | `14804-9` | 300–2000 U/L |
+| Creatinine (kidney) | Lab | `2160-0` | 0.4–1.2 mg/dL |
+| Uric acid | Lab | `3084-1` | 4–12 mg/dL |
 
-Four procedures fire for all patients. Each is a `Procedure` with a SNOMED-CT code, a
-duration range, and `"reason": "aml_condition"`.
+After the blood tests, four procedures are done on bone marrow:
 
-| State | SNOMED-CT | Duration |
-|-------|-----------|----------|
-| `Bone_Marrow_Biopsy` | `86273004` | 30–60 min |
-| `BM_Blast_Percentage` *(Observation)* | LOINC `26464-8` | — |
-| `Karyotype_Procedure` | `734877004` | 60–120 min |
-| `FISH_Procedure` | `445484009` | 30–60 min |
-| `NGS_Panel_Procedure` | `1186936003` | 60–120 min |
+| Procedure | State name | SNOMED code |
+|-----------|-----------|-------------|
+| Bone marrow biopsy | `Bone_Marrow_Biopsy` | `86273004` |
+| Bone marrow blast % | `BM_Blast_Percentage` *(Observation)* | LOINC `26464-8` |
+| Karyotype (chromosome picture) | `Karyotype_Procedure` | `734877004` |
+| FISH (gene location test) | `FISH_Procedure` | `445484009` |
+| NGS gene panel (full sequencing) | `NGS_Panel_Procedure` | `1186936003` |
 
-`BM_Blast_Percentage` is an `Observation` (not a `Procedure`) that immediately follows the
-biopsy — it records the blast % result from the marrow sample (range 20–90%).
+### Phase 4 — Subtype-specific genetic tests and genomics
 
-After `NGS_Panel_Procedure`, the module reaches `Subtype_Assay_Branch`, which uses
-`complex_transition` on `aml_subtype` to route each patient to their confirmatory assay.
+After the bone marrow workup, the module branches based on `aml_subtype`. Each branch does
+a confirmatory test and then records the genetic changes in `genomics_alterations`.
 
-### 7.6 Genomic alterations
+**For fusion subtypes (APL, CBF):** An RT-PCR test is run first to confirm the gene fusion,
+then genomics are recorded.
 
-Each subtype has a dedicated `Genomics_*` state of type `SetAttribute` that sets
-`"genomics_alterations"` to a list of alteration objects. The CSV exporter reads this
-attribute and writes one row to `genomics.csv` per object.
+**For point-mutation subtypes (NPM1, FLT3, IDH, TP53/MDS):** A molecular observation is
+recorded directly from the NGS results, then genomics are recorded.
 
-#### Fusion subtypes (APL, CBF) — RT-PCR confirmatory path
+Every subtype's genomics step is a `SetAttribute` with `"attribute": "genomics_alterations"`.
+Each object in the list becomes one row in `genomics.csv`.
 
-APL and CBF patients first receive an RT-PCR procedure (`RT_PCR_PML_RARA` or
-`RT_PCR_RUNX1_RUNX1T1`) and a qualitative fusion result observation, then the genomics
-attribute is set.
-
-Example — APL:
-
-```json
-"Genomics_APL": {
-  "type": "SetAttribute",
-  "attribute": "genomics_alterations",
-  "value": [
-    {
-      "method_genomics": "RT-PCR",
-      "source_genomics": "Bone marrow",
-      "alteration_type": "Fusion",
-      "gene": "PML",
-      "gene_other": "RARA",
-      "fusion": "PML::RARA",
-      "structural_event": "t(15;17)(q24.1;q21.2)",
-      "alteration_status": "Pathogenic",
-      "genome_version": "GRCh38",
-      "vaf": 0.50
-    }
-  ],
-  "direct_transition": "Allopurinol_TLS_Prophylaxis"
-}
-```
-
-#### SNV/Insertion subtypes (NPM1, FLT3-ITD, IDH, TP53/MDS) — NGS path
-
-These subtypes skip RT-PCR and go directly from the molecular observation to their
-`Genomics_*` state.
-
-Example — NPM1:
+Example — NPM1 genomics:
 
 ```json
 "Genomics_NPM1": {
@@ -803,122 +655,79 @@ Example — NPM1:
 }
 ```
 
-TP53/MDS is the only subtype with **two alterations** in the list — one row per alteration
-appears in `genomics.csv`:
+**Genomics field reference:**
 
-```json
-"Genomics_TP53_MDS": {
-  "type": "SetAttribute",
-  "attribute": "genomics_alterations",
-  "value": [
-    {
-      "method_genomics": "NGS", "gene": "TP53",
-      "alteration_type": "SNV",
-      "hgvs_coding": "c.817C>T", "hgvs_protein": "p.Arg273Cys",
-      "vaf": 0.55, ...
-    },
-    {
-      "method_genomics": "NGS", "gene": "ASXL1",
-      "alteration_type": "SNV",
-      "hgvs_coding": "c.1900_1901dup", "hgvs_protein": "p.Glu634GlyfsTer12",
-      "vaf": 0.38, ...
-    }
-  ],
-  "direct_transition": "Allopurinol_TLS_Prophylaxis"
-}
-```
+| Field | Required | Meaning |
+|-------|----------|---------|
+| `method_genomics` | Yes | How it was found: `"NGS"`, `"RT-PCR"`, `"FISH"`, `"Karyotype"` |
+| `source_genomics` | Yes | Where the sample came from: `"Bone marrow"`, `"Peripheral blood"` |
+| `alteration_type` | Yes | Type of change: `"SNV"`, `"Insertion"`, `"Deletion"`, `"Fusion"`, `"CNV"` |
+| `gene` | Yes | Gene symbol (e.g. `"NPM1"`, `"FLT3"`, `"TP53"`) |
+| `gene_other` | No | Second gene in a fusion (e.g. `"RARA"`) |
+| `fusion` | No | Fusion name (e.g. `"PML::RARA"`) |
+| `structural_event` | No | Chromosome rearrangement (e.g. `"t(15;17)(q24.1;q21.2)"`) |
+| `alteration_status` | Yes | Clinical meaning: `"Pathogenic"`, `"VUS"`, `"Benign"` |
+| `hgvs_coding` | No | DNA-level change notation (e.g. `"c.860_863dup"`) |
+| `hgvs_protein` | No | Protein-level change notation (e.g. `"p.Trp288CysfsTer12"`) |
+| `genome_version` | Yes | Reference genome: `"GRCh38"` or `"GRCh37"` |
+| `vaf` | No | Fraction of cells with this change (0.0–1.0) |
 
-#### All genomics fields
+### Phase 5 — Chemotherapy (induction therapy)
 
-| Field | Required | Notes |
-|-------|----------|-------|
-| `method_genomics` | Yes | Testing method: `"NGS"`, `"RT-PCR"`, `"FISH"`, `"Karyotype"`, `"Flow cytometry"` |
-| `source_genomics` | Yes | Sample source: `"Bone marrow"`, `"Peripheral blood"` |
-| `alteration_type` | Yes | `"SNV"`, `"Insertion"`, `"Deletion"`, `"Fusion"`, `"CNV"` |
-| `gene` | Yes | HGNC gene symbol |
-| `gene_other` | No | Second gene partner in a fusion |
-| `fusion` | No | Fusion name string e.g. `"PML::RARA"` |
-| `structural_event` | No | Cytogenetic notation e.g. `"t(15;17)(q24.1;q21.2)"` |
-| `alteration_status` | Yes | `"Pathogenic"`, `"VUS"`, `"Benign"` |
-| `hgvs_coding` | No | HGVS cDNA notation |
-| `hgvs_protein` | No | HGVS protein notation |
-| `genome_version` | Yes | `"GRCh38"` or `"GRCh37"` |
-| `vaf` | No | Variant allele frequency (0.0–1.0) |
-| `date_genomics` | No | If omitted, the exporter assigns a date on/after condition onset |
-| `chromosome` | No | Chromosome identifier |
-| `abnormal_cells_karyo` | No | Percent abnormal cells by karyotype |
-| `abnormal_cells_fish` | No | Percent abnormal cells by FISH |
-| `external_db_id` | No | External database identifier (ClinVar, COSMIC, etc.) |
+After genomics, all patients receive allopurinol (to prevent a complication called tumor
+lysis syndrome), then branch to their subtype-specific chemotherapy:
 
-### 7.7 Phase 4 — Induction therapy
+| Subtype | Drug regimen |
+|---------|-------------|
+| APL | ATRA + arsenic trioxide |
+| FLT3-ITD | Cytarabine + daunorubicin + midostaurin |
+| NPM1 | Cytarabine + daunorubicin (classic 7+3) |
+| CBF | Cytarabine + daunorubicin + gemtuzumab |
+| IDH | Cytarabine + daunorubicin + ivosidenib |
+| TP53/MDS | Venetoclax + azacitidine |
 
-After genomics are set, `Allopurinol_TLS_Prophylaxis` fires for all patients (TLS
-prophylaxis starts before chemotherapy), then `Induction_Therapy_Branch` uses
-`complex_transition` on `aml_subtype` to route to the correct regimen.
+After the specific drugs, a general `Induction_Chemo_Procedure` step records the
+chemotherapy session itself.
 
-| Subtype | Regimen | States |
-|---------|---------|--------|
-| `APL_PML_RARA` | ATRA + arsenic trioxide | `Give_ATRA` → `Give_ATO` |
-| `AML_FLT3_ITD` | Cytarabine + daunorubicin + midostaurin (7+3+M) | `Give_Cytarabine_FLT3` → `Give_Daunorubicin_FLT3` → `Give_Midostaurin` |
-| `AML_NPM1` | Cytarabine + daunorubicin (7+3) | `Give_Cytarabine_NPM1` → `Give_Daunorubicin_NPM1` |
-| `AML_CBF_RUNX1_RUNX1T1` | Cytarabine + daunorubicin + gemtuzumab ozogamicin | `Give_Cytarabine_CBF` → `Give_Daunorubicin_CBF` → `Give_Gemtuzumab` |
-| `AML_IDH` | Cytarabine + daunorubicin + ivosidenib | `Give_Cytarabine_IDH` → `Give_Daunorubicin_IDH` → `Give_Ivosidenib` |
-| `AML_TP53_MDS` | Venetoclax + azacitidine (HMA-based) | `Give_Venetoclax` → `Give_Azacitidine` |
+### Phase 6 — Supportive care
 
-All medication states use `"reason": "aml_condition"` and include a `"prescription"` block
-with dosage and duration.
+Three protective medications are given to every patient regardless of subtype:
 
-After the last medication for each regimen, control flows to `Induction_Chemo_Procedure`
-(SNOMED-CT `367336001`, Chemotherapy procedure).
+| Drug | Purpose |
+|------|---------|
+| Levofloxacin 500 mg | Prevent bacterial infections during low neutrophil counts |
+| Posaconazole suspension | Prevent fungal infections |
+| Acyclovir 400 mg | Prevent herpes virus reactivation |
 
-### 7.8 Phase 5 — Supportive care (all subtypes)
+### Phase 7 — Complications and final assessment
 
-Three prophylactic medications are given to every patient regardless of subtype:
+Post-chemotherapy vital signs are recorded (ANC nadir and temperature). Then one of four
+outcomes is randomly assigned:
 
-| State | Drug | RxNorm | Rationale |
-|-------|------|--------|-----------|
-| `Antimicrobial_Prophylaxis` | Levofloxacin 500 mg | `199885` | Antibacterial prophylaxis during neutropaenia |
-| `Antifungal_Prophylaxis` | Posaconazole 40 mg/mL suspension | `703569` | Antifungal prophylaxis during induction |
-| `Antiviral_Prophylaxis` | Acyclovir 400 mg | `14581` | HSV/VZV prophylaxis during immunosuppression |
+| Outcome | Probability |
+|---------|------------|
+| Febrile neutropenia (fever + low white cells) | 55% |
+| Tumor lysis syndrome (cell breakdown products spike) | 10% |
+| DIC (clotting disorder) | 5% |
+| No complication | 30% |
 
-### 7.9 Phase 6 — Post-induction assessment and complications
-
-Two post-induction vital observations fire first: `Post_Induction_ANC` (ANC nadir,
-range 0.1–0.5 ×10³/µL) and `Post_Induction_Temperature`.
-
-Then `Complication_Branch` stochastically assigns one complication (or none) via
-`distributed_transition`:
-
-| State | Probability | SNOMED-CT code |
-|-------|------------|----------------|
-| `Febrile_Neutropenia_Onset` | 55% | `409089005` |
-| `Tumor_Lysis_Syndrome_Onset` | 10% | `426263006` |
-| `DIC_Onset` | 5% | `234466008` |
-| *(none — proceed to MRD)* | 30% | — |
-
-All three complication states use `assign_to_attribute` so the conditions can be properly
-ended. All patients then receive:
-
-- `MRD_Flow_Cytometry` — procedure (SNOMED-CT `116148004`)
-- `MRD_Result_Observation` — quantitative MRD result (LOINC `59776-2`, range 0.001–5.0%)
-
-Then all active conditions are closed (`End_Febrile_Neutropenia` → `End_TLS` → `End_DIC` →
-`End_AML_Condition`) and the encounter is closed with discharge disposition "Discharge to
-Home".
+Finally, a minimal residual disease (MRD) flow cytometry procedure and result are recorded
+for all patients. Then all active conditions and medications are closed, and the encounter
+ends with "Discharge to Home".
 
 ---
 
-## 8. Setting Up and Running the Model
+## 8. How to run the model and what commands to use
 
-### 8.1 Prerequisites
+### What you need
 
 | Requirement | Version |
 |-------------|---------|
-| Java JDK | 11 or 17 (LTS recommended) |
-| Gradle | Bundled via `./gradlew` wrapper — no install needed |
+| Java JDK | 11 or 17 (recommended) |
+| Gradle | Bundled — no installation needed |
 | Operating system | Linux, macOS, or Windows |
 
-### 8.2 Build
+### Build the project
 
 ```bash
 git clone https://github.com/synthetichealth/synthea.git
@@ -926,110 +735,91 @@ cd synthea
 ./gradlew build
 ```
 
-This compiles the code and runs all unit tests. A successful build produces no test failures.
+### Run the full AML disease model
 
-### 8.3 Running the full AML disease model
-
-The `aml_disease_model` module is a standard Synthea module. Run it directly with `-m`:
+This runs `aml_disease_model.json` directly, generating 100 patients:
 
 ```bash
-./run_synthea -m aml_disease_model -p 5000 Massachusetts Bedford \
+./run_synthea -m aml_disease_model -p 100 Massachusetts Bedford \
   --exporter.csv.export=true \
-  --exporter.baseDirectory=./output_aml_disease
+  --exporter.baseDirectory=./output_aml
 ```
 
-Use `5000` or more patients because the incidence gate (0.2–0.3%) means only ~10–15 patients
-per 5000 will actually have AML. With `-p 100`, you may get 0 AML cases by chance.
-
-**To guarantee AML patients appear, restrict the age range:**
-
-```bash
-./run_synthea -m aml_disease_model -p 500 -a 0-21 Massachusetts Bedford \
-  --exporter.csv.export=true \
-  --exporter.baseDirectory=./output_aml_disease
-```
-
-The onset delay (0–21 years) means patients only develop AML within the age window. Fixing
-`-a 0-21` eliminates the search space wasted on older patients.
-
-**Reproducible run with a fixed seed:**
-
-```bash
-./run_synthea -m aml_disease_model -p 1000 -a 0-21 -s 424242 Massachusetts Bedford \
-  --exporter.csv.export=true \
-  --exporter.baseDirectory=./output_aml_seed_424242
-```
-
-The same seed, module, population, and age range always produce the same patients.
-
-### 8.4 Running the AML launcher (AcuteMyeloidLeukemiaApp)
-
-The AML launcher is a wrapper around the base `App` that defaults to the
-`acute_myeloid_leukemia` PCOR module:
-
-```bash
-./run_synthea --aml -p 500 Massachusetts Bedford --exporter.csv.export=true
-```
-
-Or equivalently:
-
-```bash
-./run_synthea -class aml -p 500 Massachusetts Bedford --exporter.csv.export=true
-```
-
-The AML launcher adds extra flags:
-
-| Flag | Effect |
-|------|--------|
-| `-class aml` | Routes to `AcuteMyeloidLeukemiaApp`; consumed and not passed to `App` |
-| `-start_date YYYYMMDD` | Alias for `-r` (reference date) |
-| `-end_date YYYYMMDD` | Alias for `-e` (end date) |
-| `-gender 0-100` | Integer male percentage; launcher splits the population and runs twice |
-| `-m aml_model` or `-m aml_disease_model` | Remapped to `acute_myeloid_leukemia` |
-
-**To run `aml_disease_model` through the AML launcher**, pass it directly with the base `-m`
-flag and **no `--aml`**:
+> Because of the incidence gate, only about 0.2–0.3% of patients will have AML. With
+> `-p 100` you may get zero AML patients. Use `-p 5000` or restrict the age range:
 
 ```bash
 ./run_synthea -m aml_disease_model -p 500 -a 0-21 Massachusetts Bedford \
   --exporter.csv.export=true
 ```
 
-### 8.5 Key command-line flags reference
+### Use the short alias
 
-| Flag | Type | Effect |
-|------|------|--------|
-| `-p N` | Integer | Population size |
-| `-s N` | Long integer | Random seed (same seed = same output) |
-| `-a MIN-MAX` | Age range | Restrict generated patient ages, e.g. `0-21` |
-| `-g M` or `-g F` | Gender | Generate only male or only female patients |
-| `-m NAME` | Module filter | Only load modules whose filename contains `NAME`; supports wildcards (`allerg*`) and multiple values separated by `:` (Linux) or `;` (Windows) |
-| `-d PATH` | Directory | Add an additional local module directory |
-| `-c PATH` | File | Load a local `synthea.properties` override file |
-| `-r YYYYMMDD` | Date | Reference date for simulation start |
-| `-e YYYYMMDD` | Date | End date for simulation |
-| `--exporter.csv.export=true` | Boolean property | Enable CSV output |
-| `--exporter.baseDirectory=PATH` | String property | Output directory |
-| `--exporter.fhir.export=true` | Boolean property | Enable FHIR R4 output |
+`aml_model` is an alias for `aml_disease_model`:
 
-Any property from `src/main/resources/synthea.properties` can be overridden on the command
-line with `--property.name=value`.
+```bash
+./run_synthea -m aml_model -p 500 -a 0-21 Massachusetts Bedford \
+  --exporter.csv.export=true
+```
 
-### 8.6 Enabling CSV export in `synthea.properties`
+### Reproducible run with a fixed seed
 
-Instead of passing `--exporter.csv.export=true` every run, set it permanently:
+```bash
+./run_synthea -m aml_disease_model -p 1000 -a 0-21 -s 424242 Massachusetts Bedford \
+  --exporter.csv.export=true \
+  --exporter.baseDirectory=./output_seed_424242
+```
+
+The same seed always produces the same patients — useful for comparing results.
+
+### Run the AML launcher (AcuteMyeloidLeukemiaApp)
+
+```bash
+./run_synthea --aml -p 500 Massachusetts Bedford --exporter.csv.export=true
+```
+
+Or using the class flag:
+
+```bash
+./run_synthea -class aml -p 500 Massachusetts Bedford --exporter.csv.export=true
+```
+
+The AML launcher adds these extra options:
+
+| Flag | What it does |
+|------|-------------|
+| `-class aml` | Uses the AML-specific launcher |
+| `-start_date YYYYMMDD` | Sets the simulation start date |
+| `-end_date YYYYMMDD` | Sets the simulation end date |
+| `-gender 0-100` | Integer male percentage; runs twice (once male, once female) |
+| `-m aml_model` | Remapped to `aml_disease_model` |
+
+### Key command-line flags
+
+| Flag | Effect |
+|------|--------|
+| `-p N` | Number of patients to generate |
+| `-s N` | Random seed (same seed = same output) |
+| `-a MIN-MAX` | Patient age range, e.g. `0-21` |
+| `-g M` or `-g F` | Generate only male or only female patients |
+| `-m NAME` | Run only modules whose filename matches NAME |
+| `--exporter.csv.export=true` | Enable CSV output |
+| `--exporter.baseDirectory=PATH` | Where to save output files |
+
+### Enable CSV output permanently
+
+Edit `src/main/resources/synthea.properties`:
 
 ```properties
-# src/main/resources/synthea.properties
 exporter.csv.export = true
 exporter.baseDirectory = ./output
 ```
 
 ---
 
-## 9. Expected CSV Output
+## 9. What files does the model produce?
 
-### 9.1 Output directory layout
+### Output folder layout
 
 ```
 output/
@@ -1043,85 +833,66 @@ output/
     genomics.csv
     allergies.csv
     careplans.csv
-    ... (other standard Synthea CSVs)
 ```
 
-### 9.2 What `aml_disease_model.json` writes to each file
+### What each file contains
 
-| CSV file | Written by | Columns of interest |
-|----------|-----------|---------------------|
-| `patients.csv` | Lifecycle module | `Id`, `BIRTHDATE`, `DEATHDATE`, `GENDER`, `RACE` |
-| `encounters.csv` | `Inpatient_Encounter` | `START`, `STOP`, `PATIENT`, `ENCOUNTERCLASS=inpatient`, `REASONCODE=185347001` |
-| `conditions.csv` | `AML_Condition_Onset` and complication onset states | `START`, `STOP`, `CODE` (SNOMED-CT), `DESCRIPTION` |
-| `observations.csv` | All `Observation` states | `DATE`, `PATIENT`, `CODE` (LOINC), `VALUE`, `UNITS`, `TYPE` |
-| `procedures.csv` | All `Procedure` states | `DATE`, `PATIENT`, `CODE` (SNOMED-CT), `DESCRIPTION`, `REASONCODE` |
-| `medications.csv` | All `MedicationOrder` states | `START`, `STOP`, `PATIENT`, `CODE` (RxNorm), `DESCRIPTION`, `REASONCODE` |
-| `genomics.csv` | `Genomics_*` `SetAttribute` states | `PATIENT`, `GENE`, `ALTERATION_TYPE`, `HGVS_CODING`, `VAF`, `METHOD_GENOMICS`, etc. |
+| File | Written by | Key columns |
+|------|------------|-------------|
+| `patients.csv` | Lifecycle module | ID, birth date, death date, gender, race |
+| `encounters.csv` | `Inpatient_Encounter` | Start, stop, patient ID, encounter class |
+| `conditions.csv` | `AML_Condition_Onset` and complication steps | Start, stop, SNOMED code, description |
+| `observations.csv` | All `Observation` steps | Date, LOINC code, value, units |
+| `procedures.csv` | All `Procedure` steps | Date, SNOMED code, description, reason |
+| `medications.csv` | All `MedicationOrder` steps | Start, stop, RxNorm code, description |
+| `genomics.csv` | `Genomics_*` `SetAttribute` steps | Patient, gene, alteration type, HGVS codes, VAF, method |
 
-### 9.3 Per-subtype output checklist
-
-For a patient with `aml_subtype = AML_FLT3_ITD`, you should see:
+### What to expect for a patient with AML (FLT3-ITD subtype)
 
 **`conditions.csv`**
-- AML onset row: SNOMED-CT `91861009`
-- Febrile neutropenia row (55% probability): SNOMED-CT `409089005`
+- AML with FLT3 mutation (SNOMED `413449008`)
+- AML general diagnosis (SNOMED `91861009`)
+- Febrile neutropenia (SNOMED `409089005`) — in 55% of patients
 
 **`observations.csv`**
-- LOINC `6690-2` — WBC
-- LOINC `718-7` — Haemoglobin
-- LOINC `777-3` — Platelets
-- LOINC `751-8` — ANC (twice: at admission and post-induction)
-- LOINC `709-6` — Peripheral blast %
-- LOINC `14804-9` — LDH
-- LOINC `2160-0` — Creatinine
-- LOINC `3084-1` — Uric acid
-- LOINC `26464-8` — BM blast %
-- LOINC `85176-4` — FLT3-ITD result (Positive)
-- LOINC `8310-5` — Temperature (post-induction)
-- LOINC `59776-2` — MRD result
+- WBC, Haemoglobin, Platelets, ANC, Blast %, LDH, Creatinine, Uric acid
+- BM blast %, FLT3-ITD result (Positive)
+- Post-induction ANC and temperature
+- MRD result
 
 **`procedures.csv`**
-- SNOMED-CT `86273004` — Bone marrow biopsy
-- SNOMED-CT `734877004` — Karyotype
-- SNOMED-CT `445484009` — FISH
-- SNOMED-CT `1186936003` — NGS panel
-- SNOMED-CT `367336001` — Chemotherapy
-- SNOMED-CT `116148004` — Flow cytometry (MRD)
+- Bone marrow biopsy, Karyotype, FISH, NGS panel
+- Chemotherapy procedure
+- MRD flow cytometry
 
 **`medications.csv`**
-- RxNorm `1152` — Allopurinol
-- RxNorm `197361` — Cytarabine
-- RxNorm `3002` — Daunorubicin
-- RxNorm `1860487` — Midostaurin
-- RxNorm `199885` — Levofloxacin
-- RxNorm `703569` — Posaconazole
-- RxNorm `14581` — Acyclovir
+- Allopurinol, Cytarabine, Daunorubicin, Midostaurin
+- Levofloxacin, Posaconazole, Acyclovir
 
 **`genomics.csv`**
-- One row: gene=`FLT3`, alteration\_type=`Insertion`, method=`NGS`, VAF=0.42
+- One row: gene=`FLT3`, alteration_type=`Insertion`, method=`NGS`, VAF=0.42
 
 ---
 
-## 10. How to Extend the Model
+## 10. How to add something new to the model
 
-### 10.1 Adding a new subtype
+### Add a new AML subtype
 
-1. Add a new `SetAttribute` state under `Assign_AML_Subtype` and adjust the distributions so
-   they still sum to `1.0`.
-2. Add `Set_Subtype_NEWNAME` and a corresponding `Set_ELN_Risk_*` target.
-3. Add a `Genomics_NEWNAME` state with the correct alteration object(s).
-4. Add the new subtype to the `Subtype_Assay_Branch` `complex_transition`.
-5. Add the new subtype to the `Induction_Therapy_Branch` `complex_transition` and create the
-   corresponding medication states.
+1. Add a new entry in `Assign_AML_Subtype`'s `distributed_transition`. Make sure all
+   probabilities still add up to 1.0.
+2. Create a `Set_Subtype_NEWNAME` state that sets `aml_subtype` to the new value.
+3. Create a `Genomics_NEWNAME` state with the correct alteration objects.
+4. Add the new subtype to `Subtype_Assay_Branch` (diagnostic routing).
+5. Add the new subtype to `Induction_Therapy_Branch` (treatment routing).
+6. Create the medication states for the new treatment.
 
-### 10.2 Adding a new observation
+### Add a new lab test
 
-Add an `Observation` state at the point in the flow where you want it recorded. Place it
-**inside the encounter** (after `Inpatient_Encounter`, before `End_Encounter`). Wire it into
-the chain with `direct_transition` on the preceding state.
+Add an `Observation` state anywhere **inside the encounter** (after `Inpatient_Encounter`,
+before `End_Encounter`) and wire it in with `direct_transition`:
 
 ```json
-"New_Lab": {
+"My_New_Lab": {
   "type": "Observation",
   "category": "laboratory",
   "unit": "ng/mL",
@@ -1129,44 +900,30 @@ the chain with `direct_transition` on the preceding state.
     { "system": "LOINC", "code": "XXXX-X", "display": "My new test" }
   ],
   "range": { "low": 0.0, "high": 100.0 },
-  "direct_transition": "Next_State"
+  "direct_transition": "Next_Step"
 }
 ```
 
-### 10.3 Adding a second genomic alteration to an existing subtype
+### Add a second genetic change to an existing subtype
 
-Edit the `"value"` list in the relevant `Genomics_*` state. Each object in the list becomes
-one row in `genomics.csv`.
+Edit the `"value"` list in the relevant `Genomics_*` state. Each object becomes one row in
+`genomics.csv`:
 
 ```json
 "Genomics_NPM1": {
   "type": "SetAttribute",
   "attribute": "genomics_alterations",
   "value": [
-    {
-      "gene": "NPM1", "alteration_type": "Insertion",
-      "hgvs_coding": "c.860_863dup", "vaf": 0.45, ...
-    },
-    {
-      "gene": "DNMT3A", "alteration_type": "SNV",
-      "hgvs_coding": "c.2644C>T", "hgvs_protein": "p.Arg882Cys",
-      "vaf": 0.48, ...
-    }
+    { "gene": "NPM1", "alteration_type": "Insertion", ... },
+    { "gene": "DNMT3A", "alteration_type": "SNV", ... }
   ],
   "direct_transition": "Allopurinol_TLS_Prophylaxis"
 }
 ```
 
-### 10.4 Adding consolidation therapy
+### Validate your changes before running
 
-After `End_Encounter`, the patient currently goes to `Terminal`. To add a consolidation
-phase, replace `"direct_transition": "Terminal"` on `End_Encounter` with a transition to a
-new encounter state for consolidation, then chain consolidation medication states, then
-`EncounterEnd` → `Terminal`.
-
-### 10.5 Validating your changes
-
-Run a quick structural check in Python before running Synthea:
+Run this Python script to check for broken links between states:
 
 ```python
 import json
@@ -1182,8 +939,6 @@ def collect_transitions(obj):
         for k, v in obj.items():
             if k in ("direct_transition", "transition"):
                 referenced.add(v)
-            elif k == "condition_onset":
-                pass  # handled separately
             else:
                 collect_transitions(v)
     elif isinstance(obj, list):
@@ -1197,82 +952,68 @@ print("Missing transition targets:", missing or "none")
 print("Total states:", len(state_names))
 ```
 
-Then run Synthea with `-p 0` to verify the module loads without errors:
+Then do a zero-patient run to check the module loads without errors:
 
 ```bash
 ./run_synthea -m aml_disease_model -p 0 Massachusetts Bedford
 ```
 
-A zero-population run loads all modules and validates them but generates no patients. If there
-is a syntax error or broken transition in the JSON, it will appear here rather than partway
-through a long generation run.
-
 ---
 
-## 11. Troubleshooting
+## 11. Common problems and how to fix them
 
-### `genomics.csv` is empty or missing
+### `genomics.csv` is empty or not created
 
-**Cause:** The module is running but no patient ever reaches a `Genomics_*` state, or the
-attribute is set before `ConditionOnset`.
+**Why it happens:** The `genomics_alterations` attribute was never set, or CSV export is
+not turned on.
 
-**Fix:** Confirm:
-1. The `genomics_alterations` attribute is set **after** `AML_Condition_Onset` fires.
-2. The patient actually has AML — check `conditions.csv` for SNOMED-CT `91861009`.
-3. CSV export is enabled: `--exporter.csv.export=true`.
+**How to fix:**
+1. Make sure `--exporter.csv.export=true` is on the command line.
+2. Check `conditions.csv` for SNOMED `91861009`. If there are no AML rows, patients never
+   reached `AML_Condition_Onset`, so the genomics steps never fired.
+3. Make sure `Genomics_*` states come **after** `AML_Condition_Onset` in the flow.
 
 ### No AML rows appear in `conditions.csv`
 
-**Cause:** The incidence gate eliminated all patients before they reached `AML_Condition_Onset`.
+**Why it happens:** The incidence gate sent all patients to `Terminal` before they got AML.
 
-**Fix:** Use a large population (`-p 5000+`) or restrict the age range (`-a 0-21`). With a
-very small population and no age restriction, the 0.002–0.003 incidence probability means
-you may get zero AML patients by chance.
+**How to fix:** Use a larger population (`-p 5000` or more), or restrict the age range
+with `-a 0-21` so that Synthea focuses on the age window where AML onset happens.
 
 ### NullPointerException at startup
 
-**Cause:** A `.json` file in `src/main/resources/modules/` is missing the required `"states"`
-key. Synthea calls `definition.get("states").getAsJsonObject()` unconditionally on every file
-it finds in that directory.
+**Why it happens:** A `.json` file in the `modules/` folder is missing the required
+`"states"` key. Synthea tries to read `"states"` from every file in that folder without
+checking first.
 
-**Fix:** Either add a valid `"states"` block with at least `Initial` and `Terminal`, or move
-the non-module file to a different directory (e.g. `src/main/resources/reference/`).
+**How to fix:** Either add a valid `"states"` block with at least `Initial` and `Terminal`,
+or move the file to a different folder (e.g. `src/main/resources/reference/`).
 
-### Module not appearing in `Modules:` output
+### Module not showing up in the run log
 
-**Cause:** The `-m` filter does not match the module's filename path.
+**Why it happens:** The `-m` filter does not match the module's filename.
 
-The module filename is `aml_disease_model.json`. Its registered path is `aml_disease_model`.
-The `-m` filter uses Apache Commons `WildcardFileFilter` (case-insensitive). These all match:
-
-```
--m aml_disease_model        exact match
--m aml_disease*             wildcard
--m *disease*                wildcard
-```
-
-These do **not** match (different name):
+The file is `aml_disease_model.json`. Its registered path is `aml_disease_model`. These
+patterns all match:
 
 ```
--m aml_model                no file named aml_model.json
+-m aml_disease_model      exact match
+-m aml_disease*           wildcard
+-m *disease*              wildcard
+-m aml_model              alias — resolved to aml_disease_model automatically
+```
+
+These do **not** match:
+
+```
 -m acute_myeloid_leukemia   different module entirely
+-m disease_model            not a substring of the filename
 ```
 
-When using the `--aml` launcher, `-m aml_model` and `-m aml_disease_model` are remapped to
-`acute_myeloid_leukemia`. Use the base launcher if you want `aml_disease_model` to run.
+### Distributions do not add up to 1.0
 
-### Medication end states cause errors
-
-If you add `MedicationEnd` states, ensure `"medication_order"` matches the
-`"assign_to_attribute"` value from the corresponding `MedicationOrder`. If the medication was
-never ordered (because the patient took a different subtype branch), `MedicationEnd` on a
-nil reference will be silently skipped, which is safe.
-
-### Distributions do not sum to 1.0
-
-Synthea will throw an exception at load time if the distributions in a
-`distributed_transition` or `complex_transition.distributions` array do not sum to exactly
-`1.0` (within floating-point tolerance). Use a Python check:
+Synthea will throw an error at startup if probabilities do not sum to exactly 1.0. Check
+with this Python snippet:
 
 ```python
 for state_name, state in module["states"].items():
@@ -1280,5 +1021,13 @@ for state_name, state in module["states"].items():
     if dt:
         total = sum(entry["distribution"] for entry in dt)
         if abs(total - 1.0) > 1e-6:
-            print(f"BAD DISTRIBUTION in {state_name}: sums to {total}")
+            print(f"Problem in {state_name}: sums to {total}")
 ```
+
+### A medication end state silently fails
+
+If a `MedicationEnd` step references a medication that was never ordered (because the
+patient took a different branch), Synthea silently skips it — this is safe and expected.
+If you see that a medication is NOT ending when you expect it to, confirm that the
+`medication_order` value in `MedicationEnd` exactly matches the **state name** of the
+`MedicationOrder` step that prescribed it.
