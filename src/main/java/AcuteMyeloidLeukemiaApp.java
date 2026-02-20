@@ -16,11 +16,17 @@ public class AcuteMyeloidLeukemiaApp extends App {
   public static final String GENDER_MIX_FLAG = "-gender";
 
   /**
-   * Known short aliases that users may pass with {@code -m} that should be
-   * resolved to the canonical executable AML module name.
+   * The canonical name of the full AML disease model module (aml_disease_model.json).
+   * When a user passes {@code -m aml_model}, this is the module that should run.
+   */
+  public static final String AML_DISEASE_MODULE_NAME = "aml_disease_model";
+
+  /**
+   * Short alias {@code aml_model} resolves to {@link #AML_DISEASE_MODULE_NAME}.
+   * {@code aml_disease_model} is the canonical name and needs no remapping.
    */
   static final java.util.Set<String> AML_MODULE_ALIASES = new java.util.HashSet<>(
-      java.util.Arrays.asList("aml_model", "aml_disease_model"));
+      java.util.Arrays.asList("aml_model"));
 
   /**
    * Normalize AML subclass args.
@@ -84,7 +90,8 @@ public class AcuteMyeloidLeukemiaApp extends App {
    *
    * <p>Each token in the path-separator-delimited list is checked against
    * {@link #AML_MODULE_ALIASES}. Matching tokens are replaced with
-   * {@link #MODULE_NAME} so that the correct executable module is loaded.
+   * {@link #AML_DISEASE_MODULE_NAME} so that {@code aml_model} correctly
+   * loads the full {@code aml_disease_model.json} module.
    *
    * @param moduleValue Raw value string from a {@code -m} argument.
    * @return Updated value string with aliases replaced.
@@ -97,7 +104,8 @@ public class AcuteMyeloidLeukemiaApp extends App {
         resolved.append(java.io.File.pathSeparator);
       }
       String token = tokens[i];
-      resolved.append(AML_MODULE_ALIASES.contains(token.toLowerCase()) ? MODULE_NAME : token);
+      resolved.append(AML_MODULE_ALIASES.contains(token.toLowerCase())
+          ? AML_DISEASE_MODULE_NAME : token);
     }
     return resolved.toString();
   }
