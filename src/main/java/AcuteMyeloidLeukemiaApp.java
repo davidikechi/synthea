@@ -72,6 +72,76 @@ public class AcuteMyeloidLeukemiaApp extends App {
   }
 
   /**
+   * Extract the male percentage from a {@code -gender} flag in the args array.
+   *
+   * <p>Scans args for {@code -gender} and returns its integer value, or {@code null}
+   * if the flag is absent. Does not validate the value; App.main() enforces 0-100.</p>
+   *
+   * @param args Command-line args to scan.
+   * @return The integer male percentage, or {@code null} if {@code -gender} is not present.
+   */
+  static Integer extractMalePercentage(String[] args) {
+    if (args == null) {
+      return null;
+    }
+    for (int i = 0; i < args.length - 1; i++) {
+      if (args[i].equalsIgnoreCase("-gender")) {
+        try {
+          return Integer.parseInt(args[i + 1]);
+        } catch (NumberFormatException e) {
+          return null;
+        }
+      }
+    }
+    return null;
+  }
+
+  /**
+   * Extract the male ratio from a {@code -gr} flag in the args array.
+   *
+   * <p>Scans args for {@code -gr} and returns its double value, or {@code null}
+   * if the flag is absent.</p>
+   *
+   * @param args Command-line args to scan.
+   * @return The double male ratio (0.0-1.0), or {@code null} if {@code -gr} is not present.
+   */
+  static Double extractMaleRatio(String[] args) {
+    if (args == null) {
+      return null;
+    }
+    for (int i = 0; i < args.length - 1; i++) {
+      if (args[i].equalsIgnoreCase("-gr")) {
+        try {
+          return Double.parseDouble(args[i + 1]);
+        } catch (NumberFormatException e) {
+          return null;
+        }
+      }
+    }
+    return null;
+  }
+
+  /**
+   * Print a gender mix summary line when {@code -gender} or {@code -gr} is supplied.
+   *
+   * <p>Output format: {@code Gender Mix: 70% male / 30% female}</p>
+   *
+   * @param args Command-line args to inspect.
+   */
+  static void printGenderMix(String[] args) {
+    Integer pct = extractMalePercentage(args);
+    if (pct != null) {
+      System.out.println("Gender Mix: " + pct + "% male / " + (100 - pct) + "% female");
+      return;
+    }
+    Double ratio = extractMaleRatio(args);
+    if (ratio != null) {
+      int malePct = (int) Math.round(ratio * 100);
+      System.out.println("Gender Mix: " + malePct + "% male / " + (100 - malePct) + "% female");
+    }
+  }
+
+  /**
    * Run Synthea generation constrained to the acute myeloid leukemia module.
    *
    * <p>All flags ({@code -class}, {@code -start_date}, {@code -end_date}, {@code -gender},
@@ -83,6 +153,7 @@ public class AcuteMyeloidLeukemiaApp extends App {
    */
   public static void main(String[] args) throws Exception {
     String[] resolved = resolveAliasesInArgs(args);
+    printGenderMix(resolved);
     App.main(hasModuleFilter(resolved) ? resolved : withModule(resolved, MODULE_NAME));
   }
 
