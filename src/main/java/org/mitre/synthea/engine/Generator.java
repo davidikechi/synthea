@@ -169,6 +169,13 @@ public class Generator {
     public boolean overflow = true;
     /** Gender to be generated. M for Male, F for Female, null for any. */
     public String gender;
+    /**
+     * Desired fraction of generated patients that are male (0.0 – 1.0).
+     * Female fraction is implicitly (1 - maleRatio).
+     * Only used when {@code gender} is null (i.e. no fixed gender override).
+     * A value of -1 (default) means use the location-based demographic distribution.
+     */
+    public double maleRatio = -1;
     /** Age range applies. */
     public boolean ageSpecified = false;
     /** Minimum age of people to be generated. Defaults to zero. */
@@ -903,6 +910,8 @@ public class Generator {
     String gender;
     if (options.gender != null) {
       gender = options.gender;
+    } else if (options.maleRatio >= 0.0 && options.maleRatio <= 1.0) {
+      gender = (random.rand() < options.maleRatio) ? "M" : "F";
     } else {
       gender = city.pickGender(random);
       if (gender.equalsIgnoreCase("male") || gender.equalsIgnoreCase("M")) {
