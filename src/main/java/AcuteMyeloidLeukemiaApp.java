@@ -16,6 +16,13 @@ public class AcuteMyeloidLeukemiaApp extends App {
   public static final String GENDER_MIX_FLAG = "-gender";
 
   /**
+   * Known short aliases that users may pass with {@code -m} that should be
+   * resolved to the canonical executable AML module name.
+   */
+  static final java.util.Set<String> AML_MODULE_ALIASES = new java.util.HashSet<>(
+      java.util.Arrays.asList("aml_model", "aml_disease_model"));
+
+  /**
    * Normalize AML subclass args.
    *
    * <p>Supported subclass conveniences:
@@ -58,12 +65,41 @@ public class AcuteMyeloidLeukemiaApp extends App {
         }
         normalized.add("-e");
         normalized.add(args[++i]);
+      } else if (arg.equalsIgnoreCase("-m")) {
+        if (i + 1 >= args.length) {
+          throw new IllegalArgumentException("-m requires a value");
+        }
+        normalized.add("-m");
+        normalized.add(resolveModuleAliases(args[++i]));
       } else {
         normalized.add(arg);
       }
     }
 
     return normalized.toArray(new String[0]);
+  }
+
+  /**
+   * Resolve known AML module name aliases within a {@code -m} value string.
+   *
+   * <p>Each token in the path-separator-delimited list is checked against
+   * {@link #AML_MODULE_ALIASES}. Matching tokens are replaced with
+   * {@link #MODULE_NAME} so that the correct executable module is loaded.
+   *
+   * @param moduleValue Raw value string from a {@code -m} argument.
+   * @return Updated value string with aliases replaced.
+   */
+  static String resolveModuleAliases(String moduleValue) {
+    String[] tokens = moduleValue.split(java.io.File.pathSeparator);
+    StringBuilder resolved = new StringBuilder();
+    for (int i = 0; i < tokens.length; i++) {
+      if (i > 0) {
+        resolved.append(java.io.File.pathSeparator);
+      }
+      String token = tokens[i];
+      resolved.append(AML_MODULE_ALIASES.contains(token.toLowerCase()) ? MODULE_NAME : token);
+    }
+    return resolved.toString();
   }
 
   static Integer extractMalePercentage(String[] args) {
