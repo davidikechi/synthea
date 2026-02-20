@@ -231,8 +231,8 @@
       "codes": [
         {
           "system": "SNOMED-CT",
-          "code": "413448000",
-          "display": "Acute myeloid leukemia with NPM1 mutation (disorder)"
+          "code": "703820005",
+          "display": "Acute myeloid leukemia with mutated NPM1 (disorder)"
         }
       ],
       "direct_transition": "AML_Condition_Onset"
@@ -243,8 +243,8 @@
       "codes": [
         {
           "system": "SNOMED-CT",
-          "code": "413449008",
-          "display": "Acute myeloid leukemia with FLT3 mutation (disorder)"
+          "code": "91861009",
+          "display": "Acute myeloid leukemia (disorder)"
         }
       ],
       "direct_transition": "AML_Condition_Onset"
@@ -255,8 +255,8 @@
       "codes": [
         {
           "system": "SNOMED-CT",
-          "code": "413441009",
-          "display": "Acute promyelocytic leukemia (disorder)"
+          "code": "28950004",
+          "display": "Acute promyelocytic leukemia with PML::RARA fusion (disorder)"
         }
       ],
       "direct_transition": "AML_Condition_Onset"
@@ -267,8 +267,8 @@
       "codes": [
         {
           "system": "SNOMED-CT",
-          "code": "413442002",
-          "display": "Acute myeloid leukemia with t(8;21)(q22;q22) (disorder)"
+          "code": "1148906001",
+          "display": "Acute myeloid leukemia with t(8;21)(q22;q22) RUNX1-RUNX1T1 (disorder)"
         }
       ],
       "direct_transition": "AML_Condition_Onset"
@@ -279,8 +279,8 @@
       "codes": [
         {
           "system": "SNOMED-CT",
-          "code": "1162864003",
-          "display": "Acute myeloid leukemia with IDH1 mutation (disorder)"
+          "code": "91861009",
+          "display": "Acute myeloid leukemia (disorder)"
         }
       ],
       "direct_transition": "AML_Condition_Onset"
@@ -291,7 +291,7 @@
       "codes": [
         {
           "system": "SNOMED-CT",
-          "code": "763512003",
+          "code": "445448008",
           "display": "Acute myeloid leukemia with myelodysplasia-related changes (disorder)"
         }
       ],
@@ -580,12 +580,12 @@
     "PML_RARA_Fusion_Observation": {
       "type": "Observation",
       "category": "laboratory",
-      "unit": "{Qualitative}",
+      "unit": "{ratio}",
       "codes": [
         {
           "system": "LOINC",
-          "code": "42797-5",
-          "display": "PML gene rearrangements [Presence] in Blood or Tissue by FISH"
+          "code": "72216-5",
+          "display": "t(15;17)(q24.1;q21.1)(PML,RARA) bcr1 fusion transcript/control transcript [# Ratio] in Blood or Tissue by Molecular genetics method"
         }
       ],
       "value_code": {
@@ -818,8 +818,8 @@
       "codes": [
         {
           "system": "RxNorm",
-          "code": 1152,
-          "display": "allopurinol"
+          "code": 197319,
+          "display": "allopurinol 100 MG Oral Tablet"
         }
       ],
       "reason": "AML_Condition_Onset",
@@ -892,7 +892,7 @@
       "codes": [
         {
           "system": "RxNorm",
-          "code": 83367,
+          "code": 199159,
           "display": "tretinoin 10 MG Oral Capsule"
         }
       ],
@@ -910,7 +910,7 @@
       "codes": [
         {
           "system": "RxNorm",
-          "code": 17419,
+          "code": 829926,
           "display": "arsenic trioxide 1 MG/ML Injection"
         }
       ],
@@ -965,7 +965,7 @@
       "codes": [
         {
           "system": "RxNorm",
-          "code": 1860487,
+          "code": 1919088,
           "display": "midostaurin 25 MG Oral Capsule"
         }
       ],
@@ -1057,8 +1057,8 @@
       "codes": [
         {
           "system": "RxNorm",
-          "code": 1293705,
-          "display": "gemtuzumab ozogamicin"
+          "code": 1294581,
+          "display": "gemtuzumab ozogamicin 1 MG/ML Injectable Solution"
         }
       ],
       "reason": "AML_Condition_Onset",
@@ -1112,7 +1112,7 @@
       "codes": [
         {
           "system": "RxNorm",
-          "code": 1946840,
+          "code": 2049878,
           "display": "ivosidenib 250 MG Oral Tablet"
         }
       ],
@@ -1131,7 +1131,7 @@
       "codes": [
         {
           "system": "RxNorm",
-          "code": 1860491,
+          "code": 1747567,
           "display": "venetoclax 100 MG Oral Tablet"
         }
       ],
@@ -1149,8 +1149,8 @@
       "codes": [
         {
           "system": "RxNorm",
-          "code": 114124,
-          "display": "azacitidine 100 MG Injectable Solution"
+          "code": 485246,
+          "display": "azacitidine 100 MG Injection"
         }
       ],
       "reason": "AML_Condition_Onset",
@@ -1327,8 +1327,8 @@
       "codes": [
         {
           "system": "LOINC",
-          "code": "59776-2",
-          "display": "Cells.CD34+ [#/volume] in Blood"
+          "code": "102098-1",
+          "display": "Acute myeloid leukemia minimal residual disease in Bone marrow by Flow cytometry (FC) Narrative"
         }
       ],
       "range": { "low": 0.001, "high": 5.0 },
