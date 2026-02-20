@@ -75,10 +75,12 @@ public class App {
     System.out.println("Usage: run_synthea [options] [state [city]]");
     System.out.println("Options: [-s seed] [-cs clinicianSeed] [-p populationSize]");
     System.out.println("         [-ps singlePersonSeed]");
-    System.out.println("         [-r referenceDate as YYYYMMDD]");
-    System.out.println("         [-e endDate as YYYYMMDD]");
-    System.out.println("         [-g gender] [-a minAge-maxAge]");
+    System.out.println("         [-r referenceDate as YYYYMMDD] [-start_date YYYYMMDD]");
+    System.out.println("         [-e endDate as YYYYMMDD]       [-end_date YYYYMMDD]");
+    System.out.println("         [-g gender] [-gr maleRatio] [-gender malePercent 0-100]");
+    System.out.println("         [-a minAge-maxAge]");
     System.out.println("         [-o overflowPopulation]");
+    System.out.println("         [-class aml]");
     System.out.println("         [-c localConfigFilePath]");
     System.out.println("         [-d localModulesDirPath]");
     System.out.println("         [-i initialPopulationSnapshotPath]");
@@ -96,6 +98,9 @@ public class App {
     System.out.println("run_synthea -s 987 Washington Seattle");
     System.out.println("run_synthea -s 21 -p 100 Utah \"Salt Lake City\"");
     System.out.println("run_synthea -g M -a 60-65");
+    System.out.println("run_synthea -gr 0.6 -p 100        (60% male, 40% female via ratio)");
+    System.out.println("run_synthea -gender 60 -p 100     (60% male, 40% female via percentage)");
+    System.out.println("run_synthea -start_date 20200101 -end_date 20231231");
     System.out.println("run_synthea -p 10 --exporter.fhir.export=true");
     System.out.println("run_synthea --exporter.baseDirectory=\"./output_tx/\" Texas");
   }
@@ -122,6 +127,30 @@ public class App {
           if (currArg.equalsIgnoreCase("-h")) {
             usage();
             System.exit(0);
+          } else if (currArg.equalsIgnoreCase("-class")) {
+            // Dispatcher hint consumed here; routing already happened in PointOfEntry.
+            argsQ.poll(); // discard value (e.g. "aml")
+          } else if (currArg.equalsIgnoreCase("-start_date")) {
+            // Alias for -r (referenceDate).
+            String value = argsQ.poll();
+            SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
+            format.setTimeZone(TimeZone.getTimeZone("UTC"));
+            options.referenceTime = format.parse(value).getTime();
+          } else if (currArg.equalsIgnoreCase("-end_date")) {
+            // Alias for -e (endDate).
+            String value = argsQ.poll();
+            SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
+            format.setTimeZone(TimeZone.getTimeZone("UTC"));
+            options.endTime = format.parse(value).getTime();
+          } else if (currArg.equalsIgnoreCase("-gender")) {
+            // Integer percentage 0-100 for male ratio (e.g. -gender 60 = 60% male).
+            String value = argsQ.poll();
+            int malePercent = Integer.parseInt(value);
+            if (malePercent < 0 || malePercent > 100) {
+              throw new Exception(
+                  "Male percentage (-gender) must be between 0 and 100 (e.g. -gender 60).");
+            }
+            options.maleRatio = malePercent / 100.0;
           } else if (currArg.equalsIgnoreCase("-s")) {
             String value = argsQ.poll();
             options.seed = Long.parseLong(value);
@@ -161,6 +190,14 @@ public class App {
             } else {
               throw new Exception("Legal values for gender are 'M' or 'F'.");
             }
+          } else if (currArg.equalsIgnoreCase("-gr")) {
+            String value = argsQ.poll();
+            double ratio = Double.parseDouble(value);
+            if (ratio < 0.0 || ratio > 1.0) {
+              throw new Exception(
+                  "Male ratio (-gr) must be between 0.0 and 1.0 (e.g. 0.6 for 60% male).");
+            }
+            options.maleRatio = ratio;
           } else if (currArg.equalsIgnoreCase("-a")) {
             String value = argsQ.poll();
             if (value.contains("-")) {

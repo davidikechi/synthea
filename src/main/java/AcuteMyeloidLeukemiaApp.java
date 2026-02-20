@@ -1,89 +1,31 @@
-import java.util.ArrayList;
-import java.util.List;
+import java.io.File;
 
 /**
  * Entry point for generating only acute myeloid leukemia focused patients.
  *
- * <p>This class reuses {@link App} command-line handling and generator behavior,
- * while ensuring the "acute_myeloid_leukemia" module is enabled.</p>
+ * <p>All flag parsing (including {@code -class}, {@code -start_date}, {@code -end_date},
+ * {@code -gender}, {@code -gr}, etc.) is handled by {@link App}.
+ * This class simply ensures the AML module is injected into the module list
+ * before delegating to {@link App#main(String[])}.</p>
+ *
+ * <p>Module aliases: {@code aml_model} is resolved to {@code aml_disease_model}.</p>
  */
 public class AcuteMyeloidLeukemiaApp extends App {
 
+  /** Default AML module loaded when no {@code -m} flag is supplied. */
   public static final String MODULE_NAME = "acute_myeloid_leukemia";
-  public static final String CLASS_FLAG = "-class";
-  public static final String START_DATE_FLAG = "-start_date";
-  public static final String END_DATE_FLAG = "-end_date";
-  public static final String GENDER_MIX_FLAG = "-gender";
 
   /**
    * The canonical name of the full AML disease model module (aml_disease_model.json).
-   * When a user passes {@code -m aml_model}, this is the module that should run.
+   * When a user passes {@code -m aml_model}, this alias is resolved to this name.
    */
   public static final String AML_DISEASE_MODULE_NAME = "aml_disease_model";
 
   /**
-   * Short alias {@code aml_model} resolves to {@link #AML_DISEASE_MODULE_NAME}.
-   * {@code aml_disease_model} is the canonical name and needs no remapping.
+   * Short alias {@code aml_model} that resolves to {@link #AML_DISEASE_MODULE_NAME}.
    */
   static final java.util.Set<String> AML_MODULE_ALIASES = new java.util.HashSet<>(
       java.util.Arrays.asList("aml_model"));
-
-  /**
-   * Normalize AML subclass args.
-   *
-   * <p>Supported subclass conveniences:
-   * <ul>
-   *   <li>{@code -class aml} (accepted and removed)</li>
-   *   <li>{@code -start_date YYYYMMDD} (mapped to {@code -r})</li>
-   *   <li>{@code -end_date YYYYMMDD} (mapped to {@code -e})</li>
-   *   <li>{@code -gender 0-100} (handled by AML launcher as male percentage)</li>
-   * </ul>
-   *
-   * @param args Original command-line args.
-   * @return Updated args compatible with {@link App} parsing.
-   */
-  static String[] normalizeArgs(String[] args) {
-    List<String> normalized = new ArrayList<>();
-    if (args == null) {
-      return new String[0];
-    }
-
-    for (int i = 0; i < args.length; i++) {
-      String arg = args[i];
-      if (arg.equalsIgnoreCase(CLASS_FLAG)) {
-        if (i + 1 >= args.length) {
-          throw new IllegalArgumentException(CLASS_FLAG + " requires a value");
-        }
-        String classValue = args[++i];
-        if (!classValue.equalsIgnoreCase("aml")) {
-          throw new IllegalArgumentException("Unsupported class '" + classValue
-              + "'. Supported values: aml");
-        }
-      } else if (arg.equalsIgnoreCase(START_DATE_FLAG)) {
-        if (i + 1 >= args.length) {
-          throw new IllegalArgumentException(START_DATE_FLAG + " requires a value");
-        }
-        normalized.add("-r");
-        normalized.add(args[++i]);
-      } else if (arg.equalsIgnoreCase(END_DATE_FLAG)) {
-        if (i + 1 >= args.length) {
-          throw new IllegalArgumentException(END_DATE_FLAG + " requires a value");
-        }
-        normalized.add("-e");
-        normalized.add(args[++i]);
-      } else if (arg.equalsIgnoreCase("-m")) {
-        if (i + 1 >= args.length) {
-          throw new IllegalArgumentException("-m requires a value");
-        }
-        normalized.add("-m");
-        normalized.add(resolveModuleAliases(args[++i]));
-      } else {
-        normalized.add(arg);
-      }
-    }
-
-    return normalized.toArray(new String[0]);
-  }
 
   /**
    * Resolve known AML module name aliases within a {@code -m} value string.
@@ -101,7 +43,7 @@ public class AcuteMyeloidLeukemiaApp extends App {
     StringBuilder resolved = new StringBuilder();
     for (int i = 0; i < tokens.length; i++) {
       if (i > 0) {
-        resolved.append(java.io.File.pathSeparator);
+        resolved.append(File.pathSeparator);
       }
       String token = tokens[i];
       resolved.append(AML_MODULE_ALIASES.contains(token.toLowerCase())
@@ -110,131 +52,52 @@ public class AcuteMyeloidLeukemiaApp extends App {
     return resolved.toString();
   }
 
-  static Integer extractMalePercentage(String[] args) {
-    if (args == null) {
-      return null;
-    }
-
-    for (int i = 0; i < args.length; i++) {
-      if (args[i].equalsIgnoreCase(GENDER_MIX_FLAG)) {
-        if (i + 1 >= args.length) {
-          throw new IllegalArgumentException(GENDER_MIX_FLAG + " requires a value");
-        }
-        int malePercentage = Integer.parseInt(args[i + 1]);
-        if (malePercentage < 0 || malePercentage > 100) {
-          throw new IllegalArgumentException("Male percentage must be between 0 and 100.");
-        }
-        return malePercentage;
-      }
-    }
-
-    return null;
-  }
-
-  static String[] removeGenderMixArg(String[] args) {
-    List<String> filtered = new ArrayList<>();
+  /**
+   * Resolve module aliases in any {@code -m} argument and return the updated args array.
+   *
+   * @param args Original command-line args.
+   * @return Args with AML module aliases replaced by canonical names.
+   */
+  static String[] resolveAliasesInArgs(String[] args) {
     if (args == null) {
       return new String[0];
     }
-
-    for (int i = 0; i < args.length; i++) {
-      if (args[i].equalsIgnoreCase(GENDER_MIX_FLAG)) {
-        if (i + 1 >= args.length) {
-          throw new IllegalArgumentException(GENDER_MIX_FLAG + " requires a value");
-        }
-        i++; // skip value
-      } else {
-        filtered.add(args[i]);
+    String[] result = args.clone();
+    for (int i = 0; i < result.length; i++) {
+      if (result[i].equalsIgnoreCase("-m") && i + 1 < result.length) {
+        result[i + 1] = resolveModuleAliases(result[i + 1]);
       }
     }
-
-    return filtered.toArray(new String[0]);
-  }
-
-
-  static boolean hasModuleFilter(String[] args) {
-    if (args == null) {
-      return false;
-    }
-
-    for (int i = 0; i < args.length; i++) {
-      if (args[i].equalsIgnoreCase("-m")) {
-        return true;
-      }
-    }
-
-    return false;
-  }
-
-  static int extractPopulation(String[] args) {
-    for (int i = 0; i < args.length; i++) {
-      if (args[i].equalsIgnoreCase("-p")) {
-        if (i + 1 >= args.length) {
-          throw new IllegalArgumentException("-p requires a value");
-        }
-        return Integer.parseInt(args[i + 1]);
-      }
-    }
-    return 1;
-  }
-
-  static String[] withPopulationAndGender(String[] args, int population, String gender) {
-    List<String> rewritten = new ArrayList<>();
-    boolean skipNext = false;
-    for (int i = 0; i < args.length; i++) {
-      if (skipNext) {
-        skipNext = false;
-        continue;
-      }
-      String arg = args[i];
-      if (arg.equalsIgnoreCase("-p") || arg.equalsIgnoreCase("-g")) {
-        if (i + 1 >= args.length) {
-          throw new IllegalArgumentException(arg + " requires a value");
-        }
-        skipNext = true;
-        continue;
-      }
-      rewritten.add(arg);
-    }
-
-    rewritten.add("-p");
-    rewritten.add(Integer.toString(population));
-    rewritten.add("-g");
-    rewritten.add(gender);
-    return rewritten.toArray(new String[0]);
+    return result;
   }
 
   /**
    * Run Synthea generation constrained to the acute myeloid leukemia module.
    *
-   * @param args Original command line args.
+   * <p>All flags ({@code -class}, {@code -start_date}, {@code -end_date}, {@code -gender},
+   * {@code -gr}, {@code -g}, {@code -p}, etc.) are handled by {@link App#main(String[])}.
+   * If no {@code -m} flag is present, the default AML module is automatically added.</p>
+   *
+   * @param args Command-line args (passed through to {@link App}).
    * @throws Exception On errors.
    */
   public static void main(String[] args) throws Exception {
-    String[] normalized = normalizeArgs(removeGenderMixArg(args));
-    Integer malePercentage = extractMalePercentage(args);
+    String[] resolved = resolveAliasesInArgs(args);
+    App.main(hasModuleFilter(resolved) ? resolved : withModule(resolved, MODULE_NAME));
+  }
 
-    boolean moduleSpecified = hasModuleFilter(normalized);
-
-    if (malePercentage == null) {
-      App.main(moduleSpecified ? normalized : withModule(normalized, MODULE_NAME));
-      return;
+  /**
+   * Returns true if a {@code -m} flag is present in args.
+   */
+  static boolean hasModuleFilter(String[] args) {
+    if (args == null) {
+      return false;
     }
-
-    int population = extractPopulation(normalized);
-    int malePopulation = (int) Math.round(population * (malePercentage / 100.0));
-    int femalePopulation = population - malePopulation;
-
-    System.out.println(String.format("Gender Mix: %d%% male / %d%% female",
-        malePercentage, 100 - malePercentage));
-
-    if (malePopulation > 0) {
-      String[] maleArgs = withPopulationAndGender(normalized, malePopulation, "M");
-      App.main(moduleSpecified ? maleArgs : withModule(maleArgs, MODULE_NAME));
+    for (String arg : args) {
+      if (arg.equalsIgnoreCase("-m")) {
+        return true;
+      }
     }
-    if (femalePopulation > 0) {
-      String[] femaleArgs = withPopulationAndGender(normalized, femalePopulation, "F");
-      App.main(moduleSpecified ? femaleArgs : withModule(femaleArgs, MODULE_NAME));
-    }
+    return false;
   }
 }
