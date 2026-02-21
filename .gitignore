@@ -8,6 +8,7 @@
 bin/**
 lib/custom/*.jar
 
+**claude**
 /.gradle/
 /bin/
 
