@@ -20,7 +20,7 @@ lib/custom/*.jar
 **aml_output_folder/**
 **explain_document_aml.md**
 **explain_document.md**
-**synthea_module_guide.md**
+**synthea_module_guide**
 
 **/*.log
 
