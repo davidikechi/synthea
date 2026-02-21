@@ -1,0 +1,969 @@
+DATE,PATIENT,ENCOUNTER,CATEGORY,CODE,DESCRIPTION,VALUE,UNITS,TYPE
+2016-01-12T05:17:26Z,f55bbb82-0dc0-d01e-7f7b-cc655c0bf2be,,,QALY,QALY,25.0,a,numeric
+2016-03-26T05:15:29Z,551977b5-3ae6-ecac-3974-f250f21beac3,,,QALY,QALY,12.0,a,numeric
+2016-10-30T14:29:53Z,3c4758a4-ed66-8b73-2711-41dcbff94e9a,,,QALY,QALY,43.0,a,numeric
+2016-08-05T23:11:20Z,e01fe3ec-87df-690a-bb43-1702495d67cc,,,QALY,QALY,36.0,a,numeric
+2017-08-05T23:11:20Z,e01fe3ec-87df-690a-bb43-1702495d67cc,,,QALY,QALY,37.0,a,numeric
+2017-03-26T04:15:29Z,551977b5-3ae6-ecac-3974-f250f21beac3,,,QALY,QALY,13.0,a,numeric
+2017-10-30T14:29:53Z,3c4758a4-ed66-8b73-2711-41dcbff94e9a,,,QALY,QALY,44.0,a,numeric
+2016-01-31T20:16:16Z,7536a771-242f-f5af-fafd-fa6f7128cbb7,,,QALY,QALY,21.0,a,numeric
+2018-08-05T23:11:20Z,e01fe3ec-87df-690a-bb43-1702495d67cc,,,QALY,QALY,38.0,a,numeric
+2018-10-30T14:29:53Z,3c4758a4-ed66-8b73-2711-41dcbff94e9a,,,QALY,QALY,45.0,a,numeric
+2018-03-26T04:15:29Z,551977b5-3ae6-ecac-3974-f250f21beac3,,,QALY,QALY,14.0,a,numeric
+2017-01-12T05:17:26Z,f55bbb82-0dc0-d01e-7f7b-cc655c0bf2be,,,QALY,QALY,26.0,a,numeric
+2019-08-05T23:11:20Z,e01fe3ec-87df-690a-bb43-1702495d67cc,,,QALY,QALY,39.0,a,numeric
+2019-10-30T14:29:53Z,3c4758a4-ed66-8b73-2711-41dcbff94e9a,,,QALY,QALY,46.0,a,numeric
+2019-03-26T05:15:29Z,551977b5-3ae6-ecac-3974-f250f21beac3,,,QALY,QALY,15.0,a,numeric
+2017-01-31T20:16:16Z,7536a771-242f-f5af-fafd-fa6f7128cbb7,,,QALY,QALY,22.0,a,numeric
+2020-10-30T14:29:53Z,3c4758a4-ed66-8b73-2711-41dcbff94e9a,,,QALY,QALY,47.0,a,numeric
+2018-01-12T05:17:26Z,f55bbb82-0dc0-d01e-7f7b-cc655c0bf2be,,,QALY,QALY,27.0,a,numeric
+2020-03-26T05:15:29Z,551977b5-3ae6-ecac-3974-f250f21beac3,,,QALY,QALY,16.0,a,numeric
+2020-08-05T23:11:20Z,e01fe3ec-87df-690a-bb43-1702495d67cc,,,QALY,QALY,40.0,a,numeric
+2018-01-31T20:16:16Z,7536a771-242f-f5af-fafd-fa6f7128cbb7,,,QALY,QALY,23.0,a,numeric
+2021-10-30T13:29:53Z,3c4758a4-ed66-8b73-2711-41dcbff94e9a,,,QALY,QALY,48.0,a,numeric
+2021-03-26T05:15:29Z,551977b5-3ae6-ecac-3974-f250f21beac3,,,QALY,QALY,17.0,a,numeric
+2021-08-05T23:11:20Z,e01fe3ec-87df-690a-bb43-1702495d67cc,,,QALY,QALY,41.0,a,numeric
+2022-10-30T14:29:53Z,3c4758a4-ed66-8b73-2711-41dcbff94e9a,,,QALY,QALY,49.0,a,numeric
+2019-01-12T05:17:26Z,f55bbb82-0dc0-d01e-7f7b-cc655c0bf2be,,,QALY,QALY,28.0,a,numeric
+2019-01-31T20:16:16Z,7536a771-242f-f5af-fafd-fa6f7128cbb7,,,QALY,QALY,24.0,a,numeric
+2022-03-26T05:15:29Z,551977b5-3ae6-ecac-3974-f250f21beac3,,,QALY,QALY,18.0,a,numeric
+2022-08-05T23:11:20Z,e01fe3ec-87df-690a-bb43-1702495d67cc,,,QALY,QALY,42.0,a,numeric
+2023-10-30T14:29:53Z,3c4758a4-ed66-8b73-2711-41dcbff94e9a,,,QALY,QALY,50.0,a,numeric
+2020-01-12T05:17:26Z,f55bbb82-0dc0-d01e-7f7b-cc655c0bf2be,,,QALY,QALY,29.0,a,numeric
+2020-01-31T20:16:16Z,7536a771-242f-f5af-fafd-fa6f7128cbb7,,,QALY,QALY,25.0,a,numeric
+2023-08-05T23:11:20Z,e01fe3ec-87df-690a-bb43-1702495d67cc,,,QALY,QALY,43.0,a,numeric
+2023-03-26T04:15:29Z,551977b5-3ae6-ecac-3974-f250f21beac3,,,QALY,QALY,19.0,a,numeric
+2024-10-30T14:29:53Z,3c4758a4-ed66-8b73-2711-41dcbff94e9a,,,QALY,QALY,51.0,a,numeric
+2021-01-12T05:17:26Z,f55bbb82-0dc0-d01e-7f7b-cc655c0bf2be,,,QALY,QALY,30.0,a,numeric
+2021-01-31T20:16:16Z,7536a771-242f-f5af-fafd-fa6f7128cbb7,,,QALY,QALY,26.0,a,numeric
+2025-10-30T14:29:53Z,3c4758a4-ed66-8b73-2711-41dcbff94e9a,,,QALY,QALY,52.0,a,numeric
+2024-08-05T23:11:20Z,e01fe3ec-87df-690a-bb43-1702495d67cc,,,QALY,QALY,44.0,a,numeric
+2024-03-26T05:15:29Z,551977b5-3ae6-ecac-3974-f250f21beac3,,,QALY,QALY,20.0,a,numeric
+2022-01-12T05:17:26Z,f55bbb82-0dc0-d01e-7f7b-cc655c0bf2be,,,QALY,QALY,31.0,a,numeric
+2022-01-31T20:16:16Z,7536a771-242f-f5af-fafd-fa6f7128cbb7,,,QALY,QALY,27.0,a,numeric
+2025-08-05T23:11:20Z,e01fe3ec-87df-690a-bb43-1702495d67cc,,,QALY,QALY,45.0,a,numeric
+2025-03-26T05:15:29Z,551977b5-3ae6-ecac-3974-f250f21beac3,,,QALY,QALY,21.0,a,numeric
+2023-01-12T05:17:26Z,f55bbb82-0dc0-d01e-7f7b-cc655c0bf2be,,,QALY,QALY,32.0,a,numeric
+2023-01-31T20:16:16Z,7536a771-242f-f5af-fafd-fa6f7128cbb7,,,QALY,QALY,28.0,a,numeric
+2024-01-12T05:17:26Z,f55bbb82-0dc0-d01e-7f7b-cc655c0bf2be,,,QALY,QALY,33.0,a,numeric
+2024-01-31T20:16:16Z,7536a771-242f-f5af-fafd-fa6f7128cbb7,,,QALY,QALY,29.0,a,numeric
+2016-03-26T05:15:29Z,551977b5-3ae6-ecac-3974-f250f21beac3,,,DALY,DALY,0.0,a,numeric
+2025-01-12T05:17:26Z,f55bbb82-0dc0-d01e-7f7b-cc655c0bf2be,,,QALY,QALY,34.0,a,numeric
+2025-01-31T20:16:16Z,7536a771-242f-f5af-fafd-fa6f7128cbb7,,,QALY,QALY,30.0,a,numeric
+2016-10-30T14:29:53Z,3c4758a4-ed66-8b73-2711-41dcbff94e9a,,,DALY,DALY,0.0,a,numeric
+2017-03-26T04:15:29Z,551977b5-3ae6-ecac-3974-f250f21beac3,,,DALY,DALY,0.0,a,numeric
+2016-08-05T23:11:20Z,e01fe3ec-87df-690a-bb43-1702495d67cc,,,DALY,DALY,0.0,a,numeric
+2017-10-30T14:29:53Z,3c4758a4-ed66-8b73-2711-41dcbff94e9a,,,DALY,DALY,0.0,a,numeric
+2018-03-26T04:15:29Z,551977b5-3ae6-ecac-3974-f250f21beac3,,,DALY,DALY,0.0,a,numeric
+2026-01-12T05:17:26Z,f55bbb82-0dc0-d01e-7f7b-cc655c0bf2be,,,QALY,QALY,35.0,a,numeric
+2026-01-31T20:16:16Z,7536a771-242f-f5af-fafd-fa6f7128cbb7,,,QALY,QALY,31.0,a,numeric
+2017-08-05T23:11:20Z,e01fe3ec-87df-690a-bb43-1702495d67cc,,,DALY,DALY,0.0,a,numeric
+2019-03-26T05:15:29Z,551977b5-3ae6-ecac-3974-f250f21beac3,,,DALY,DALY,0.0,a,numeric
+2018-10-30T14:29:53Z,3c4758a4-ed66-8b73-2711-41dcbff94e9a,,,DALY,DALY,0.0,a,numeric
+2018-08-05T23:11:20Z,e01fe3ec-87df-690a-bb43-1702495d67cc,,,DALY,DALY,0.0,a,numeric
+2020-03-26T05:15:29Z,551977b5-3ae6-ecac-3974-f250f21beac3,,,DALY,DALY,0.0,a,numeric
+2019-10-30T14:29:53Z,3c4758a4-ed66-8b73-2711-41dcbff94e9a,,,DALY,DALY,0.0,a,numeric
+2019-08-05T23:11:20Z,e01fe3ec-87df-690a-bb43-1702495d67cc,,,DALY,DALY,0.0,a,numeric
+2021-03-26T05:15:29Z,551977b5-3ae6-ecac-3974-f250f21beac3,,,DALY,DALY,0.0,a,numeric
+2020-10-30T14:29:53Z,3c4758a4-ed66-8b73-2711-41dcbff94e9a,,,DALY,DALY,0.0,a,numeric
+2020-08-05T23:11:20Z,e01fe3ec-87df-690a-bb43-1702495d67cc,,,DALY,DALY,0.0,a,numeric
+2022-03-26T05:15:29Z,551977b5-3ae6-ecac-3974-f250f21beac3,,,DALY,DALY,0.0,a,numeric
+2021-10-30T13:29:53Z,3c4758a4-ed66-8b73-2711-41dcbff94e9a,,,DALY,DALY,0.0,a,numeric
+2021-08-05T23:11:20Z,e01fe3ec-87df-690a-bb43-1702495d67cc,,,DALY,DALY,0.0,a,numeric
+2016-01-31T20:16:16Z,7536a771-242f-f5af-fafd-fa6f7128cbb7,,,DALY,DALY,0.0,a,numeric
+2016-01-12T05:17:26Z,f55bbb82-0dc0-d01e-7f7b-cc655c0bf2be,,,DALY,DALY,0.0,a,numeric
+2023-03-26T04:15:29Z,551977b5-3ae6-ecac-3974-f250f21beac3,,,DALY,DALY,0.0,a,numeric
+2022-10-30T14:29:53Z,3c4758a4-ed66-8b73-2711-41dcbff94e9a,,,DALY,DALY,0.0,a,numeric
+2022-08-05T23:11:20Z,e01fe3ec-87df-690a-bb43-1702495d67cc,,,DALY,DALY,0.0,a,numeric
+2017-01-31T20:16:16Z,7536a771-242f-f5af-fafd-fa6f7128cbb7,,,DALY,DALY,0.0,a,numeric
+2023-10-30T14:29:53Z,3c4758a4-ed66-8b73-2711-41dcbff94e9a,,,DALY,DALY,0.0,a,numeric
+2024-03-26T05:15:29Z,551977b5-3ae6-ecac-3974-f250f21beac3,,,DALY,DALY,0.0,a,numeric
+2023-08-05T23:11:20Z,e01fe3ec-87df-690a-bb43-1702495d67cc,,,DALY,DALY,0.0,a,numeric
+2017-01-12T05:17:26Z,f55bbb82-0dc0-d01e-7f7b-cc655c0bf2be,,,DALY,DALY,0.0,a,numeric
+2024-10-30T14:29:53Z,3c4758a4-ed66-8b73-2711-41dcbff94e9a,,,DALY,DALY,0.0,a,numeric
+2025-03-26T05:15:29Z,551977b5-3ae6-ecac-3974-f250f21beac3,,,DALY,DALY,0.0,a,numeric
+2024-08-05T23:11:20Z,e01fe3ec-87df-690a-bb43-1702495d67cc,,,DALY,DALY,0.0,a,numeric
+2018-01-31T20:16:16Z,7536a771-242f-f5af-fafd-fa6f7128cbb7,,,DALY,DALY,0.0,a,numeric
+2018-01-12T05:17:26Z,f55bbb82-0dc0-d01e-7f7b-cc655c0bf2be,,,DALY,DALY,0.0,a,numeric
+2025-10-30T14:29:53Z,3c4758a4-ed66-8b73-2711-41dcbff94e9a,,,DALY,DALY,0.0,a,numeric
+2025-08-05T23:11:20Z,e01fe3ec-87df-690a-bb43-1702495d67cc,,,DALY,DALY,0.0,a,numeric
+2019-01-31T20:16:16Z,7536a771-242f-f5af-fafd-fa6f7128cbb7,,,DALY,DALY,0.0,a,numeric
+2019-01-12T05:17:26Z,f55bbb82-0dc0-d01e-7f7b-cc655c0bf2be,,,DALY,DALY,0.0,a,numeric
+2020-01-31T20:16:16Z,7536a771-242f-f5af-fafd-fa6f7128cbb7,,,DALY,DALY,0.0,a,numeric
+2016-03-26T05:15:29Z,551977b5-3ae6-ecac-3974-f250f21beac3,,,QOLS,QOLS,1.0,{score},numeric
+2020-01-12T05:17:26Z,f55bbb82-0dc0-d01e-7f7b-cc655c0bf2be,,,DALY,DALY,0.0,a,numeric
+2017-03-26T04:15:29Z,551977b5-3ae6-ecac-3974-f250f21beac3,,,QOLS,QOLS,1.0,{score},numeric
+2021-01-31T20:16:16Z,7536a771-242f-f5af-fafd-fa6f7128cbb7,,,DALY,DALY,0.0,a,numeric
+2016-10-30T14:29:53Z,3c4758a4-ed66-8b73-2711-41dcbff94e9a,,,QOLS,QOLS,1.0,{score},numeric
+2016-08-05T23:11:20Z,e01fe3ec-87df-690a-bb43-1702495d67cc,,,QOLS,QOLS,1.0,{score},numeric
+2018-03-26T04:15:29Z,551977b5-3ae6-ecac-3974-f250f21beac3,,,QOLS,QOLS,1.0,{score},numeric
+2021-01-12T05:17:26Z,f55bbb82-0dc0-d01e-7f7b-cc655c0bf2be,,,DALY,DALY,0.0,a,numeric
+2017-08-05T23:11:20Z,e01fe3ec-87df-690a-bb43-1702495d67cc,,,QOLS,QOLS,1.0,{score},numeric
+2019-03-26T05:15:29Z,551977b5-3ae6-ecac-3974-f250f21beac3,,,QOLS,QOLS,1.0,{score},numeric
+2020-03-26T05:15:29Z,551977b5-3ae6-ecac-3974-f250f21beac3,,,QOLS,QOLS,1.0,{score},numeric
+2022-01-12T05:17:26Z,f55bbb82-0dc0-d01e-7f7b-cc655c0bf2be,,,DALY,DALY,0.0,a,numeric
+2018-08-05T23:11:20Z,e01fe3ec-87df-690a-bb43-1702495d67cc,,,QOLS,QOLS,1.0,{score},numeric
+2021-03-26T05:15:29Z,551977b5-3ae6-ecac-3974-f250f21beac3,,,QOLS,QOLS,1.0,{score},numeric
+2022-03-26T05:15:29Z,551977b5-3ae6-ecac-3974-f250f21beac3,,,QOLS,QOLS,1.0,{score},numeric
+2023-01-12T05:17:26Z,f55bbb82-0dc0-d01e-7f7b-cc655c0bf2be,,,DALY,DALY,0.0,a,numeric
+2019-08-05T23:11:20Z,e01fe3ec-87df-690a-bb43-1702495d67cc,,,QOLS,QOLS,1.0,{score},numeric
+2023-03-26T04:15:29Z,551977b5-3ae6-ecac-3974-f250f21beac3,,,QOLS,QOLS,1.0,{score},numeric
+2024-01-12T05:17:26Z,f55bbb82-0dc0-d01e-7f7b-cc655c0bf2be,,,DALY,DALY,0.0,a,numeric
+2024-03-26T05:15:29Z,551977b5-3ae6-ecac-3974-f250f21beac3,,,QOLS,QOLS,1.0,{score},numeric
+2020-08-05T23:11:20Z,e01fe3ec-87df-690a-bb43-1702495d67cc,,,QOLS,QOLS,1.0,{score},numeric
+2025-03-26T05:15:29Z,551977b5-3ae6-ecac-3974-f250f21beac3,,,QOLS,QOLS,1.0,{score},numeric
+2025-01-12T05:17:26Z,f55bbb82-0dc0-d01e-7f7b-cc655c0bf2be,,,DALY,DALY,0.0,a,numeric
+2021-08-05T23:11:20Z,e01fe3ec-87df-690a-bb43-1702495d67cc,,,QOLS,QOLS,1.0,{score},numeric
+2026-01-12T05:17:26Z,f55bbb82-0dc0-d01e-7f7b-cc655c0bf2be,,,DALY,DALY,0.0,a,numeric
+2022-08-05T23:11:20Z,e01fe3ec-87df-690a-bb43-1702495d67cc,,,QOLS,QOLS,1.0,{score},numeric
+2023-08-05T23:11:20Z,e01fe3ec-87df-690a-bb43-1702495d67cc,,,QOLS,QOLS,1.0,{score},numeric
+2024-08-05T23:11:20Z,e01fe3ec-87df-690a-bb43-1702495d67cc,,,QOLS,QOLS,1.0,{score},numeric
+2025-08-05T23:11:20Z,e01fe3ec-87df-690a-bb43-1702495d67cc,,,QOLS,QOLS,1.0,{score},numeric
+2022-01-31T20:16:16Z,7536a771-242f-f5af-fafd-fa6f7128cbb7,,,DALY,DALY,0.0,a,numeric
+2017-10-30T14:29:53Z,3c4758a4-ed66-8b73-2711-41dcbff94e9a,,,QOLS,QOLS,1.0,{score},numeric
+2023-01-31T20:16:16Z,7536a771-242f-f5af-fafd-fa6f7128cbb7,,,DALY,DALY,0.0,a,numeric
+2018-10-30T14:29:53Z,3c4758a4-ed66-8b73-2711-41dcbff94e9a,,,QOLS,QOLS,1.0,{score},numeric
+2019-10-30T14:29:53Z,3c4758a4-ed66-8b73-2711-41dcbff94e9a,,,QOLS,QOLS,1.0,{score},numeric
+2024-01-31T20:16:16Z,7536a771-242f-f5af-fafd-fa6f7128cbb7,,,DALY,DALY,0.0,a,numeric
+2020-10-30T14:29:53Z,3c4758a4-ed66-8b73-2711-41dcbff94e9a,,,QOLS,QOLS,1.0,{score},numeric
+2021-10-30T13:29:53Z,3c4758a4-ed66-8b73-2711-41dcbff94e9a,,,QOLS,QOLS,1.0,{score},numeric
+2025-01-31T20:16:16Z,7536a771-242f-f5af-fafd-fa6f7128cbb7,,,DALY,DALY,0.0,a,numeric
+2022-10-30T14:29:53Z,3c4758a4-ed66-8b73-2711-41dcbff94e9a,,,QOLS,QOLS,1.0,{score},numeric
+2023-10-30T14:29:53Z,3c4758a4-ed66-8b73-2711-41dcbff94e9a,,,QOLS,QOLS,1.0,{score},numeric
+2026-01-31T20:16:16Z,7536a771-242f-f5af-fafd-fa6f7128cbb7,,,DALY,DALY,0.0,a,numeric
+2024-10-30T14:29:53Z,3c4758a4-ed66-8b73-2711-41dcbff94e9a,,,QOLS,QOLS,1.0,{score},numeric
+2025-10-30T14:29:53Z,3c4758a4-ed66-8b73-2711-41dcbff94e9a,,,QOLS,QOLS,1.0,{score},numeric
+2016-01-12T05:17:26Z,f55bbb82-0dc0-d01e-7f7b-cc655c0bf2be,,,QOLS,QOLS,1.0,{score},numeric
+2016-01-31T20:16:16Z,7536a771-242f-f5af-fafd-fa6f7128cbb7,,,QOLS,QOLS,1.0,{score},numeric
+2017-01-12T05:17:26Z,f55bbb82-0dc0-d01e-7f7b-cc655c0bf2be,,,QOLS,QOLS,1.0,{score},numeric
+2018-01-12T05:17:26Z,f55bbb82-0dc0-d01e-7f7b-cc655c0bf2be,,,QOLS,QOLS,1.0,{score},numeric
+2017-01-31T20:16:16Z,7536a771-242f-f5af-fafd-fa6f7128cbb7,,,QOLS,QOLS,1.0,{score},numeric
+2019-01-12T05:17:26Z,f55bbb82-0dc0-d01e-7f7b-cc655c0bf2be,,,QOLS,QOLS,1.0,{score},numeric
+2018-01-31T20:16:16Z,7536a771-242f-f5af-fafd-fa6f7128cbb7,,,QOLS,QOLS,1.0,{score},numeric
+2020-01-12T05:17:26Z,f55bbb82-0dc0-d01e-7f7b-cc655c0bf2be,,,QOLS,QOLS,1.0,{score},numeric
+2019-01-31T20:16:16Z,7536a771-242f-f5af-fafd-fa6f7128cbb7,,,QOLS,QOLS,1.0,{score},numeric
+2021-01-12T05:17:26Z,f55bbb82-0dc0-d01e-7f7b-cc655c0bf2be,,,QOLS,QOLS,1.0,{score},numeric
+2020-01-31T20:16:16Z,7536a771-242f-f5af-fafd-fa6f7128cbb7,,,QOLS,QOLS,1.0,{score},numeric
+2022-01-12T05:17:26Z,f55bbb82-0dc0-d01e-7f7b-cc655c0bf2be,,,QOLS,QOLS,1.0,{score},numeric
+2021-01-31T20:16:16Z,7536a771-242f-f5af-fafd-fa6f7128cbb7,,,QOLS,QOLS,1.0,{score},numeric
+2023-01-12T05:17:26Z,f55bbb82-0dc0-d01e-7f7b-cc655c0bf2be,,,QOLS,QOLS,1.0,{score},numeric
+2022-01-31T20:16:16Z,7536a771-242f-f5af-fafd-fa6f7128cbb7,,,QOLS,QOLS,1.0,{score},numeric
+2024-01-12T05:17:26Z,f55bbb82-0dc0-d01e-7f7b-cc655c0bf2be,,,QOLS,QOLS,1.0,{score},numeric
+2023-01-31T20:16:16Z,7536a771-242f-f5af-fafd-fa6f7128cbb7,,,QOLS,QOLS,1.0,{score},numeric
+2025-01-12T05:17:26Z,f55bbb82-0dc0-d01e-7f7b-cc655c0bf2be,,,QOLS,QOLS,1.0,{score},numeric
+2024-01-31T20:16:16Z,7536a771-242f-f5af-fafd-fa6f7128cbb7,,,QOLS,QOLS,1.0,{score},numeric
+2026-01-12T05:17:26Z,f55bbb82-0dc0-d01e-7f7b-cc655c0bf2be,,,QOLS,QOLS,1.0,{score},numeric
+2025-01-31T20:16:16Z,7536a771-242f-f5af-fafd-fa6f7128cbb7,,,QOLS,QOLS,1.0,{score},numeric
+2026-01-31T20:16:16Z,7536a771-242f-f5af-fafd-fa6f7128cbb7,,,QOLS,QOLS,1.0,{score},numeric
+2016-12-23T10:10:41Z,68edc97f-1050-1337-92aa-ee230923ff16,,,QALY,QALY,53.0,a,numeric
+2017-12-23T10:10:41Z,68edc97f-1050-1337-92aa-ee230923ff16,,,QALY,QALY,54.0,a,numeric
+2018-12-23T10:10:41Z,68edc97f-1050-1337-92aa-ee230923ff16,,,QALY,QALY,55.0,a,numeric
+2019-12-23T10:10:41Z,68edc97f-1050-1337-92aa-ee230923ff16,,,QALY,QALY,56.0,a,numeric
+2020-12-23T10:10:41Z,68edc97f-1050-1337-92aa-ee230923ff16,,,QALY,QALY,57.0,a,numeric
+2021-12-23T10:10:41Z,68edc97f-1050-1337-92aa-ee230923ff16,,,QALY,QALY,58.0,a,numeric
+2022-12-23T10:10:41Z,68edc97f-1050-1337-92aa-ee230923ff16,,,QALY,QALY,59.0,a,numeric
+2023-12-23T10:10:41Z,68edc97f-1050-1337-92aa-ee230923ff16,,,QALY,QALY,60.0,a,numeric
+2024-12-23T10:10:41Z,68edc97f-1050-1337-92aa-ee230923ff16,,,QALY,QALY,61.0,a,numeric
+2025-12-23T10:10:41Z,68edc97f-1050-1337-92aa-ee230923ff16,,,QALY,QALY,62.0,a,numeric
+2016-12-23T10:10:41Z,68edc97f-1050-1337-92aa-ee230923ff16,,,DALY,DALY,0.0,a,numeric
+2017-12-23T10:10:41Z,68edc97f-1050-1337-92aa-ee230923ff16,,,DALY,DALY,0.0,a,numeric
+2018-12-23T10:10:41Z,68edc97f-1050-1337-92aa-ee230923ff16,,,DALY,DALY,0.0,a,numeric
+2019-12-23T10:10:41Z,68edc97f-1050-1337-92aa-ee230923ff16,,,DALY,DALY,0.0,a,numeric
+2020-12-23T10:10:41Z,68edc97f-1050-1337-92aa-ee230923ff16,,,DALY,DALY,0.0,a,numeric
+2021-12-23T10:10:41Z,68edc97f-1050-1337-92aa-ee230923ff16,,,DALY,DALY,0.0,a,numeric
+2022-12-23T10:10:41Z,68edc97f-1050-1337-92aa-ee230923ff16,,,DALY,DALY,0.0,a,numeric
+2023-12-23T10:10:41Z,68edc97f-1050-1337-92aa-ee230923ff16,,,DALY,DALY,0.0,a,numeric
+2024-12-23T10:10:41Z,68edc97f-1050-1337-92aa-ee230923ff16,,,DALY,DALY,0.0,a,numeric
+2025-12-23T10:10:41Z,68edc97f-1050-1337-92aa-ee230923ff16,,,DALY,DALY,0.0,a,numeric
+2016-12-23T10:10:41Z,68edc97f-1050-1337-92aa-ee230923ff16,,,QOLS,QOLS,1.0,{score},numeric
+2016-03-23T21:44:04Z,0f2be9ec-5b95-f362-0882-383752305a74,,,QALY,QALY,54.0,a,numeric
+2017-03-23T21:44:04Z,0f2be9ec-5b95-f362-0882-383752305a74,,,QALY,QALY,55.0,a,numeric
+2018-03-23T21:44:04Z,0f2be9ec-5b95-f362-0882-383752305a74,,,QALY,QALY,56.0,a,numeric
+2019-03-23T21:44:04Z,0f2be9ec-5b95-f362-0882-383752305a74,,,QALY,QALY,57.0,a,numeric
+2020-03-23T21:44:04Z,0f2be9ec-5b95-f362-0882-383752305a74,,,QALY,QALY,58.0,a,numeric
+2021-03-23T21:44:04Z,0f2be9ec-5b95-f362-0882-383752305a74,,,QALY,QALY,59.0,a,numeric
+2022-03-23T21:44:04Z,0f2be9ec-5b95-f362-0882-383752305a74,,,QALY,QALY,60.0,a,numeric
+2023-03-23T21:44:04Z,0f2be9ec-5b95-f362-0882-383752305a74,,,QALY,QALY,61.0,a,numeric
+2024-03-23T21:44:04Z,0f2be9ec-5b95-f362-0882-383752305a74,,,QALY,QALY,62.0,a,numeric
+2025-03-23T21:44:04Z,0f2be9ec-5b95-f362-0882-383752305a74,,,QALY,QALY,63.0,a,numeric
+2017-12-23T10:10:41Z,68edc97f-1050-1337-92aa-ee230923ff16,,,QOLS,QOLS,1.0,{score},numeric
+2018-12-23T10:10:41Z,68edc97f-1050-1337-92aa-ee230923ff16,,,QOLS,QOLS,1.0,{score},numeric
+2019-12-23T10:10:41Z,68edc97f-1050-1337-92aa-ee230923ff16,,,QOLS,QOLS,1.0,{score},numeric
+2016-03-23T21:44:04Z,0f2be9ec-5b95-f362-0882-383752305a74,,,DALY,DALY,0.0,a,numeric
+2020-12-23T10:10:41Z,68edc97f-1050-1337-92aa-ee230923ff16,,,QOLS,QOLS,1.0,{score},numeric
+2017-03-23T21:44:04Z,0f2be9ec-5b95-f362-0882-383752305a74,,,DALY,DALY,0.0,a,numeric
+2021-12-23T10:10:41Z,68edc97f-1050-1337-92aa-ee230923ff16,,,QOLS,QOLS,1.0,{score},numeric
+2018-03-23T21:44:04Z,0f2be9ec-5b95-f362-0882-383752305a74,,,DALY,DALY,0.0,a,numeric
+2019-03-23T21:44:04Z,0f2be9ec-5b95-f362-0882-383752305a74,,,DALY,DALY,0.0,a,numeric
+2022-12-23T10:10:41Z,68edc97f-1050-1337-92aa-ee230923ff16,,,QOLS,QOLS,1.0,{score},numeric
+2020-03-23T21:44:04Z,0f2be9ec-5b95-f362-0882-383752305a74,,,DALY,DALY,0.0,a,numeric
+2023-12-23T10:10:41Z,68edc97f-1050-1337-92aa-ee230923ff16,,,QOLS,QOLS,1.0,{score},numeric
+2021-03-23T21:44:04Z,0f2be9ec-5b95-f362-0882-383752305a74,,,DALY,DALY,0.0,a,numeric
+2024-12-23T10:10:41Z,68edc97f-1050-1337-92aa-ee230923ff16,,,QOLS,QOLS,1.0,{score},numeric
+2022-03-23T21:44:04Z,0f2be9ec-5b95-f362-0882-383752305a74,,,DALY,DALY,0.0,a,numeric
+2025-12-23T10:10:41Z,68edc97f-1050-1337-92aa-ee230923ff16,,,QOLS,QOLS,1.0,{score},numeric
+2023-03-23T21:44:04Z,0f2be9ec-5b95-f362-0882-383752305a74,,,DALY,DALY,0.0,a,numeric
+2024-03-23T21:44:04Z,0f2be9ec-5b95-f362-0882-383752305a74,,,DALY,DALY,0.0,a,numeric
+2025-03-23T21:44:04Z,0f2be9ec-5b95-f362-0882-383752305a74,,,DALY,DALY,0.0,a,numeric
+2016-03-23T21:44:04Z,0f2be9ec-5b95-f362-0882-383752305a74,,,QOLS,QOLS,1.0,{score},numeric
+2017-03-23T21:44:04Z,0f2be9ec-5b95-f362-0882-383752305a74,,,QOLS,QOLS,1.0,{score},numeric
+2018-03-23T21:44:04Z,0f2be9ec-5b95-f362-0882-383752305a74,,,QOLS,QOLS,1.0,{score},numeric
+2019-03-23T21:44:04Z,0f2be9ec-5b95-f362-0882-383752305a74,,,QOLS,QOLS,1.0,{score},numeric
+2020-03-23T21:44:04Z,0f2be9ec-5b95-f362-0882-383752305a74,,,QOLS,QOLS,1.0,{score},numeric
+2021-03-23T21:44:04Z,0f2be9ec-5b95-f362-0882-383752305a74,,,QOLS,QOLS,1.0,{score},numeric
+2022-03-23T21:44:04Z,0f2be9ec-5b95-f362-0882-383752305a74,,,QOLS,QOLS,1.0,{score},numeric
+2023-03-23T21:44:04Z,0f2be9ec-5b95-f362-0882-383752305a74,,,QOLS,QOLS,1.0,{score},numeric
+2024-03-23T21:44:04Z,0f2be9ec-5b95-f362-0882-383752305a74,,,QOLS,QOLS,1.0,{score},numeric
+2025-03-23T21:44:04Z,0f2be9ec-5b95-f362-0882-383752305a74,,,QOLS,QOLS,1.0,{score},numeric
+2002-03-25T22:08:50Z,4be14408-3743-0fc7-002e-9343c0887f98,4be14408-3743-0fc7-e467-f9f27b03cc72,laboratory,6690-2,Leukocytes [#/volume] in Blood by Automated count,23.2,10*3/uL,numeric
+2002-03-25T22:08:50Z,4be14408-3743-0fc7-002e-9343c0887f98,4be14408-3743-0fc7-e467-f9f27b03cc72,laboratory,718-7,Hemoglobin [Mass/volume] in Blood,6.7,g/dL,numeric
+2002-03-25T22:08:50Z,4be14408-3743-0fc7-002e-9343c0887f98,4be14408-3743-0fc7-e467-f9f27b03cc72,laboratory,777-3,Platelets [#/volume] in Blood by Automated count,85.9,10*3/uL,numeric
+2002-03-25T22:08:50Z,4be14408-3743-0fc7-002e-9343c0887f98,4be14408-3743-0fc7-e467-f9f27b03cc72,laboratory,751-8,Neutrophils [#/volume] in Blood by Automated count,0.5,10*3/uL,numeric
+2002-03-25T22:08:50Z,4be14408-3743-0fc7-002e-9343c0887f98,4be14408-3743-0fc7-e467-f9f27b03cc72,laboratory,709-6,Blasts/100 leukocytes in Blood by Manual count,63.5,%,numeric
+2016-08-28T10:14:09Z,2a60b40c-52f4-c67c-eafa-24fa2c1db046,,,QALY,QALY,77.0,a,numeric
+2002-03-25T22:08:50Z,4be14408-3743-0fc7-002e-9343c0887f98,4be14408-3743-0fc7-e467-f9f27b03cc72,laboratory,14804-9,Lactate dehydrogenase [Enzymatic activity/volume] in Serum or Plasma,626.5,U/L,numeric
+2002-03-25T22:08:50Z,4be14408-3743-0fc7-002e-9343c0887f98,4be14408-3743-0fc7-e467-f9f27b03cc72,laboratory,2160-0,Creatinine [Mass/volume] in Serum or Plasma,0.9,mg/dL,numeric
+2017-08-28T10:14:09Z,2a60b40c-52f4-c67c-eafa-24fa2c1db046,,,QALY,QALY,78.0,a,numeric
+2002-03-25T22:08:50Z,4be14408-3743-0fc7-002e-9343c0887f98,4be14408-3743-0fc7-e467-f9f27b03cc72,laboratory,3084-1,Urate [Mass/volume] in Serum or Plasma,5.2,mg/dL,numeric
+2002-03-25T22:56:28Z,4be14408-3743-0fc7-002e-9343c0887f98,4be14408-3743-0fc7-e467-f9f27b03cc72,laboratory,26464-8,Blasts/100 cells in Bone marrow,25.1,%,numeric
+2018-08-28T10:14:09Z,2a60b40c-52f4-c67c-eafa-24fa2c1db046,,,QALY,QALY,79.0,a,numeric
+2002-03-26T02:24:20Z,4be14408-3743-0fc7-002e-9343c0887f98,4be14408-3743-0fc7-e467-f9f27b03cc72,laboratory,85176-4,FLT3 gene internal tandem duplication [Presence] in Blood or Tissue by Molecular genetics method,Positive (qualifier value),{Qualitative},text
+2002-03-26T05:17:48Z,4be14408-3743-0fc7-002e-9343c0887f98,4be14408-3743-0fc7-e467-f9f27b03cc72,laboratory,751-8,Neutrophils [#/volume] in Blood by Automated count,0.4,10*3/uL,numeric
+2002-03-26T05:17:48Z,4be14408-3743-0fc7-002e-9343c0887f98,4be14408-3743-0fc7-e467-f9f27b03cc72,vital-signs,8310-5,Body temperature,101.3,[degF],numeric
+2019-08-28T10:14:09Z,2a60b40c-52f4-c67c-eafa-24fa2c1db046,,,QALY,QALY,80.0,a,numeric
+2002-03-26T06:53:47Z,4be14408-3743-0fc7-002e-9343c0887f98,4be14408-3743-0fc7-e467-f9f27b03cc72,laboratory,102098-1,Acute myeloid leukemia minimal residual disease in Bone marrow by Flow cytometry (FC) Narrative,1.2,%,numeric
+2020-08-28T10:14:09Z,2a60b40c-52f4-c67c-eafa-24fa2c1db046,,,QALY,QALY,81.0,a,numeric
+2021-08-28T10:14:09Z,2a60b40c-52f4-c67c-eafa-24fa2c1db046,,,QALY,QALY,82.0,a,numeric
+2022-08-28T10:14:09Z,2a60b40c-52f4-c67c-eafa-24fa2c1db046,,,QALY,QALY,83.0,a,numeric
+2023-08-28T10:14:09Z,2a60b40c-52f4-c67c-eafa-24fa2c1db046,,,QALY,QALY,84.0,a,numeric
+2024-08-28T10:14:09Z,2a60b40c-52f4-c67c-eafa-24fa2c1db046,,,QALY,QALY,85.0,a,numeric
+2025-08-28T10:14:09Z,2a60b40c-52f4-c67c-eafa-24fa2c1db046,,,QALY,QALY,86.0,a,numeric
+2016-08-28T10:14:09Z,2a60b40c-52f4-c67c-eafa-24fa2c1db046,,,DALY,DALY,0.0,a,numeric
+2017-08-28T10:14:09Z,2a60b40c-52f4-c67c-eafa-24fa2c1db046,,,DALY,DALY,0.0,a,numeric
+2018-08-28T10:14:09Z,2a60b40c-52f4-c67c-eafa-24fa2c1db046,,,DALY,DALY,0.0,a,numeric
+2019-08-28T10:14:09Z,2a60b40c-52f4-c67c-eafa-24fa2c1db046,,,DALY,DALY,0.0,a,numeric
+2020-08-28T10:14:09Z,2a60b40c-52f4-c67c-eafa-24fa2c1db046,,,DALY,DALY,0.0,a,numeric
+2021-08-28T10:14:09Z,2a60b40c-52f4-c67c-eafa-24fa2c1db046,,,DALY,DALY,0.0,a,numeric
+2022-08-28T10:14:09Z,2a60b40c-52f4-c67c-eafa-24fa2c1db046,,,DALY,DALY,0.0,a,numeric
+2023-08-28T10:14:09Z,2a60b40c-52f4-c67c-eafa-24fa2c1db046,,,DALY,DALY,0.0,a,numeric
+2024-08-28T10:14:09Z,2a60b40c-52f4-c67c-eafa-24fa2c1db046,,,DALY,DALY,0.0,a,numeric
+2025-08-28T10:14:09Z,2a60b40c-52f4-c67c-eafa-24fa2c1db046,,,DALY,DALY,0.0,a,numeric
+2016-08-28T10:14:09Z,2a60b40c-52f4-c67c-eafa-24fa2c1db046,,,QOLS,QOLS,1.0,{score},numeric
+2017-08-28T10:14:09Z,2a60b40c-52f4-c67c-eafa-24fa2c1db046,,,QOLS,QOLS,1.0,{score},numeric
+2018-08-28T10:14:09Z,2a60b40c-52f4-c67c-eafa-24fa2c1db046,,,QOLS,QOLS,1.0,{score},numeric
+2019-08-28T10:14:09Z,2a60b40c-52f4-c67c-eafa-24fa2c1db046,,,QOLS,QOLS,1.0,{score},numeric
+2020-08-28T10:14:09Z,2a60b40c-52f4-c67c-eafa-24fa2c1db046,,,QOLS,QOLS,1.0,{score},numeric
+2021-08-28T10:14:09Z,2a60b40c-52f4-c67c-eafa-24fa2c1db046,,,QOLS,QOLS,1.0,{score},numeric
+2022-08-28T10:14:09Z,2a60b40c-52f4-c67c-eafa-24fa2c1db046,,,QOLS,QOLS,1.0,{score},numeric
+2023-08-28T10:14:09Z,2a60b40c-52f4-c67c-eafa-24fa2c1db046,,,QOLS,QOLS,1.0,{score},numeric
+2024-08-28T10:14:09Z,2a60b40c-52f4-c67c-eafa-24fa2c1db046,,,QOLS,QOLS,1.0,{score},numeric
+2025-08-28T10:14:09Z,2a60b40c-52f4-c67c-eafa-24fa2c1db046,,,QOLS,QOLS,1.0,{score},numeric
+2002-11-17T22:08:50Z,4be14408-3743-0fc7-002e-9343c0887f98,4be14408-3743-0fc7-ae45-9ae4af3bf7b4,exam,69453-9,Cause of Death [US Standard Certificate of Death],Acute myeloid leukemia with FLT3 mutation (disorder),,text
+2016-05-08T18:40:08Z,81c34130-e4d7-01be-9e9a-44cb46b539dd,,,QALY,QALY,43.0,a,numeric
+2017-05-08T18:40:08Z,81c34130-e4d7-01be-9e9a-44cb46b539dd,,,QALY,QALY,44.0,a,numeric
+2018-05-08T18:40:08Z,81c34130-e4d7-01be-9e9a-44cb46b539dd,,,QALY,QALY,45.0,a,numeric
+2019-05-08T18:40:08Z,81c34130-e4d7-01be-9e9a-44cb46b539dd,,,QALY,QALY,46.0,a,numeric
+2020-05-08T18:40:08Z,81c34130-e4d7-01be-9e9a-44cb46b539dd,,,QALY,QALY,47.0,a,numeric
+2021-05-08T18:40:08Z,81c34130-e4d7-01be-9e9a-44cb46b539dd,,,QALY,QALY,48.0,a,numeric
+2022-05-08T18:40:08Z,81c34130-e4d7-01be-9e9a-44cb46b539dd,,,QALY,QALY,49.0,a,numeric
+2023-05-08T18:40:08Z,81c34130-e4d7-01be-9e9a-44cb46b539dd,,,QALY,QALY,50.0,a,numeric
+2024-05-08T18:40:08Z,81c34130-e4d7-01be-9e9a-44cb46b539dd,,,QALY,QALY,51.0,a,numeric
+2025-05-08T18:40:08Z,81c34130-e4d7-01be-9e9a-44cb46b539dd,,,QALY,QALY,52.0,a,numeric
+2016-05-08T18:40:08Z,81c34130-e4d7-01be-9e9a-44cb46b539dd,,,DALY,DALY,0.0,a,numeric
+2017-05-08T18:40:08Z,81c34130-e4d7-01be-9e9a-44cb46b539dd,,,DALY,DALY,0.0,a,numeric
+2018-05-08T18:40:08Z,81c34130-e4d7-01be-9e9a-44cb46b539dd,,,DALY,DALY,0.0,a,numeric
+2019-05-08T18:40:08Z,81c34130-e4d7-01be-9e9a-44cb46b539dd,,,DALY,DALY,0.0,a,numeric
+2020-05-08T18:40:08Z,81c34130-e4d7-01be-9e9a-44cb46b539dd,,,DALY,DALY,0.0,a,numeric
+2021-05-08T18:40:08Z,81c34130-e4d7-01be-9e9a-44cb46b539dd,,,DALY,DALY,0.0,a,numeric
+2022-05-08T18:40:08Z,81c34130-e4d7-01be-9e9a-44cb46b539dd,,,DALY,DALY,0.0,a,numeric
+2023-05-08T18:40:08Z,81c34130-e4d7-01be-9e9a-44cb46b539dd,,,DALY,DALY,0.0,a,numeric
+2024-05-08T18:40:08Z,81c34130-e4d7-01be-9e9a-44cb46b539dd,,,DALY,DALY,0.0,a,numeric
+2025-05-08T18:40:08Z,81c34130-e4d7-01be-9e9a-44cb46b539dd,,,DALY,DALY,0.0,a,numeric
+2016-05-08T18:40:08Z,81c34130-e4d7-01be-9e9a-44cb46b539dd,,,QOLS,QOLS,1.0,{score},numeric
+2017-05-08T18:40:08Z,81c34130-e4d7-01be-9e9a-44cb46b539dd,,,QOLS,QOLS,1.0,{score},numeric
+2018-05-08T18:40:08Z,81c34130-e4d7-01be-9e9a-44cb46b539dd,,,QOLS,QOLS,1.0,{score},numeric
+2019-05-08T18:40:08Z,81c34130-e4d7-01be-9e9a-44cb46b539dd,,,QOLS,QOLS,1.0,{score},numeric
+2020-05-08T18:40:08Z,81c34130-e4d7-01be-9e9a-44cb46b539dd,,,QOLS,QOLS,1.0,{score},numeric
+2021-05-08T18:40:08Z,81c34130-e4d7-01be-9e9a-44cb46b539dd,,,QOLS,QOLS,1.0,{score},numeric
+2022-05-08T18:40:08Z,81c34130-e4d7-01be-9e9a-44cb46b539dd,,,QOLS,QOLS,1.0,{score},numeric
+2023-05-08T18:40:08Z,81c34130-e4d7-01be-9e9a-44cb46b539dd,,,QOLS,QOLS,1.0,{score},numeric
+2024-05-08T18:40:08Z,81c34130-e4d7-01be-9e9a-44cb46b539dd,,,QOLS,QOLS,1.0,{score},numeric
+2025-05-08T18:40:08Z,81c34130-e4d7-01be-9e9a-44cb46b539dd,,,QOLS,QOLS,1.0,{score},numeric
+2016-03-01T07:16:17Z,979b8b07-2072-3c56-720b-13e210b3fc82,,,QALY,QALY,83.0,a,numeric
+2017-03-01T07:16:17Z,979b8b07-2072-3c56-720b-13e210b3fc82,,,QALY,QALY,84.0,a,numeric
+2018-03-01T07:16:17Z,979b8b07-2072-3c56-720b-13e210b3fc82,,,QALY,QALY,85.0,a,numeric
+2019-03-01T07:16:17Z,979b8b07-2072-3c56-720b-13e210b3fc82,,,QALY,QALY,86.0,a,numeric
+2020-03-01T07:16:17Z,979b8b07-2072-3c56-720b-13e210b3fc82,,,QALY,QALY,87.0,a,numeric
+2021-03-01T07:16:17Z,979b8b07-2072-3c56-720b-13e210b3fc82,,,QALY,QALY,88.0,a,numeric
+2022-03-01T07:16:17Z,979b8b07-2072-3c56-720b-13e210b3fc82,,,QALY,QALY,89.0,a,numeric
+2023-03-01T07:16:17Z,979b8b07-2072-3c56-720b-13e210b3fc82,,,QALY,QALY,90.0,a,numeric
+2024-03-01T07:16:17Z,979b8b07-2072-3c56-720b-13e210b3fc82,,,QALY,QALY,91.0,a,numeric
+2025-03-01T07:16:17Z,979b8b07-2072-3c56-720b-13e210b3fc82,,,QALY,QALY,92.0,a,numeric
+1987-04-01T05:09:31Z,9659201c-793d-2870-7016-e2dddbba8eda,9659201c-793d-2870-c959-43b1f71bf4b1,laboratory,6690-2,Leukocytes [#/volume] in Blood by Automated count,92.7,10*3/uL,numeric
+1987-04-01T05:09:31Z,9659201c-793d-2870-7016-e2dddbba8eda,9659201c-793d-2870-c959-43b1f71bf4b1,laboratory,718-7,Hemoglobin [Mass/volume] in Blood,10.5,g/dL,numeric
+1987-04-01T05:09:31Z,9659201c-793d-2870-7016-e2dddbba8eda,9659201c-793d-2870-c959-43b1f71bf4b1,laboratory,777-3,Platelets [#/volume] in Blood by Automated count,16.4,10*3/uL,numeric
+1987-04-01T05:09:31Z,9659201c-793d-2870-7016-e2dddbba8eda,9659201c-793d-2870-c959-43b1f71bf4b1,laboratory,751-8,Neutrophils [#/volume] in Blood by Automated count,0.8,10*3/uL,numeric
+1987-04-01T05:09:31Z,9659201c-793d-2870-7016-e2dddbba8eda,9659201c-793d-2870-c959-43b1f71bf4b1,laboratory,709-6,Blasts/100 leukocytes in Blood by Manual count,59.5,%,numeric
+1987-04-01T05:09:31Z,9659201c-793d-2870-7016-e2dddbba8eda,9659201c-793d-2870-c959-43b1f71bf4b1,laboratory,14804-9,Lactate dehydrogenase [Enzymatic activity/volume] in Serum or Plasma,1362.5,U/L,numeric
+1987-04-01T05:09:31Z,9659201c-793d-2870-7016-e2dddbba8eda,9659201c-793d-2870-c959-43b1f71bf4b1,laboratory,2160-0,Creatinine [Mass/volume] in Serum or Plasma,0.9,mg/dL,numeric
+1987-04-01T05:09:31Z,9659201c-793d-2870-7016-e2dddbba8eda,9659201c-793d-2870-c959-43b1f71bf4b1,laboratory,3084-1,Urate [Mass/volume] in Serum or Plasma,6.7,mg/dL,numeric
+1987-04-01T06:05:28Z,9659201c-793d-2870-7016-e2dddbba8eda,9659201c-793d-2870-c959-43b1f71bf4b1,laboratory,26464-8,Blasts/100 cells in Bone marrow,24.9,%,numeric
+1987-04-01T10:33:40Z,9659201c-793d-2870-7016-e2dddbba8eda,9659201c-793d-2870-c959-43b1f71bf4b1,laboratory,72216-5,t(15;17)(q24.1;q21.1)(PML RARA) bcr1 fusion transcript/control transcript [# Ratio] in Blood or Tissue by Molecular genetics method,Positive (qualifier value),{ratio},text
+1987-04-01T13:28:51Z,9659201c-793d-2870-7016-e2dddbba8eda,9659201c-793d-2870-c959-43b1f71bf4b1,laboratory,751-8,Neutrophils [#/volume] in Blood by Automated count,0.4,10*3/uL,numeric
+1987-04-01T13:28:51Z,9659201c-793d-2870-7016-e2dddbba8eda,9659201c-793d-2870-c959-43b1f71bf4b1,vital-signs,8310-5,Body temperature,102.7,[degF],numeric
+1987-04-01T15:27:33Z,9659201c-793d-2870-7016-e2dddbba8eda,9659201c-793d-2870-c959-43b1f71bf4b1,laboratory,102098-1,Acute myeloid leukemia minimal residual disease in Bone marrow by Flow cytometry (FC) Narrative,2.1,%,numeric
+1987-10-30T05:09:31Z,9659201c-793d-2870-7016-e2dddbba8eda,9659201c-793d-2870-1bf2-0e390bc2a9fd,exam,69453-9,Cause of Death [US Standard Certificate of Death],Acute promyelocytic leukemia (disorder),,text
+2016-03-01T07:16:17Z,979b8b07-2072-3c56-720b-13e210b3fc82,,,DALY,DALY,0.0,a,numeric
+2017-03-01T07:16:17Z,979b8b07-2072-3c56-720b-13e210b3fc82,,,DALY,DALY,0.0,a,numeric
+2018-03-01T07:16:17Z,979b8b07-2072-3c56-720b-13e210b3fc82,,,DALY,DALY,0.0,a,numeric
+2019-03-01T07:16:17Z,979b8b07-2072-3c56-720b-13e210b3fc82,,,DALY,DALY,0.0,a,numeric
+2020-03-01T07:16:17Z,979b8b07-2072-3c56-720b-13e210b3fc82,,,DALY,DALY,0.0,a,numeric
+2021-03-01T07:16:17Z,979b8b07-2072-3c56-720b-13e210b3fc82,,,DALY,DALY,0.0,a,numeric
+2022-03-01T07:16:17Z,979b8b07-2072-3c56-720b-13e210b3fc82,,,DALY,DALY,0.0,a,numeric
+2023-03-01T07:16:17Z,979b8b07-2072-3c56-720b-13e210b3fc82,,,DALY,DALY,0.0,a,numeric
+2024-03-01T07:16:17Z,979b8b07-2072-3c56-720b-13e210b3fc82,,,DALY,DALY,0.0,a,numeric
+2025-03-01T07:16:17Z,979b8b07-2072-3c56-720b-13e210b3fc82,,,DALY,DALY,0.0,a,numeric
+2016-03-01T07:16:17Z,979b8b07-2072-3c56-720b-13e210b3fc82,,,QOLS,QOLS,1.0,{score},numeric
+2017-03-01T07:16:17Z,979b8b07-2072-3c56-720b-13e210b3fc82,,,QOLS,QOLS,1.0,{score},numeric
+2018-03-01T07:16:17Z,979b8b07-2072-3c56-720b-13e210b3fc82,,,QOLS,QOLS,1.0,{score},numeric
+2019-03-01T07:16:17Z,979b8b07-2072-3c56-720b-13e210b3fc82,,,QOLS,QOLS,1.0,{score},numeric
+2020-03-01T07:16:17Z,979b8b07-2072-3c56-720b-13e210b3fc82,,,QOLS,QOLS,1.0,{score},numeric
+2021-03-01T07:16:17Z,979b8b07-2072-3c56-720b-13e210b3fc82,,,QOLS,QOLS,1.0,{score},numeric
+2022-03-01T07:16:17Z,979b8b07-2072-3c56-720b-13e210b3fc82,,,QOLS,QOLS,1.0,{score},numeric
+2023-03-01T07:16:17Z,979b8b07-2072-3c56-720b-13e210b3fc82,,,QOLS,QOLS,1.0,{score},numeric
+2024-03-01T07:16:17Z,979b8b07-2072-3c56-720b-13e210b3fc82,,,QOLS,QOLS,1.0,{score},numeric
+2025-03-01T07:16:17Z,979b8b07-2072-3c56-720b-13e210b3fc82,,,QOLS,QOLS,1.0,{score},numeric
+2016-07-16T10:52:17Z,3b2eb2d3-92bf-596c-6128-e232af8e3153,,,QALY,QALY,15.0,a,numeric
+2017-07-16T10:52:17Z,3b2eb2d3-92bf-596c-6128-e232af8e3153,,,QALY,QALY,16.0,a,numeric
+2018-07-16T10:52:17Z,3b2eb2d3-92bf-596c-6128-e232af8e3153,,,QALY,QALY,17.0,a,numeric
+2019-07-16T10:52:17Z,3b2eb2d3-92bf-596c-6128-e232af8e3153,,,QALY,QALY,18.0,a,numeric
+2020-07-16T10:52:17Z,3b2eb2d3-92bf-596c-6128-e232af8e3153,,,QALY,QALY,19.0,a,numeric
+2021-07-16T10:52:17Z,3b2eb2d3-92bf-596c-6128-e232af8e3153,,,QALY,QALY,20.0,a,numeric
+2022-07-16T10:52:17Z,3b2eb2d3-92bf-596c-6128-e232af8e3153,,,QALY,QALY,21.0,a,numeric
+2023-07-16T10:52:17Z,3b2eb2d3-92bf-596c-6128-e232af8e3153,,,QALY,QALY,22.0,a,numeric
+2024-07-16T10:52:17Z,3b2eb2d3-92bf-596c-6128-e232af8e3153,,,QALY,QALY,23.0,a,numeric
+2025-07-16T10:52:17Z,3b2eb2d3-92bf-596c-6128-e232af8e3153,,,QALY,QALY,24.0,a,numeric
+2016-07-16T10:52:17Z,3b2eb2d3-92bf-596c-6128-e232af8e3153,,,DALY,DALY,0.0,a,numeric
+2017-07-16T10:52:17Z,3b2eb2d3-92bf-596c-6128-e232af8e3153,,,DALY,DALY,0.0,a,numeric
+2018-07-16T10:52:17Z,3b2eb2d3-92bf-596c-6128-e232af8e3153,,,DALY,DALY,0.0,a,numeric
+2019-07-16T10:52:17Z,3b2eb2d3-92bf-596c-6128-e232af8e3153,,,DALY,DALY,0.0,a,numeric
+2020-07-16T10:52:17Z,3b2eb2d3-92bf-596c-6128-e232af8e3153,,,DALY,DALY,0.0,a,numeric
+2021-07-16T10:52:17Z,3b2eb2d3-92bf-596c-6128-e232af8e3153,,,DALY,DALY,0.0,a,numeric
+2022-07-16T10:52:17Z,3b2eb2d3-92bf-596c-6128-e232af8e3153,,,DALY,DALY,0.0,a,numeric
+2023-07-16T10:52:17Z,3b2eb2d3-92bf-596c-6128-e232af8e3153,,,DALY,DALY,0.0,a,numeric
+2024-07-16T10:52:17Z,3b2eb2d3-92bf-596c-6128-e232af8e3153,,,DALY,DALY,0.0,a,numeric
+2025-07-16T10:52:17Z,3b2eb2d3-92bf-596c-6128-e232af8e3153,,,DALY,DALY,0.0,a,numeric
+2016-07-16T10:52:17Z,3b2eb2d3-92bf-596c-6128-e232af8e3153,,,QOLS,QOLS,1.0,{score},numeric
+2017-07-16T10:52:17Z,3b2eb2d3-92bf-596c-6128-e232af8e3153,,,QOLS,QOLS,1.0,{score},numeric
+2018-07-16T10:52:17Z,3b2eb2d3-92bf-596c-6128-e232af8e3153,,,QOLS,QOLS,1.0,{score},numeric
+2019-07-16T10:52:17Z,3b2eb2d3-92bf-596c-6128-e232af8e3153,,,QOLS,QOLS,1.0,{score},numeric
+2020-07-16T10:52:17Z,3b2eb2d3-92bf-596c-6128-e232af8e3153,,,QOLS,QOLS,1.0,{score},numeric
+2021-07-16T10:52:17Z,3b2eb2d3-92bf-596c-6128-e232af8e3153,,,QOLS,QOLS,1.0,{score},numeric
+2022-07-16T10:52:17Z,3b2eb2d3-92bf-596c-6128-e232af8e3153,,,QOLS,QOLS,1.0,{score},numeric
+2023-07-16T10:52:17Z,3b2eb2d3-92bf-596c-6128-e232af8e3153,,,QOLS,QOLS,1.0,{score},numeric
+1995-03-25T22:08:50Z,a8681438-35b9-12cf-bac3-362130e85f8a,a8681438-35b9-12cf-d4b6-0a31e23afe83,laboratory,6690-2,Leukocytes [#/volume] in Blood by Automated count,28.2,10*3/uL,numeric
+2024-07-16T10:52:17Z,3b2eb2d3-92bf-596c-6128-e232af8e3153,,,QOLS,QOLS,1.0,{score},numeric
+1995-03-25T22:08:50Z,a8681438-35b9-12cf-bac3-362130e85f8a,a8681438-35b9-12cf-d4b6-0a31e23afe83,laboratory,718-7,Hemoglobin [Mass/volume] in Blood,9.5,g/dL,numeric
+2025-07-16T10:52:17Z,3b2eb2d3-92bf-596c-6128-e232af8e3153,,,QOLS,QOLS,1.0,{score},numeric
+1995-03-25T22:08:50Z,a8681438-35b9-12cf-bac3-362130e85f8a,a8681438-35b9-12cf-d4b6-0a31e23afe83,laboratory,777-3,Platelets [#/volume] in Blood by Automated count,53.7,10*3/uL,numeric
+1995-03-25T22:08:50Z,a8681438-35b9-12cf-bac3-362130e85f8a,a8681438-35b9-12cf-d4b6-0a31e23afe83,laboratory,751-8,Neutrophils [#/volume] in Blood by Automated count,0.3,10*3/uL,numeric
+1995-03-25T22:08:50Z,a8681438-35b9-12cf-bac3-362130e85f8a,a8681438-35b9-12cf-d4b6-0a31e23afe83,laboratory,709-6,Blasts/100 leukocytes in Blood by Manual count,61.1,%,numeric
+1995-03-25T22:08:50Z,a8681438-35b9-12cf-bac3-362130e85f8a,a8681438-35b9-12cf-d4b6-0a31e23afe83,laboratory,14804-9,Lactate dehydrogenase [Enzymatic activity/volume] in Serum or Plasma,1901.6,U/L,numeric
+1995-03-25T22:08:50Z,a8681438-35b9-12cf-bac3-362130e85f8a,a8681438-35b9-12cf-d4b6-0a31e23afe83,laboratory,2160-0,Creatinine [Mass/volume] in Serum or Plasma,0.4,mg/dL,numeric
+1995-03-25T22:08:50Z,a8681438-35b9-12cf-bac3-362130e85f8a,a8681438-35b9-12cf-d4b6-0a31e23afe83,laboratory,3084-1,Urate [Mass/volume] in Serum or Plasma,8.4,mg/dL,numeric
+1995-03-25T23:05:31Z,a8681438-35b9-12cf-bac3-362130e85f8a,a8681438-35b9-12cf-d4b6-0a31e23afe83,laboratory,26464-8,Blasts/100 cells in Bone marrow,89.2,%,numeric
+1995-03-26T02:53:03Z,a8681438-35b9-12cf-bac3-362130e85f8a,a8681438-35b9-12cf-d4b6-0a31e23afe83,laboratory,89266-3,NPM1 gene mutation analysis in Blood or Tissue by Molecular genetics method,Positive (qualifier value),{Qualitative},text
+1995-03-26T07:06:35Z,a8681438-35b9-12cf-bac3-362130e85f8a,a8681438-35b9-12cf-d4b6-0a31e23afe83,laboratory,751-8,Neutrophils [#/volume] in Blood by Automated count,0.3,10*3/uL,numeric
+1995-03-26T07:06:35Z,a8681438-35b9-12cf-bac3-362130e85f8a,a8681438-35b9-12cf-d4b6-0a31e23afe83,vital-signs,8310-5,Body temperature,96.0,[degF],numeric
+1995-03-26T08:17:59Z,a8681438-35b9-12cf-bac3-362130e85f8a,a8681438-35b9-12cf-d4b6-0a31e23afe83,laboratory,102098-1,Acute myeloid leukemia minimal residual disease in Bone marrow by Flow cytometry (FC) Narrative,0.8,%,numeric
+1995-08-27T22:08:50Z,a8681438-35b9-12cf-bac3-362130e85f8a,a8681438-35b9-12cf-dca3-88e5ae014a75,exam,69453-9,Cause of Death [US Standard Certificate of Death],Acute myeloid leukemia with NPM1 mutation (disorder),,text
+2016-08-22T04:26:14Z,d067fee2-2740-9cf1-fefd-c62b65af69a5,,,QALY,QALY,29.0,a,numeric
+2017-08-22T04:26:14Z,d067fee2-2740-9cf1-fefd-c62b65af69a5,,,QALY,QALY,30.0,a,numeric
+2018-08-22T04:26:14Z,d067fee2-2740-9cf1-fefd-c62b65af69a5,,,QALY,QALY,31.0,a,numeric
+2019-08-22T04:26:14Z,d067fee2-2740-9cf1-fefd-c62b65af69a5,,,QALY,QALY,32.0,a,numeric
+2020-08-22T04:26:14Z,d067fee2-2740-9cf1-fefd-c62b65af69a5,,,QALY,QALY,33.0,a,numeric
+2021-08-22T04:26:14Z,d067fee2-2740-9cf1-fefd-c62b65af69a5,,,QALY,QALY,34.0,a,numeric
+2022-08-22T04:26:14Z,d067fee2-2740-9cf1-fefd-c62b65af69a5,,,QALY,QALY,35.0,a,numeric
+2023-08-22T04:26:14Z,d067fee2-2740-9cf1-fefd-c62b65af69a5,,,QALY,QALY,36.0,a,numeric
+2024-08-22T04:26:14Z,d067fee2-2740-9cf1-fefd-c62b65af69a5,,,QALY,QALY,37.0,a,numeric
+2025-08-22T04:26:14Z,d067fee2-2740-9cf1-fefd-c62b65af69a5,,,QALY,QALY,38.0,a,numeric
+2016-08-22T04:26:14Z,d067fee2-2740-9cf1-fefd-c62b65af69a5,,,DALY,DALY,0.0,a,numeric
+2017-08-22T04:26:14Z,d067fee2-2740-9cf1-fefd-c62b65af69a5,,,DALY,DALY,0.0,a,numeric
+2018-08-22T04:26:14Z,d067fee2-2740-9cf1-fefd-c62b65af69a5,,,DALY,DALY,0.0,a,numeric
+2019-08-22T04:26:14Z,d067fee2-2740-9cf1-fefd-c62b65af69a5,,,DALY,DALY,0.0,a,numeric
+2020-08-22T04:26:14Z,d067fee2-2740-9cf1-fefd-c62b65af69a5,,,DALY,DALY,0.0,a,numeric
+2021-08-22T04:26:14Z,d067fee2-2740-9cf1-fefd-c62b65af69a5,,,DALY,DALY,0.0,a,numeric
+2022-08-22T04:26:14Z,d067fee2-2740-9cf1-fefd-c62b65af69a5,,,DALY,DALY,0.0,a,numeric
+2023-08-22T04:26:14Z,d067fee2-2740-9cf1-fefd-c62b65af69a5,,,DALY,DALY,0.0,a,numeric
+2024-08-22T04:26:14Z,d067fee2-2740-9cf1-fefd-c62b65af69a5,,,DALY,DALY,0.0,a,numeric
+2025-08-22T04:26:14Z,d067fee2-2740-9cf1-fefd-c62b65af69a5,,,DALY,DALY,0.0,a,numeric
+2016-08-22T04:26:14Z,d067fee2-2740-9cf1-fefd-c62b65af69a5,,,QOLS,QOLS,1.0,{score},numeric
+2017-08-22T04:26:14Z,d067fee2-2740-9cf1-fefd-c62b65af69a5,,,QOLS,QOLS,1.0,{score},numeric
+2018-08-22T04:26:14Z,d067fee2-2740-9cf1-fefd-c62b65af69a5,,,QOLS,QOLS,1.0,{score},numeric
+2019-08-22T04:26:14Z,d067fee2-2740-9cf1-fefd-c62b65af69a5,,,QOLS,QOLS,1.0,{score},numeric
+2020-08-22T04:26:14Z,d067fee2-2740-9cf1-fefd-c62b65af69a5,,,QOLS,QOLS,1.0,{score},numeric
+2021-08-22T04:26:14Z,d067fee2-2740-9cf1-fefd-c62b65af69a5,,,QOLS,QOLS,1.0,{score},numeric
+2022-08-22T04:26:14Z,d067fee2-2740-9cf1-fefd-c62b65af69a5,,,QOLS,QOLS,1.0,{score},numeric
+2023-08-22T04:26:14Z,d067fee2-2740-9cf1-fefd-c62b65af69a5,,,QOLS,QOLS,1.0,{score},numeric
+2024-08-22T04:26:14Z,d067fee2-2740-9cf1-fefd-c62b65af69a5,,,QOLS,QOLS,1.0,{score},numeric
+2025-08-22T04:26:14Z,d067fee2-2740-9cf1-fefd-c62b65af69a5,,,QOLS,QOLS,1.0,{score},numeric
+2016-03-12T23:28:59Z,b5926a83-f8e0-9fde-5ee5-dadee8d4bc4f,,,QALY,QALY,27.0,a,numeric
+2017-03-12T23:28:59Z,b5926a83-f8e0-9fde-5ee5-dadee8d4bc4f,,,QALY,QALY,28.0,a,numeric
+2018-03-12T23:28:59Z,b5926a83-f8e0-9fde-5ee5-dadee8d4bc4f,,,QALY,QALY,29.0,a,numeric
+2019-03-12T23:28:59Z,b5926a83-f8e0-9fde-5ee5-dadee8d4bc4f,,,QALY,QALY,30.0,a,numeric
+2020-03-12T23:28:59Z,b5926a83-f8e0-9fde-5ee5-dadee8d4bc4f,,,QALY,QALY,31.0,a,numeric
+2021-03-12T23:28:59Z,b5926a83-f8e0-9fde-5ee5-dadee8d4bc4f,,,QALY,QALY,32.0,a,numeric
+2022-03-12T23:28:59Z,b5926a83-f8e0-9fde-5ee5-dadee8d4bc4f,,,QALY,QALY,33.0,a,numeric
+2023-03-12T23:28:59Z,b5926a83-f8e0-9fde-5ee5-dadee8d4bc4f,,,QALY,QALY,34.0,a,numeric
+2024-03-12T23:28:59Z,b5926a83-f8e0-9fde-5ee5-dadee8d4bc4f,,,QALY,QALY,35.0,a,numeric
+2025-03-12T23:28:59Z,b5926a83-f8e0-9fde-5ee5-dadee8d4bc4f,,,QALY,QALY,36.0,a,numeric
+2016-03-12T23:28:59Z,b5926a83-f8e0-9fde-5ee5-dadee8d4bc4f,,,DALY,DALY,0.0,a,numeric
+2017-03-12T23:28:59Z,b5926a83-f8e0-9fde-5ee5-dadee8d4bc4f,,,DALY,DALY,0.0,a,numeric
+2018-03-12T23:28:59Z,b5926a83-f8e0-9fde-5ee5-dadee8d4bc4f,,,DALY,DALY,0.0,a,numeric
+2019-03-12T23:28:59Z,b5926a83-f8e0-9fde-5ee5-dadee8d4bc4f,,,DALY,DALY,0.0,a,numeric
+2020-03-12T23:28:59Z,b5926a83-f8e0-9fde-5ee5-dadee8d4bc4f,,,DALY,DALY,0.0,a,numeric
+2021-03-12T23:28:59Z,b5926a83-f8e0-9fde-5ee5-dadee8d4bc4f,,,DALY,DALY,0.0,a,numeric
+2022-03-12T23:28:59Z,b5926a83-f8e0-9fde-5ee5-dadee8d4bc4f,,,DALY,DALY,0.0,a,numeric
+2023-03-12T23:28:59Z,b5926a83-f8e0-9fde-5ee5-dadee8d4bc4f,,,DALY,DALY,0.0,a,numeric
+2024-03-12T23:28:59Z,b5926a83-f8e0-9fde-5ee5-dadee8d4bc4f,,,DALY,DALY,0.0,a,numeric
+2025-03-12T23:28:59Z,b5926a83-f8e0-9fde-5ee5-dadee8d4bc4f,,,DALY,DALY,0.0,a,numeric
+2016-03-12T23:28:59Z,b5926a83-f8e0-9fde-5ee5-dadee8d4bc4f,,,QOLS,QOLS,1.0,{score},numeric
+2017-03-12T23:28:59Z,b5926a83-f8e0-9fde-5ee5-dadee8d4bc4f,,,QOLS,QOLS,1.0,{score},numeric
+2018-03-12T23:28:59Z,b5926a83-f8e0-9fde-5ee5-dadee8d4bc4f,,,QOLS,QOLS,1.0,{score},numeric
+2019-03-12T23:28:59Z,b5926a83-f8e0-9fde-5ee5-dadee8d4bc4f,,,QOLS,QOLS,1.0,{score},numeric
+2020-03-12T23:28:59Z,b5926a83-f8e0-9fde-5ee5-dadee8d4bc4f,,,QOLS,QOLS,1.0,{score},numeric
+2021-03-12T23:28:59Z,b5926a83-f8e0-9fde-5ee5-dadee8d4bc4f,,,QOLS,QOLS,1.0,{score},numeric
+2022-03-12T23:28:59Z,b5926a83-f8e0-9fde-5ee5-dadee8d4bc4f,,,QOLS,QOLS,1.0,{score},numeric
+2023-03-12T23:28:59Z,b5926a83-f8e0-9fde-5ee5-dadee8d4bc4f,,,QOLS,QOLS,1.0,{score},numeric
+2024-03-12T23:28:59Z,b5926a83-f8e0-9fde-5ee5-dadee8d4bc4f,,,QOLS,QOLS,1.0,{score},numeric
+2025-03-12T23:28:59Z,b5926a83-f8e0-9fde-5ee5-dadee8d4bc4f,,,QOLS,QOLS,1.0,{score},numeric
+1942-06-26T04:18:49Z,796d8c16-e4c3-ffee-2427-df78a27a2e49,796d8c16-e4c3-ffee-bce5-91747dbe0576,laboratory,6690-2,Leukocytes [#/volume] in Blood by Automated count,33.9,10*3/uL,numeric
+1942-06-26T04:18:49Z,796d8c16-e4c3-ffee-2427-df78a27a2e49,796d8c16-e4c3-ffee-bce5-91747dbe0576,laboratory,718-7,Hemoglobin [Mass/volume] in Blood,7.6,g/dL,numeric
+1942-06-26T04:18:49Z,796d8c16-e4c3-ffee-2427-df78a27a2e49,796d8c16-e4c3-ffee-bce5-91747dbe0576,laboratory,777-3,Platelets [#/volume] in Blood by Automated count,98.7,10*3/uL,numeric
+1942-06-26T04:18:49Z,796d8c16-e4c3-ffee-2427-df78a27a2e49,796d8c16-e4c3-ffee-bce5-91747dbe0576,laboratory,751-8,Neutrophils [#/volume] in Blood by Automated count,0.5,10*3/uL,numeric
+1942-06-26T04:18:49Z,796d8c16-e4c3-ffee-2427-df78a27a2e49,796d8c16-e4c3-ffee-bce5-91747dbe0576,laboratory,709-6,Blasts/100 leukocytes in Blood by Manual count,60.4,%,numeric
+1942-06-26T04:18:49Z,796d8c16-e4c3-ffee-2427-df78a27a2e49,796d8c16-e4c3-ffee-bce5-91747dbe0576,laboratory,14804-9,Lactate dehydrogenase [Enzymatic activity/volume] in Serum or Plasma,1917.7,U/L,numeric
+1942-06-26T04:18:49Z,796d8c16-e4c3-ffee-2427-df78a27a2e49,796d8c16-e4c3-ffee-bce5-91747dbe0576,laboratory,2160-0,Creatinine [Mass/volume] in Serum or Plasma,1.2,mg/dL,numeric
+1942-06-26T04:18:49Z,796d8c16-e4c3-ffee-2427-df78a27a2e49,796d8c16-e4c3-ffee-bce5-91747dbe0576,laboratory,3084-1,Urate [Mass/volume] in Serum or Plasma,8.6,mg/dL,numeric
+1942-06-26T04:55:36Z,796d8c16-e4c3-ffee-2427-df78a27a2e49,796d8c16-e4c3-ffee-bce5-91747dbe0576,laboratory,26464-8,Blasts/100 cells in Bone marrow,67.4,%,numeric
+1942-06-26T09:08:36Z,796d8c16-e4c3-ffee-2427-df78a27a2e49,796d8c16-e4c3-ffee-bce5-91747dbe0576,laboratory,53007-3,RUNX1T1 gene rearrangements [Presence] in Blood or Tissue,Positive (qualifier value),{Qualitative},text
+1942-06-26T12:27:05Z,796d8c16-e4c3-ffee-2427-df78a27a2e49,796d8c16-e4c3-ffee-bce5-91747dbe0576,laboratory,751-8,Neutrophils [#/volume] in Blood by Automated count,0.3,10*3/uL,numeric
+1942-06-26T12:27:05Z,796d8c16-e4c3-ffee-2427-df78a27a2e49,796d8c16-e4c3-ffee-bce5-91747dbe0576,vital-signs,8310-5,Body temperature,99.2,[degF],numeric
+1942-06-26T13:48:25Z,796d8c16-e4c3-ffee-2427-df78a27a2e49,796d8c16-e4c3-ffee-bce5-91747dbe0576,laboratory,102098-1,Acute myeloid leukemia minimal residual disease in Bone marrow by Flow cytometry (FC) Narrative,1.7,%,numeric
+1943-05-21T04:18:49Z,796d8c16-e4c3-ffee-2427-df78a27a2e49,796d8c16-e4c3-ffee-0596-1f2ca1f52e27,exam,69453-9,Cause of Death [US Standard Certificate of Death],Acute myeloid leukemia with t(8;21)(q22;q22) (disorder),,text
+1952-09-16T20:35:48Z,ba573a19-a3b6-c617-63c8-56acf1468d36,ba573a19-a3b6-c617-3e4f-8f8b17c32da4,laboratory,6690-2,Leukocytes [#/volume] in Blood by Automated count,89.3,10*3/uL,numeric
+1952-09-16T20:35:48Z,ba573a19-a3b6-c617-63c8-56acf1468d36,ba573a19-a3b6-c617-3e4f-8f8b17c32da4,laboratory,718-7,Hemoglobin [Mass/volume] in Blood,10.1,g/dL,numeric
+1952-09-16T20:35:48Z,ba573a19-a3b6-c617-63c8-56acf1468d36,ba573a19-a3b6-c617-3e4f-8f8b17c32da4,laboratory,777-3,Platelets [#/volume] in Blood by Automated count,39.7,10*3/uL,numeric
+1952-09-16T20:35:48Z,ba573a19-a3b6-c617-63c8-56acf1468d36,ba573a19-a3b6-c617-3e4f-8f8b17c32da4,laboratory,751-8,Neutrophils [#/volume] in Blood by Automated count,1.0,10*3/uL,numeric
+1952-09-16T20:35:48Z,ba573a19-a3b6-c617-63c8-56acf1468d36,ba573a19-a3b6-c617-3e4f-8f8b17c32da4,laboratory,709-6,Blasts/100 leukocytes in Blood by Manual count,62.0,%,numeric
+1952-09-16T20:35:48Z,ba573a19-a3b6-c617-63c8-56acf1468d36,ba573a19-a3b6-c617-3e4f-8f8b17c32da4,laboratory,14804-9,Lactate dehydrogenase [Enzymatic activity/volume] in Serum or Plasma,1738.0,U/L,numeric
+1952-09-16T20:35:48Z,ba573a19-a3b6-c617-63c8-56acf1468d36,ba573a19-a3b6-c617-3e4f-8f8b17c32da4,laboratory,2160-0,Creatinine [Mass/volume] in Serum or Plasma,0.5,mg/dL,numeric
+1952-09-16T20:35:48Z,ba573a19-a3b6-c617-63c8-56acf1468d36,ba573a19-a3b6-c617-3e4f-8f8b17c32da4,laboratory,3084-1,Urate [Mass/volume] in Serum or Plasma,8.1,mg/dL,numeric
+1952-09-16T21:15:36Z,ba573a19-a3b6-c617-63c8-56acf1468d36,ba573a19-a3b6-c617-3e4f-8f8b17c32da4,laboratory,26464-8,Blasts/100 cells in Bone marrow,78.4,%,numeric
+1952-09-17T01:35:30Z,ba573a19-a3b6-c617-63c8-56acf1468d36,ba573a19-a3b6-c617-3e4f-8f8b17c32da4,laboratory,89266-3,NPM1 gene mutation analysis in Blood or Tissue by Molecular genetics method,Positive (qualifier value),{Qualitative},text
+1952-09-17T04:08:00Z,ba573a19-a3b6-c617-63c8-56acf1468d36,ba573a19-a3b6-c617-3e4f-8f8b17c32da4,laboratory,751-8,Neutrophils [#/volume] in Blood by Automated count,0.5,10*3/uL,numeric
+1952-09-17T04:08:00Z,ba573a19-a3b6-c617-63c8-56acf1468d36,ba573a19-a3b6-c617-3e4f-8f8b17c32da4,vital-signs,8310-5,Body temperature,101.4,[degF],numeric
+1952-09-17T05:19:17Z,ba573a19-a3b6-c617-63c8-56acf1468d36,ba573a19-a3b6-c617-3e4f-8f8b17c32da4,laboratory,102098-1,Acute myeloid leukemia minimal residual disease in Bone marrow by Flow cytometry (FC) Narrative,3.8,%,numeric
+1953-06-07T20:35:48Z,ba573a19-a3b6-c617-63c8-56acf1468d36,ba573a19-a3b6-c617-4b21-6f0ff15c04d9,exam,69453-9,Cause of Death [US Standard Certificate of Death],Acute myeloid leukemia with NPM1 mutation (disorder),,text
+2016-03-21T17:48:26Z,9e681a82-ec47-0a53-c10c-1f4f76ed2a4d,,,QALY,QALY,22.0,a,numeric
+2017-03-21T17:48:26Z,9e681a82-ec47-0a53-c10c-1f4f76ed2a4d,,,QALY,QALY,23.0,a,numeric
+2018-03-21T17:48:26Z,9e681a82-ec47-0a53-c10c-1f4f76ed2a4d,,,QALY,QALY,24.0,a,numeric
+2019-03-21T17:48:26Z,9e681a82-ec47-0a53-c10c-1f4f76ed2a4d,,,QALY,QALY,25.0,a,numeric
+2020-03-21T17:48:26Z,9e681a82-ec47-0a53-c10c-1f4f76ed2a4d,,,QALY,QALY,26.0,a,numeric
+2021-03-21T17:48:26Z,9e681a82-ec47-0a53-c10c-1f4f76ed2a4d,,,QALY,QALY,27.0,a,numeric
+2022-03-21T17:48:26Z,9e681a82-ec47-0a53-c10c-1f4f76ed2a4d,,,QALY,QALY,28.0,a,numeric
+2023-03-21T17:48:26Z,9e681a82-ec47-0a53-c10c-1f4f76ed2a4d,,,QALY,QALY,29.0,a,numeric
+2024-03-21T17:48:26Z,9e681a82-ec47-0a53-c10c-1f4f76ed2a4d,,,QALY,QALY,30.0,a,numeric
+2025-03-21T17:48:26Z,9e681a82-ec47-0a53-c10c-1f4f76ed2a4d,,,QALY,QALY,31.0,a,numeric
+2016-03-21T17:48:26Z,9e681a82-ec47-0a53-c10c-1f4f76ed2a4d,,,DALY,DALY,0.0,a,numeric
+2017-03-21T17:48:26Z,9e681a82-ec47-0a53-c10c-1f4f76ed2a4d,,,DALY,DALY,0.0,a,numeric
+2018-03-21T17:48:26Z,9e681a82-ec47-0a53-c10c-1f4f76ed2a4d,,,DALY,DALY,0.0,a,numeric
+2019-03-21T17:48:26Z,9e681a82-ec47-0a53-c10c-1f4f76ed2a4d,,,DALY,DALY,0.0,a,numeric
+2020-03-21T17:48:26Z,9e681a82-ec47-0a53-c10c-1f4f76ed2a4d,,,DALY,DALY,0.0,a,numeric
+2021-03-21T17:48:26Z,9e681a82-ec47-0a53-c10c-1f4f76ed2a4d,,,DALY,DALY,0.0,a,numeric
+2022-03-21T17:48:26Z,9e681a82-ec47-0a53-c10c-1f4f76ed2a4d,,,DALY,DALY,0.0,a,numeric
+2023-03-21T17:48:26Z,9e681a82-ec47-0a53-c10c-1f4f76ed2a4d,,,DALY,DALY,0.0,a,numeric
+2024-03-21T17:48:26Z,9e681a82-ec47-0a53-c10c-1f4f76ed2a4d,,,DALY,DALY,0.0,a,numeric
+2025-03-21T17:48:26Z,9e681a82-ec47-0a53-c10c-1f4f76ed2a4d,,,DALY,DALY,0.0,a,numeric
+2016-03-21T17:48:26Z,9e681a82-ec47-0a53-c10c-1f4f76ed2a4d,,,QOLS,QOLS,1.0,{score},numeric
+2017-03-21T17:48:26Z,9e681a82-ec47-0a53-c10c-1f4f76ed2a4d,,,QOLS,QOLS,1.0,{score},numeric
+2018-03-21T17:48:26Z,9e681a82-ec47-0a53-c10c-1f4f76ed2a4d,,,QOLS,QOLS,1.0,{score},numeric
+2019-03-21T17:48:26Z,9e681a82-ec47-0a53-c10c-1f4f76ed2a4d,,,QOLS,QOLS,1.0,{score},numeric
+2020-03-21T17:48:26Z,9e681a82-ec47-0a53-c10c-1f4f76ed2a4d,,,QOLS,QOLS,1.0,{score},numeric
+2021-03-21T17:48:26Z,9e681a82-ec47-0a53-c10c-1f4f76ed2a4d,,,QOLS,QOLS,1.0,{score},numeric
+2022-03-21T17:48:26Z,9e681a82-ec47-0a53-c10c-1f4f76ed2a4d,,,QOLS,QOLS,1.0,{score},numeric
+2023-03-21T17:48:26Z,9e681a82-ec47-0a53-c10c-1f4f76ed2a4d,,,QOLS,QOLS,1.0,{score},numeric
+2024-03-21T17:48:26Z,9e681a82-ec47-0a53-c10c-1f4f76ed2a4d,,,QOLS,QOLS,1.0,{score},numeric
+2025-03-21T17:48:26Z,9e681a82-ec47-0a53-c10c-1f4f76ed2a4d,,,QOLS,QOLS,1.0,{score},numeric
+1985-04-01T05:09:31Z,65db6886-9d74-fcf9-cb8d-516132213ff8,65db6886-9d74-fcf9-404c-f15cc23f4ffd,laboratory,6690-2,Leukocytes [#/volume] in Blood by Automated count,81.4,10*3/uL,numeric
+1985-04-01T05:09:31Z,65db6886-9d74-fcf9-cb8d-516132213ff8,65db6886-9d74-fcf9-404c-f15cc23f4ffd,laboratory,718-7,Hemoglobin [Mass/volume] in Blood,6.7,g/dL,numeric
+1985-04-01T05:09:31Z,65db6886-9d74-fcf9-cb8d-516132213ff8,65db6886-9d74-fcf9-404c-f15cc23f4ffd,laboratory,777-3,Platelets [#/volume] in Blood by Automated count,52.0,10*3/uL,numeric
+1985-04-01T05:09:31Z,65db6886-9d74-fcf9-cb8d-516132213ff8,65db6886-9d74-fcf9-404c-f15cc23f4ffd,laboratory,751-8,Neutrophils [#/volume] in Blood by Automated count,0.8,10*3/uL,numeric
+1985-04-01T05:09:31Z,65db6886-9d74-fcf9-cb8d-516132213ff8,65db6886-9d74-fcf9-404c-f15cc23f4ffd,laboratory,709-6,Blasts/100 leukocytes in Blood by Manual count,55.0,%,numeric
+1985-04-01T05:09:31Z,65db6886-9d74-fcf9-cb8d-516132213ff8,65db6886-9d74-fcf9-404c-f15cc23f4ffd,laboratory,14804-9,Lactate dehydrogenase [Enzymatic activity/volume] in Serum or Plasma,522.7,U/L,numeric
+1985-04-01T05:09:31Z,65db6886-9d74-fcf9-cb8d-516132213ff8,65db6886-9d74-fcf9-404c-f15cc23f4ffd,laboratory,2160-0,Creatinine [Mass/volume] in Serum or Plasma,1.1,mg/dL,numeric
+1985-04-01T05:09:31Z,65db6886-9d74-fcf9-cb8d-516132213ff8,65db6886-9d74-fcf9-404c-f15cc23f4ffd,laboratory,3084-1,Urate [Mass/volume] in Serum or Plasma,6.4,mg/dL,numeric
+1985-04-01T05:43:44Z,65db6886-9d74-fcf9-cb8d-516132213ff8,65db6886-9d74-fcf9-404c-f15cc23f4ffd,laboratory,26464-8,Blasts/100 cells in Bone marrow,26.2,%,numeric
+1985-04-01T09:08:45Z,65db6886-9d74-fcf9-cb8d-516132213ff8,65db6886-9d74-fcf9-404c-f15cc23f4ffd,laboratory,85176-4,FLT3 gene internal tandem duplication [Presence] in Blood or Tissue by Molecular genetics method,Positive (qualifier value),{Qualitative},text
+2016-01-20T07:41:34Z,77921746-94b4-3e41-9fc5-0f43aea1de27,,,QALY,QALY,57.0,a,numeric
+2017-01-20T07:41:34Z,77921746-94b4-3e41-9fc5-0f43aea1de27,,,QALY,QALY,58.0,a,numeric
+1985-04-01T13:56:29Z,65db6886-9d74-fcf9-cb8d-516132213ff8,65db6886-9d74-fcf9-404c-f15cc23f4ffd,laboratory,751-8,Neutrophils [#/volume] in Blood by Automated count,0.3,10*3/uL,numeric
+2018-01-20T07:41:34Z,77921746-94b4-3e41-9fc5-0f43aea1de27,,,QALY,QALY,59.0,a,numeric
+2019-01-20T07:41:34Z,77921746-94b4-3e41-9fc5-0f43aea1de27,,,QALY,QALY,60.0,a,numeric
+1985-04-01T13:56:29Z,65db6886-9d74-fcf9-cb8d-516132213ff8,65db6886-9d74-fcf9-404c-f15cc23f4ffd,vital-signs,8310-5,Body temperature,99.3,[degF],numeric
+2020-01-20T07:41:34Z,77921746-94b4-3e41-9fc5-0f43aea1de27,,,QALY,QALY,61.0,a,numeric
+2021-01-20T07:41:34Z,77921746-94b4-3e41-9fc5-0f43aea1de27,,,QALY,QALY,62.0,a,numeric
+2022-01-20T07:41:34Z,77921746-94b4-3e41-9fc5-0f43aea1de27,,,QALY,QALY,63.0,a,numeric
+1985-04-01T15:10:41Z,65db6886-9d74-fcf9-cb8d-516132213ff8,65db6886-9d74-fcf9-404c-f15cc23f4ffd,laboratory,102098-1,Acute myeloid leukemia minimal residual disease in Bone marrow by Flow cytometry (FC) Narrative,1.8,%,numeric
+2023-01-20T07:41:34Z,77921746-94b4-3e41-9fc5-0f43aea1de27,,,QALY,QALY,64.0,a,numeric
+2024-01-20T07:41:34Z,77921746-94b4-3e41-9fc5-0f43aea1de27,,,QALY,QALY,65.0,a,numeric
+2025-01-20T07:41:34Z,77921746-94b4-3e41-9fc5-0f43aea1de27,,,QALY,QALY,66.0,a,numeric
+2026-01-20T07:41:34Z,77921746-94b4-3e41-9fc5-0f43aea1de27,,,QALY,QALY,67.0,a,numeric
+2016-01-20T07:41:34Z,77921746-94b4-3e41-9fc5-0f43aea1de27,,,DALY,DALY,0.0,a,numeric
+2017-01-20T07:41:34Z,77921746-94b4-3e41-9fc5-0f43aea1de27,,,DALY,DALY,0.0,a,numeric
+2018-01-20T07:41:34Z,77921746-94b4-3e41-9fc5-0f43aea1de27,,,DALY,DALY,0.0,a,numeric
+2019-01-20T07:41:34Z,77921746-94b4-3e41-9fc5-0f43aea1de27,,,DALY,DALY,0.0,a,numeric
+2020-01-20T07:41:34Z,77921746-94b4-3e41-9fc5-0f43aea1de27,,,DALY,DALY,0.0,a,numeric
+2021-01-20T07:41:34Z,77921746-94b4-3e41-9fc5-0f43aea1de27,,,DALY,DALY,0.0,a,numeric
+2022-01-20T07:41:34Z,77921746-94b4-3e41-9fc5-0f43aea1de27,,,DALY,DALY,0.0,a,numeric
+2023-01-20T07:41:34Z,77921746-94b4-3e41-9fc5-0f43aea1de27,,,DALY,DALY,0.0,a,numeric
+2024-01-20T07:41:34Z,77921746-94b4-3e41-9fc5-0f43aea1de27,,,DALY,DALY,0.0,a,numeric
+2025-01-20T07:41:34Z,77921746-94b4-3e41-9fc5-0f43aea1de27,,,DALY,DALY,0.0,a,numeric
+2026-01-20T07:41:34Z,77921746-94b4-3e41-9fc5-0f43aea1de27,,,DALY,DALY,0.0,a,numeric
+2016-01-20T07:41:34Z,77921746-94b4-3e41-9fc5-0f43aea1de27,,,QOLS,QOLS,1.0,{score},numeric
+2017-01-20T07:41:34Z,77921746-94b4-3e41-9fc5-0f43aea1de27,,,QOLS,QOLS,1.0,{score},numeric
+2018-01-20T07:41:34Z,77921746-94b4-3e41-9fc5-0f43aea1de27,,,QOLS,QOLS,1.0,{score},numeric
+2019-01-20T07:41:34Z,77921746-94b4-3e41-9fc5-0f43aea1de27,,,QOLS,QOLS,1.0,{score},numeric
+2020-01-20T07:41:34Z,77921746-94b4-3e41-9fc5-0f43aea1de27,,,QOLS,QOLS,1.0,{score},numeric
+2021-01-20T07:41:34Z,77921746-94b4-3e41-9fc5-0f43aea1de27,,,QOLS,QOLS,1.0,{score},numeric
+2022-01-20T07:41:34Z,77921746-94b4-3e41-9fc5-0f43aea1de27,,,QOLS,QOLS,1.0,{score},numeric
+2023-01-20T07:41:34Z,77921746-94b4-3e41-9fc5-0f43aea1de27,,,QOLS,QOLS,1.0,{score},numeric
+2024-01-20T07:41:34Z,77921746-94b4-3e41-9fc5-0f43aea1de27,,,QOLS,QOLS,1.0,{score},numeric
+2025-01-20T07:41:34Z,77921746-94b4-3e41-9fc5-0f43aea1de27,,,QOLS,QOLS,1.0,{score},numeric
+2026-01-20T07:41:34Z,77921746-94b4-3e41-9fc5-0f43aea1de27,,,QOLS,QOLS,1.0,{score},numeric
+1985-08-23T05:09:31Z,65db6886-9d74-fcf9-cb8d-516132213ff8,65db6886-9d74-fcf9-6730-f85ef575e9ab,exam,69453-9,Cause of Death [US Standard Certificate of Death],Acute myeloid leukemia with FLT3 mutation (disorder),,text
+2016-11-10T18:55:37Z,9d8cf364-ddc3-8b58-8aeb-a34008872a49,,,QALY,QALY,55.0,a,numeric
+2017-11-10T18:55:37Z,9d8cf364-ddc3-8b58-8aeb-a34008872a49,,,QALY,QALY,56.0,a,numeric
+2018-11-10T18:55:37Z,9d8cf364-ddc3-8b58-8aeb-a34008872a49,,,QALY,QALY,57.0,a,numeric
+2019-11-10T18:55:37Z,9d8cf364-ddc3-8b58-8aeb-a34008872a49,,,QALY,QALY,58.0,a,numeric
+2020-11-10T18:55:37Z,9d8cf364-ddc3-8b58-8aeb-a34008872a49,,,QALY,QALY,59.0,a,numeric
+2021-11-10T18:55:37Z,9d8cf364-ddc3-8b58-8aeb-a34008872a49,,,QALY,QALY,60.0,a,numeric
+2022-11-10T18:55:37Z,9d8cf364-ddc3-8b58-8aeb-a34008872a49,,,QALY,QALY,61.0,a,numeric
+2023-11-10T18:55:37Z,9d8cf364-ddc3-8b58-8aeb-a34008872a49,,,QALY,QALY,62.0,a,numeric
+2024-11-10T18:55:37Z,9d8cf364-ddc3-8b58-8aeb-a34008872a49,,,QALY,QALY,63.0,a,numeric
+2025-11-10T18:55:37Z,9d8cf364-ddc3-8b58-8aeb-a34008872a49,,,QALY,QALY,64.0,a,numeric
+2016-11-10T18:55:37Z,9d8cf364-ddc3-8b58-8aeb-a34008872a49,,,DALY,DALY,0.0,a,numeric
+2017-11-10T18:55:37Z,9d8cf364-ddc3-8b58-8aeb-a34008872a49,,,DALY,DALY,0.0,a,numeric
+2018-11-10T18:55:37Z,9d8cf364-ddc3-8b58-8aeb-a34008872a49,,,DALY,DALY,0.0,a,numeric
+2019-11-10T18:55:37Z,9d8cf364-ddc3-8b58-8aeb-a34008872a49,,,DALY,DALY,0.0,a,numeric
+2020-11-10T18:55:37Z,9d8cf364-ddc3-8b58-8aeb-a34008872a49,,,DALY,DALY,0.0,a,numeric
+2021-11-10T18:55:37Z,9d8cf364-ddc3-8b58-8aeb-a34008872a49,,,DALY,DALY,0.0,a,numeric
+2022-11-10T18:55:37Z,9d8cf364-ddc3-8b58-8aeb-a34008872a49,,,DALY,DALY,0.0,a,numeric
+2023-11-10T18:55:37Z,9d8cf364-ddc3-8b58-8aeb-a34008872a49,,,DALY,DALY,0.0,a,numeric
+2024-11-10T18:55:37Z,9d8cf364-ddc3-8b58-8aeb-a34008872a49,,,DALY,DALY,0.0,a,numeric
+2025-11-10T18:55:37Z,9d8cf364-ddc3-8b58-8aeb-a34008872a49,,,DALY,DALY,0.0,a,numeric
+2016-11-10T18:55:37Z,9d8cf364-ddc3-8b58-8aeb-a34008872a49,,,QOLS,QOLS,1.0,{score},numeric
+2017-11-10T18:55:37Z,9d8cf364-ddc3-8b58-8aeb-a34008872a49,,,QOLS,QOLS,1.0,{score},numeric
+2018-11-10T18:55:37Z,9d8cf364-ddc3-8b58-8aeb-a34008872a49,,,QOLS,QOLS,1.0,{score},numeric
+2019-11-10T18:55:37Z,9d8cf364-ddc3-8b58-8aeb-a34008872a49,,,QOLS,QOLS,1.0,{score},numeric
+2020-11-10T18:55:37Z,9d8cf364-ddc3-8b58-8aeb-a34008872a49,,,QOLS,QOLS,1.0,{score},numeric
+2021-11-10T18:55:37Z,9d8cf364-ddc3-8b58-8aeb-a34008872a49,,,QOLS,QOLS,1.0,{score},numeric
+2022-11-10T18:55:37Z,9d8cf364-ddc3-8b58-8aeb-a34008872a49,,,QOLS,QOLS,1.0,{score},numeric
+2023-11-10T18:55:37Z,9d8cf364-ddc3-8b58-8aeb-a34008872a49,,,QOLS,QOLS,1.0,{score},numeric
+2024-11-10T18:55:37Z,9d8cf364-ddc3-8b58-8aeb-a34008872a49,,,QOLS,QOLS,1.0,{score},numeric
+2025-11-10T18:55:37Z,9d8cf364-ddc3-8b58-8aeb-a34008872a49,,,QOLS,QOLS,1.0,{score},numeric
+2016-03-25T23:08:50Z,779176cf-63aa-6543-663b-c1e08d8dd107,,,QALY,QALY,31.0,a,numeric
+2017-03-25T23:08:50Z,779176cf-63aa-6543-663b-c1e08d8dd107,,,QALY,QALY,32.0,a,numeric
+2018-03-25T22:08:50Z,779176cf-63aa-6543-663b-c1e08d8dd107,,,QALY,QALY,33.0,a,numeric
+2019-03-25T23:08:50Z,779176cf-63aa-6543-663b-c1e08d8dd107,,,QALY,QALY,34.0,a,numeric
+2020-03-25T23:08:50Z,779176cf-63aa-6543-663b-c1e08d8dd107,,,QALY,QALY,35.0,a,numeric
+2021-03-25T23:08:50Z,779176cf-63aa-6543-663b-c1e08d8dd107,,,QALY,QALY,36.0,a,numeric
+2022-03-25T23:08:50Z,779176cf-63aa-6543-663b-c1e08d8dd107,,,QALY,QALY,37.0,a,numeric
+2023-03-25T23:08:50Z,779176cf-63aa-6543-663b-c1e08d8dd107,,,QALY,QALY,38.0,a,numeric
+2024-03-25T23:08:50Z,779176cf-63aa-6543-663b-c1e08d8dd107,,,QALY,QALY,39.0,a,numeric
+2025-03-25T23:08:50Z,779176cf-63aa-6543-663b-c1e08d8dd107,,,QALY,QALY,40.0,a,numeric
+2016-03-25T23:08:50Z,779176cf-63aa-6543-663b-c1e08d8dd107,,,DALY,DALY,0.0,a,numeric
+2017-03-25T23:08:50Z,779176cf-63aa-6543-663b-c1e08d8dd107,,,DALY,DALY,0.0,a,numeric
+2018-03-25T22:08:50Z,779176cf-63aa-6543-663b-c1e08d8dd107,,,DALY,DALY,0.0,a,numeric
+2019-03-25T23:08:50Z,779176cf-63aa-6543-663b-c1e08d8dd107,,,DALY,DALY,0.0,a,numeric
+2020-03-25T23:08:50Z,779176cf-63aa-6543-663b-c1e08d8dd107,,,DALY,DALY,0.0,a,numeric
+2021-03-25T23:08:50Z,779176cf-63aa-6543-663b-c1e08d8dd107,,,DALY,DALY,0.0,a,numeric
+2022-03-25T23:08:50Z,779176cf-63aa-6543-663b-c1e08d8dd107,,,DALY,DALY,0.0,a,numeric
+2023-03-25T23:08:50Z,779176cf-63aa-6543-663b-c1e08d8dd107,,,DALY,DALY,0.0,a,numeric
+2024-03-25T23:08:50Z,779176cf-63aa-6543-663b-c1e08d8dd107,,,DALY,DALY,0.0,a,numeric
+2025-03-25T23:08:50Z,779176cf-63aa-6543-663b-c1e08d8dd107,,,DALY,DALY,0.0,a,numeric
+2016-03-25T23:08:50Z,779176cf-63aa-6543-663b-c1e08d8dd107,,,QOLS,QOLS,1.0,{score},numeric
+2017-03-25T23:08:50Z,779176cf-63aa-6543-663b-c1e08d8dd107,,,QOLS,QOLS,1.0,{score},numeric
+2018-03-25T22:08:50Z,779176cf-63aa-6543-663b-c1e08d8dd107,,,QOLS,QOLS,1.0,{score},numeric
+2019-03-25T23:08:50Z,779176cf-63aa-6543-663b-c1e08d8dd107,,,QOLS,QOLS,1.0,{score},numeric
+2020-03-25T23:08:50Z,779176cf-63aa-6543-663b-c1e08d8dd107,,,QOLS,QOLS,1.0,{score},numeric
+2021-03-25T23:08:50Z,779176cf-63aa-6543-663b-c1e08d8dd107,,,QOLS,QOLS,1.0,{score},numeric
+2022-03-25T23:08:50Z,779176cf-63aa-6543-663b-c1e08d8dd107,,,QOLS,QOLS,1.0,{score},numeric
+2023-03-25T23:08:50Z,779176cf-63aa-6543-663b-c1e08d8dd107,,,QOLS,QOLS,1.0,{score},numeric
+2024-03-25T23:08:50Z,779176cf-63aa-6543-663b-c1e08d8dd107,,,QOLS,QOLS,1.0,{score},numeric
+2025-03-25T23:08:50Z,779176cf-63aa-6543-663b-c1e08d8dd107,,,QOLS,QOLS,1.0,{score},numeric
+2006-11-10T21:41:35Z,7f5f6b56-1c72-e466-2d84-cde4e2af0632,7f5f6b56-1c72-e466-a7b7-98c36a6ca6af,laboratory,6690-2,Leukocytes [#/volume] in Blood by Automated count,97.2,10*3/uL,numeric
+2006-11-10T21:41:35Z,7f5f6b56-1c72-e466-2d84-cde4e2af0632,7f5f6b56-1c72-e466-a7b7-98c36a6ca6af,laboratory,718-7,Hemoglobin [Mass/volume] in Blood,8.0,g/dL,numeric
+2006-11-10T21:41:35Z,7f5f6b56-1c72-e466-2d84-cde4e2af0632,7f5f6b56-1c72-e466-a7b7-98c36a6ca6af,laboratory,777-3,Platelets [#/volume] in Blood by Automated count,20.9,10*3/uL,numeric
+2006-11-10T21:41:35Z,7f5f6b56-1c72-e466-2d84-cde4e2af0632,7f5f6b56-1c72-e466-a7b7-98c36a6ca6af,laboratory,751-8,Neutrophils [#/volume] in Blood by Automated count,0.8,10*3/uL,numeric
+2006-11-10T21:41:35Z,7f5f6b56-1c72-e466-2d84-cde4e2af0632,7f5f6b56-1c72-e466-a7b7-98c36a6ca6af,laboratory,709-6,Blasts/100 leukocytes in Blood by Manual count,57.5,%,numeric
+2006-11-10T21:41:35Z,7f5f6b56-1c72-e466-2d84-cde4e2af0632,7f5f6b56-1c72-e466-a7b7-98c36a6ca6af,laboratory,14804-9,Lactate dehydrogenase [Enzymatic activity/volume] in Serum or Plasma,969.9,U/L,numeric
+2006-11-10T21:41:35Z,7f5f6b56-1c72-e466-2d84-cde4e2af0632,7f5f6b56-1c72-e466-a7b7-98c36a6ca6af,laboratory,2160-0,Creatinine [Mass/volume] in Serum or Plasma,0.6,mg/dL,numeric
+2006-11-10T21:41:35Z,7f5f6b56-1c72-e466-2d84-cde4e2af0632,7f5f6b56-1c72-e466-a7b7-98c36a6ca6af,laboratory,3084-1,Urate [Mass/volume] in Serum or Plasma,6.3,mg/dL,numeric
+2006-11-10T22:34:52Z,7f5f6b56-1c72-e466-2d84-cde4e2af0632,7f5f6b56-1c72-e466-a7b7-98c36a6ca6af,laboratory,26464-8,Blasts/100 cells in Bone marrow,77.2,%,numeric
+2006-11-11T02:42:55Z,7f5f6b56-1c72-e466-2d84-cde4e2af0632,7f5f6b56-1c72-e466-a7b7-98c36a6ca6af,laboratory,85176-4,FLT3 gene internal tandem duplication [Presence] in Blood or Tissue by Molecular genetics method,Positive (qualifier value),{Qualitative},text
+2006-11-11T05:56:08Z,7f5f6b56-1c72-e466-2d84-cde4e2af0632,7f5f6b56-1c72-e466-a7b7-98c36a6ca6af,laboratory,751-8,Neutrophils [#/volume] in Blood by Automated count,0.3,10*3/uL,numeric
+2006-11-11T05:56:08Z,7f5f6b56-1c72-e466-2d84-cde4e2af0632,7f5f6b56-1c72-e466-a7b7-98c36a6ca6af,vital-signs,8310-5,Body temperature,102.2,[degF],numeric
+2006-11-11T06:57:30Z,7f5f6b56-1c72-e466-2d84-cde4e2af0632,7f5f6b56-1c72-e466-a7b7-98c36a6ca6af,laboratory,102098-1,Acute myeloid leukemia minimal residual disease in Bone marrow by Flow cytometry (FC) Narrative,1.2,%,numeric
+2007-08-19T21:41:35Z,7f5f6b56-1c72-e466-2d84-cde4e2af0632,7f5f6b56-1c72-e466-a88d-36c89600c118,exam,69453-9,Cause of Death [US Standard Certificate of Death],Acute myeloid leukemia with FLT3 mutation (disorder),,text
+2016-10-02T09:17:00Z,8c6037b4-52b8-8497-cbbd-2b33a2444d24,,,QALY,QALY,27.0,a,numeric
+2017-10-02T09:17:00Z,8c6037b4-52b8-8497-cbbd-2b33a2444d24,,,QALY,QALY,28.0,a,numeric
+2018-10-02T09:17:00Z,8c6037b4-52b8-8497-cbbd-2b33a2444d24,,,QALY,QALY,29.0,a,numeric
+2019-10-02T09:17:00Z,8c6037b4-52b8-8497-cbbd-2b33a2444d24,,,QALY,QALY,30.0,a,numeric
+2020-10-02T09:17:00Z,8c6037b4-52b8-8497-cbbd-2b33a2444d24,,,QALY,QALY,31.0,a,numeric
+2021-10-02T09:17:00Z,8c6037b4-52b8-8497-cbbd-2b33a2444d24,,,QALY,QALY,32.0,a,numeric
+2022-10-02T09:17:00Z,8c6037b4-52b8-8497-cbbd-2b33a2444d24,,,QALY,QALY,33.0,a,numeric
+2023-10-02T09:17:00Z,8c6037b4-52b8-8497-cbbd-2b33a2444d24,,,QALY,QALY,34.0,a,numeric
+2024-10-02T09:17:00Z,8c6037b4-52b8-8497-cbbd-2b33a2444d24,,,QALY,QALY,35.0,a,numeric
+2025-10-02T09:17:00Z,8c6037b4-52b8-8497-cbbd-2b33a2444d24,,,QALY,QALY,36.0,a,numeric
+2016-10-02T09:17:00Z,8c6037b4-52b8-8497-cbbd-2b33a2444d24,,,DALY,DALY,0.0,a,numeric
+2017-10-02T09:17:00Z,8c6037b4-52b8-8497-cbbd-2b33a2444d24,,,DALY,DALY,0.0,a,numeric
+2018-10-02T09:17:00Z,8c6037b4-52b8-8497-cbbd-2b33a2444d24,,,DALY,DALY,0.0,a,numeric
+2019-10-02T09:17:00Z,8c6037b4-52b8-8497-cbbd-2b33a2444d24,,,DALY,DALY,0.0,a,numeric
+2020-10-02T09:17:00Z,8c6037b4-52b8-8497-cbbd-2b33a2444d24,,,DALY,DALY,0.0,a,numeric
+2021-10-02T09:17:00Z,8c6037b4-52b8-8497-cbbd-2b33a2444d24,,,DALY,DALY,0.0,a,numeric
+2022-10-02T09:17:00Z,8c6037b4-52b8-8497-cbbd-2b33a2444d24,,,DALY,DALY,0.0,a,numeric
+2023-10-02T09:17:00Z,8c6037b4-52b8-8497-cbbd-2b33a2444d24,,,DALY,DALY,0.0,a,numeric
+2024-10-02T09:17:00Z,8c6037b4-52b8-8497-cbbd-2b33a2444d24,,,DALY,DALY,0.0,a,numeric
+2025-10-02T09:17:00Z,8c6037b4-52b8-8497-cbbd-2b33a2444d24,,,DALY,DALY,0.0,a,numeric
+2016-10-02T09:17:00Z,8c6037b4-52b8-8497-cbbd-2b33a2444d24,,,QOLS,QOLS,1.0,{score},numeric
+2017-10-02T09:17:00Z,8c6037b4-52b8-8497-cbbd-2b33a2444d24,,,QOLS,QOLS,1.0,{score},numeric
+2018-10-02T09:17:00Z,8c6037b4-52b8-8497-cbbd-2b33a2444d24,,,QOLS,QOLS,1.0,{score},numeric
+2019-10-02T09:17:00Z,8c6037b4-52b8-8497-cbbd-2b33a2444d24,,,QOLS,QOLS,1.0,{score},numeric
+2020-10-02T09:17:00Z,8c6037b4-52b8-8497-cbbd-2b33a2444d24,,,QOLS,QOLS,1.0,{score},numeric
+2021-10-02T09:17:00Z,8c6037b4-52b8-8497-cbbd-2b33a2444d24,,,QOLS,QOLS,1.0,{score},numeric
+2022-10-02T09:17:00Z,8c6037b4-52b8-8497-cbbd-2b33a2444d24,,,QOLS,QOLS,1.0,{score},numeric
+2023-10-02T09:17:00Z,8c6037b4-52b8-8497-cbbd-2b33a2444d24,,,QOLS,QOLS,1.0,{score},numeric
+2024-10-02T09:17:00Z,8c6037b4-52b8-8497-cbbd-2b33a2444d24,,,QOLS,QOLS,1.0,{score},numeric
+2025-10-02T09:17:00Z,8c6037b4-52b8-8497-cbbd-2b33a2444d24,,,QOLS,QOLS,1.0,{score},numeric
+2016-08-15T04:47:05Z,867970fe-aace-33a1-48c6-d47efe0076e3,,,QALY,QALY,53.0,a,numeric
+2017-08-15T04:47:05Z,867970fe-aace-33a1-48c6-d47efe0076e3,,,QALY,QALY,54.0,a,numeric
+2018-08-15T04:47:05Z,867970fe-aace-33a1-48c6-d47efe0076e3,,,QALY,QALY,55.0,a,numeric
+2019-08-15T04:47:05Z,867970fe-aace-33a1-48c6-d47efe0076e3,,,QALY,QALY,56.0,a,numeric
+2020-08-15T04:47:05Z,867970fe-aace-33a1-48c6-d47efe0076e3,,,QALY,QALY,57.0,a,numeric
+2021-08-15T04:47:05Z,867970fe-aace-33a1-48c6-d47efe0076e3,,,QALY,QALY,58.0,a,numeric
+2022-08-15T04:47:05Z,867970fe-aace-33a1-48c6-d47efe0076e3,,,QALY,QALY,59.0,a,numeric
+2023-08-15T04:47:05Z,867970fe-aace-33a1-48c6-d47efe0076e3,,,QALY,QALY,60.0,a,numeric
+2024-08-15T04:47:05Z,867970fe-aace-33a1-48c6-d47efe0076e3,,,QALY,QALY,61.0,a,numeric
+2025-08-15T04:47:05Z,867970fe-aace-33a1-48c6-d47efe0076e3,,,QALY,QALY,62.0,a,numeric
+2016-08-15T04:47:05Z,867970fe-aace-33a1-48c6-d47efe0076e3,,,DALY,DALY,0.0,a,numeric
+2017-08-15T04:47:05Z,867970fe-aace-33a1-48c6-d47efe0076e3,,,DALY,DALY,0.0,a,numeric
+2018-08-15T04:47:05Z,867970fe-aace-33a1-48c6-d47efe0076e3,,,DALY,DALY,0.0,a,numeric
+2019-08-15T04:47:05Z,867970fe-aace-33a1-48c6-d47efe0076e3,,,DALY,DALY,0.0,a,numeric
+2020-08-15T04:47:05Z,867970fe-aace-33a1-48c6-d47efe0076e3,,,DALY,DALY,0.0,a,numeric
+2021-08-15T04:47:05Z,867970fe-aace-33a1-48c6-d47efe0076e3,,,DALY,DALY,0.0,a,numeric
+2022-08-15T04:47:05Z,867970fe-aace-33a1-48c6-d47efe0076e3,,,DALY,DALY,0.0,a,numeric
+2023-08-15T04:47:05Z,867970fe-aace-33a1-48c6-d47efe0076e3,,,DALY,DALY,0.0,a,numeric
+2024-08-15T04:47:05Z,867970fe-aace-33a1-48c6-d47efe0076e3,,,DALY,DALY,0.0,a,numeric
+2025-08-15T04:47:05Z,867970fe-aace-33a1-48c6-d47efe0076e3,,,DALY,DALY,0.0,a,numeric
+2016-08-15T04:47:05Z,867970fe-aace-33a1-48c6-d47efe0076e3,,,QOLS,QOLS,1.0,{score},numeric
+2017-08-15T04:47:05Z,867970fe-aace-33a1-48c6-d47efe0076e3,,,QOLS,QOLS,1.0,{score},numeric
+2018-08-15T04:47:05Z,867970fe-aace-33a1-48c6-d47efe0076e3,,,QOLS,QOLS,1.0,{score},numeric
+2019-08-15T04:47:05Z,867970fe-aace-33a1-48c6-d47efe0076e3,,,QOLS,QOLS,1.0,{score},numeric
+2020-08-15T04:47:05Z,867970fe-aace-33a1-48c6-d47efe0076e3,,,QOLS,QOLS,1.0,{score},numeric
+2021-08-15T04:47:05Z,867970fe-aace-33a1-48c6-d47efe0076e3,,,QOLS,QOLS,1.0,{score},numeric
+2022-08-15T04:47:05Z,867970fe-aace-33a1-48c6-d47efe0076e3,,,QOLS,QOLS,1.0,{score},numeric
+2023-08-15T04:47:05Z,867970fe-aace-33a1-48c6-d47efe0076e3,,,QOLS,QOLS,1.0,{score},numeric
+2024-08-15T04:47:05Z,867970fe-aace-33a1-48c6-d47efe0076e3,,,QOLS,QOLS,1.0,{score},numeric
+2025-08-15T04:47:05Z,867970fe-aace-33a1-48c6-d47efe0076e3,,,QOLS,QOLS,1.0,{score},numeric
+1972-12-25T16:43:56Z,58fb692d-796a-ec70-c786-501df3e9111a,58fb692d-796a-ec70-7066-bcec7b18186d,laboratory,6690-2,Leukocytes [#/volume] in Blood by Automated count,97.6,10*3/uL,numeric
+1972-12-25T16:43:56Z,58fb692d-796a-ec70-c786-501df3e9111a,58fb692d-796a-ec70-7066-bcec7b18186d,laboratory,718-7,Hemoglobin [Mass/volume] in Blood,10.1,g/dL,numeric
+1972-12-25T16:43:56Z,58fb692d-796a-ec70-c786-501df3e9111a,58fb692d-796a-ec70-7066-bcec7b18186d,laboratory,777-3,Platelets [#/volume] in Blood by Automated count,69.4,10*3/uL,numeric
+1972-12-25T16:43:56Z,58fb692d-796a-ec70-c786-501df3e9111a,58fb692d-796a-ec70-7066-bcec7b18186d,laboratory,751-8,Neutrophils [#/volume] in Blood by Automated count,0.1,10*3/uL,numeric
+1972-12-25T16:43:56Z,58fb692d-796a-ec70-c786-501df3e9111a,58fb692d-796a-ec70-7066-bcec7b18186d,laboratory,709-6,Blasts/100 leukocytes in Blood by Manual count,62.3,%,numeric
+1972-12-25T16:43:56Z,58fb692d-796a-ec70-c786-501df3e9111a,58fb692d-796a-ec70-7066-bcec7b18186d,laboratory,14804-9,Lactate dehydrogenase [Enzymatic activity/volume] in Serum or Plasma,1063.2,U/L,numeric
+1972-12-25T16:43:56Z,58fb692d-796a-ec70-c786-501df3e9111a,58fb692d-796a-ec70-7066-bcec7b18186d,laboratory,2160-0,Creatinine [Mass/volume] in Serum or Plasma,0.9,mg/dL,numeric
+1972-12-25T16:43:56Z,58fb692d-796a-ec70-c786-501df3e9111a,58fb692d-796a-ec70-7066-bcec7b18186d,laboratory,3084-1,Urate [Mass/volume] in Serum or Plasma,7.4,mg/dL,numeric
+1972-12-25T17:42:29Z,58fb692d-796a-ec70-c786-501df3e9111a,58fb692d-796a-ec70-7066-bcec7b18186d,laboratory,26464-8,Blasts/100 cells in Bone marrow,86.5,%,numeric
+1972-12-25T21:12:34Z,58fb692d-796a-ec70-c786-501df3e9111a,58fb692d-796a-ec70-7066-bcec7b18186d,laboratory,85176-4,FLT3 gene internal tandem duplication [Presence] in Blood or Tissue by Molecular genetics method,Positive (qualifier value),{Qualitative},text
+1972-12-26T01:23:42Z,58fb692d-796a-ec70-c786-501df3e9111a,58fb692d-796a-ec70-7066-bcec7b18186d,laboratory,751-8,Neutrophils [#/volume] in Blood by Automated count,0.2,10*3/uL,numeric
+1972-12-26T01:23:42Z,58fb692d-796a-ec70-c786-501df3e9111a,58fb692d-796a-ec70-7066-bcec7b18186d,vital-signs,8310-5,Body temperature,96.1,[degF],numeric
+1972-12-26T02:46:51Z,58fb692d-796a-ec70-c786-501df3e9111a,58fb692d-796a-ec70-7066-bcec7b18186d,laboratory,102098-1,Acute myeloid leukemia minimal residual disease in Bone marrow by Flow cytometry (FC) Narrative,0.3,%,numeric
+1973-11-19T16:43:56Z,58fb692d-796a-ec70-c786-501df3e9111a,58fb692d-796a-ec70-176f-34cf64f4e1c8,exam,69453-9,Cause of Death [US Standard Certificate of Death],Acute myeloid leukemia with FLT3 mutation (disorder),,text
+1981-03-25T23:49:25Z,6933deae-b696-156e-3644-bce0d9643f85,6933deae-b696-156e-b047-2491d00a2ae2,laboratory,6690-2,Leukocytes [#/volume] in Blood by Automated count,89.4,10*3/uL,numeric
+1981-03-25T23:49:25Z,6933deae-b696-156e-3644-bce0d9643f85,6933deae-b696-156e-b047-2491d00a2ae2,laboratory,718-7,Hemoglobin [Mass/volume] in Blood,7.4,g/dL,numeric
+1981-03-25T23:49:25Z,6933deae-b696-156e-3644-bce0d9643f85,6933deae-b696-156e-b047-2491d00a2ae2,laboratory,777-3,Platelets [#/volume] in Blood by Automated count,95.9,10*3/uL,numeric
+1981-03-25T23:49:25Z,6933deae-b696-156e-3644-bce0d9643f85,6933deae-b696-156e-b047-2491d00a2ae2,laboratory,751-8,Neutrophils [#/volume] in Blood by Automated count,0.8,10*3/uL,numeric
+1981-03-25T23:49:25Z,6933deae-b696-156e-3644-bce0d9643f85,6933deae-b696-156e-b047-2491d00a2ae2,laboratory,709-6,Blasts/100 leukocytes in Blood by Manual count,22.3,%,numeric
+1981-03-25T23:49:25Z,6933deae-b696-156e-3644-bce0d9643f85,6933deae-b696-156e-b047-2491d00a2ae2,laboratory,14804-9,Lactate dehydrogenase [Enzymatic activity/volume] in Serum or Plasma,1118.9,U/L,numeric
+1981-03-25T23:49:25Z,6933deae-b696-156e-3644-bce0d9643f85,6933deae-b696-156e-b047-2491d00a2ae2,laboratory,2160-0,Creatinine [Mass/volume] in Serum or Plasma,0.9,mg/dL,numeric
+1981-03-25T23:49:25Z,6933deae-b696-156e-3644-bce0d9643f85,6933deae-b696-156e-b047-2491d00a2ae2,laboratory,3084-1,Urate [Mass/volume] in Serum or Plasma,4.1,mg/dL,numeric
+1981-03-26T00:30:32Z,6933deae-b696-156e-3644-bce0d9643f85,6933deae-b696-156e-b047-2491d00a2ae2,laboratory,26464-8,Blasts/100 cells in Bone marrow,73.4,%,numeric
+1981-03-26T09:05:21Z,6933deae-b696-156e-3644-bce0d9643f85,6933deae-b696-156e-b047-2491d00a2ae2,laboratory,751-8,Neutrophils [#/volume] in Blood by Automated count,0.4,10*3/uL,numeric
+1981-03-26T09:05:21Z,6933deae-b696-156e-3644-bce0d9643f85,6933deae-b696-156e-b047-2491d00a2ae2,vital-signs,8310-5,Body temperature,101.4,[degF],numeric
+1981-03-26T10:20:57Z,6933deae-b696-156e-3644-bce0d9643f85,6933deae-b696-156e-b047-2491d00a2ae2,laboratory,102098-1,Acute myeloid leukemia minimal residual disease in Bone marrow by Flow cytometry (FC) Narrative,2.9,%,numeric
+1981-11-22T23:49:25Z,6933deae-b696-156e-3644-bce0d9643f85,6933deae-b696-156e-cbbf-b0eb8cbccafa,exam,69453-9,Cause of Death [US Standard Certificate of Death],Acute myeloid leukemia with myelodysplasia-related changes (disorder),,text
+1968-12-25T16:43:56Z,30cbc755-45df-d185-cc21-40f15a25d6dd,30cbc755-45df-d185-79b6-43fbef82bebe,laboratory,6690-2,Leukocytes [#/volume] in Blood by Automated count,76.8,10*3/uL,numeric
+1968-12-25T16:43:56Z,30cbc755-45df-d185-cc21-40f15a25d6dd,30cbc755-45df-d185-79b6-43fbef82bebe,laboratory,718-7,Hemoglobin [Mass/volume] in Blood,7.3,g/dL,numeric
+1968-12-25T16:43:56Z,30cbc755-45df-d185-cc21-40f15a25d6dd,30cbc755-45df-d185-79b6-43fbef82bebe,laboratory,777-3,Platelets [#/volume] in Blood by Automated count,35.3,10*3/uL,numeric
+1968-12-25T16:43:56Z,30cbc755-45df-d185-cc21-40f15a25d6dd,30cbc755-45df-d185-79b6-43fbef82bebe,laboratory,751-8,Neutrophils [#/volume] in Blood by Automated count,0.8,10*3/uL,numeric
+1968-12-25T16:43:56Z,30cbc755-45df-d185-cc21-40f15a25d6dd,30cbc755-45df-d185-79b6-43fbef82bebe,laboratory,709-6,Blasts/100 leukocytes in Blood by Manual count,64.9,%,numeric
+1968-12-25T16:43:56Z,30cbc755-45df-d185-cc21-40f15a25d6dd,30cbc755-45df-d185-79b6-43fbef82bebe,laboratory,14804-9,Lactate dehydrogenase [Enzymatic activity/volume] in Serum or Plasma,510.8,U/L,numeric
+1968-12-25T16:43:56Z,30cbc755-45df-d185-cc21-40f15a25d6dd,30cbc755-45df-d185-79b6-43fbef82bebe,laboratory,2160-0,Creatinine [Mass/volume] in Serum or Plasma,0.4,mg/dL,numeric
+1968-12-25T16:43:56Z,30cbc755-45df-d185-cc21-40f15a25d6dd,30cbc755-45df-d185-79b6-43fbef82bebe,laboratory,3084-1,Urate [Mass/volume] in Serum or Plasma,5.8,mg/dL,numeric
+1968-12-25T17:28:13Z,30cbc755-45df-d185-cc21-40f15a25d6dd,30cbc755-45df-d185-79b6-43fbef82bebe,laboratory,26464-8,Blasts/100 cells in Bone marrow,49.5,%,numeric
+1968-12-25T21:50:55Z,30cbc755-45df-d185-cc21-40f15a25d6dd,30cbc755-45df-d185-79b6-43fbef82bebe,laboratory,94077-5,IDH1 gene mutation analysis in Blood or Tissue by Molecular genetics method,Positive (qualifier value),{Qualitative},text
+1968-12-26T02:36:09Z,30cbc755-45df-d185-cc21-40f15a25d6dd,30cbc755-45df-d185-79b6-43fbef82bebe,laboratory,751-8,Neutrophils [#/volume] in Blood by Automated count,0.2,10*3/uL,numeric
+1968-12-26T02:36:09Z,30cbc755-45df-d185-cc21-40f15a25d6dd,30cbc755-45df-d185-79b6-43fbef82bebe,vital-signs,8310-5,Body temperature,98.1,[degF],numeric
+1968-12-26T03:58:42Z,30cbc755-45df-d185-cc21-40f15a25d6dd,30cbc755-45df-d185-79b6-43fbef82bebe,laboratory,102098-1,Acute myeloid leukemia minimal residual disease in Bone marrow by Flow cytometry (FC) Narrative,3.1,%,numeric
+2016-07-28T10:54:55Z,162b473e-cbb9-c4c0-4a56-8a5fc9153933,,,QALY,QALY,77.0,a,numeric
+2017-07-28T10:54:55Z,162b473e-cbb9-c4c0-4a56-8a5fc9153933,,,QALY,QALY,78.0,a,numeric
+2018-07-28T10:54:55Z,162b473e-cbb9-c4c0-4a56-8a5fc9153933,,,QALY,QALY,79.0,a,numeric
+2019-07-28T10:54:55Z,162b473e-cbb9-c4c0-4a56-8a5fc9153933,,,QALY,QALY,80.0,a,numeric
+2020-07-28T10:54:55Z,162b473e-cbb9-c4c0-4a56-8a5fc9153933,,,QALY,QALY,81.0,a,numeric
+2021-07-28T10:54:55Z,162b473e-cbb9-c4c0-4a56-8a5fc9153933,,,QALY,QALY,82.0,a,numeric
+2022-07-28T10:54:55Z,162b473e-cbb9-c4c0-4a56-8a5fc9153933,,,QALY,QALY,83.0,a,numeric
+2023-07-28T10:54:55Z,162b473e-cbb9-c4c0-4a56-8a5fc9153933,,,QALY,QALY,84.0,a,numeric
+2024-07-28T10:54:55Z,162b473e-cbb9-c4c0-4a56-8a5fc9153933,,,QALY,QALY,85.0,a,numeric
+2025-07-28T10:54:55Z,162b473e-cbb9-c4c0-4a56-8a5fc9153933,,,QALY,QALY,86.0,a,numeric
+2016-07-28T10:54:55Z,162b473e-cbb9-c4c0-4a56-8a5fc9153933,,,DALY,DALY,0.0,a,numeric
+2017-07-28T10:54:55Z,162b473e-cbb9-c4c0-4a56-8a5fc9153933,,,DALY,DALY,0.0,a,numeric
+2018-07-28T10:54:55Z,162b473e-cbb9-c4c0-4a56-8a5fc9153933,,,DALY,DALY,0.0,a,numeric
+2019-07-28T10:54:55Z,162b473e-cbb9-c4c0-4a56-8a5fc9153933,,,DALY,DALY,0.0,a,numeric
+2020-07-28T10:54:55Z,162b473e-cbb9-c4c0-4a56-8a5fc9153933,,,DALY,DALY,0.0,a,numeric
+2021-07-28T10:54:55Z,162b473e-cbb9-c4c0-4a56-8a5fc9153933,,,DALY,DALY,0.0,a,numeric
+2022-07-28T10:54:55Z,162b473e-cbb9-c4c0-4a56-8a5fc9153933,,,DALY,DALY,0.0,a,numeric
+2023-07-28T10:54:55Z,162b473e-cbb9-c4c0-4a56-8a5fc9153933,,,DALY,DALY,0.0,a,numeric
+2024-07-28T10:54:55Z,162b473e-cbb9-c4c0-4a56-8a5fc9153933,,,DALY,DALY,0.0,a,numeric
+2025-07-28T10:54:55Z,162b473e-cbb9-c4c0-4a56-8a5fc9153933,,,DALY,DALY,0.0,a,numeric
+2016-07-28T10:54:55Z,162b473e-cbb9-c4c0-4a56-8a5fc9153933,,,QOLS,QOLS,1.0,{score},numeric
+2017-07-28T10:54:55Z,162b473e-cbb9-c4c0-4a56-8a5fc9153933,,,QOLS,QOLS,1.0,{score},numeric
+2018-07-28T10:54:55Z,162b473e-cbb9-c4c0-4a56-8a5fc9153933,,,QOLS,QOLS,1.0,{score},numeric
+2019-07-28T10:54:55Z,162b473e-cbb9-c4c0-4a56-8a5fc9153933,,,QOLS,QOLS,1.0,{score},numeric
+2020-07-28T10:54:55Z,162b473e-cbb9-c4c0-4a56-8a5fc9153933,,,QOLS,QOLS,1.0,{score},numeric
+2021-07-28T10:54:55Z,162b473e-cbb9-c4c0-4a56-8a5fc9153933,,,QOLS,QOLS,1.0,{score},numeric
+2022-07-28T10:54:55Z,162b473e-cbb9-c4c0-4a56-8a5fc9153933,,,QOLS,QOLS,1.0,{score},numeric
+2023-07-28T10:54:55Z,162b473e-cbb9-c4c0-4a56-8a5fc9153933,,,QOLS,QOLS,1.0,{score},numeric
+2024-07-28T10:54:55Z,162b473e-cbb9-c4c0-4a56-8a5fc9153933,,,QOLS,QOLS,1.0,{score},numeric
+2025-07-28T10:54:55Z,162b473e-cbb9-c4c0-4a56-8a5fc9153933,,,QOLS,QOLS,1.0,{score},numeric
+1969-02-17T16:43:56Z,30cbc755-45df-d185-cc21-40f15a25d6dd,30cbc755-45df-d185-09b7-46c790d132b1,exam,69453-9,Cause of Death [US Standard Certificate of Death],Acute myeloid leukemia with IDH1 mutation (disorder),,text
+1948-09-26T20:35:48Z,17662471-408b-1082-07fd-bb3bc53ca0b3,17662471-408b-1082-d610-cbdc55a3304a,laboratory,6690-2,Leukocytes [#/volume] in Blood by Automated count,72.0,10*3/uL,numeric
+1948-09-26T20:35:48Z,17662471-408b-1082-07fd-bb3bc53ca0b3,17662471-408b-1082-d610-cbdc55a3304a,laboratory,718-7,Hemoglobin [Mass/volume] in Blood,7.7,g/dL,numeric
+1948-09-26T20:35:48Z,17662471-408b-1082-07fd-bb3bc53ca0b3,17662471-408b-1082-d610-cbdc55a3304a,laboratory,777-3,Platelets [#/volume] in Blood by Automated count,17.7,10*3/uL,numeric
+1948-09-26T20:35:48Z,17662471-408b-1082-07fd-bb3bc53ca0b3,17662471-408b-1082-d610-cbdc55a3304a,laboratory,751-8,Neutrophils [#/volume] in Blood by Automated count,0.7,10*3/uL,numeric
+1948-09-26T20:35:48Z,17662471-408b-1082-07fd-bb3bc53ca0b3,17662471-408b-1082-d610-cbdc55a3304a,laboratory,709-6,Blasts/100 leukocytes in Blood by Manual count,77.4,%,numeric
+1948-09-26T20:35:48Z,17662471-408b-1082-07fd-bb3bc53ca0b3,17662471-408b-1082-d610-cbdc55a3304a,laboratory,14804-9,Lactate dehydrogenase [Enzymatic activity/volume] in Serum or Plasma,1110.8,U/L,numeric
+1948-09-26T20:35:48Z,17662471-408b-1082-07fd-bb3bc53ca0b3,17662471-408b-1082-d610-cbdc55a3304a,laboratory,2160-0,Creatinine [Mass/volume] in Serum or Plasma,0.9,mg/dL,numeric
+1948-09-26T20:35:48Z,17662471-408b-1082-07fd-bb3bc53ca0b3,17662471-408b-1082-d610-cbdc55a3304a,laboratory,3084-1,Urate [Mass/volume] in Serum or Plasma,8.4,mg/dL,numeric
+1948-09-26T21:17:59Z,17662471-408b-1082-07fd-bb3bc53ca0b3,17662471-408b-1082-d610-cbdc55a3304a,laboratory,26464-8,Blasts/100 cells in Bone marrow,42.8,%,numeric
+1948-09-27T01:32:38Z,17662471-408b-1082-07fd-bb3bc53ca0b3,17662471-408b-1082-d610-cbdc55a3304a,laboratory,85176-4,FLT3 gene internal tandem duplication [Presence] in Blood or Tissue by Molecular genetics method,Positive (qualifier value),{Qualitative},text
+1948-09-27T05:51:49Z,17662471-408b-1082-07fd-bb3bc53ca0b3,17662471-408b-1082-d610-cbdc55a3304a,laboratory,751-8,Neutrophils [#/volume] in Blood by Automated count,0.3,10*3/uL,numeric
+1948-09-27T05:51:49Z,17662471-408b-1082-07fd-bb3bc53ca0b3,17662471-408b-1082-d610-cbdc55a3304a,vital-signs,8310-5,Body temperature,102.8,[degF],numeric
+1948-09-27T07:33:04Z,17662471-408b-1082-07fd-bb3bc53ca0b3,17662471-408b-1082-d610-cbdc55a3304a,laboratory,102098-1,Acute myeloid leukemia minimal residual disease in Bone marrow by Flow cytometry (FC) Narrative,2.8,%,numeric
+1949-07-17T20:35:48Z,17662471-408b-1082-07fd-bb3bc53ca0b3,17662471-408b-1082-f629-fdf276648b3c,exam,69453-9,Cause of Death [US Standard Certificate of Death],Acute myeloid leukemia with FLT3 mutation (disorder),,text
+1977-03-25T23:49:25Z,aa395443-c635-8e51-7791-0ae04956dd50,aa395443-c635-8e51-53f5-470b577717cf,laboratory,6690-2,Leukocytes [#/volume] in Blood by Automated count,37.8,10*3/uL,numeric
+1977-03-25T23:49:25Z,aa395443-c635-8e51-7791-0ae04956dd50,aa395443-c635-8e51-53f5-470b577717cf,laboratory,718-7,Hemoglobin [Mass/volume] in Blood,9.6,g/dL,numeric
+1977-03-25T23:49:25Z,aa395443-c635-8e51-7791-0ae04956dd50,aa395443-c635-8e51-53f5-470b577717cf,laboratory,777-3,Platelets [#/volume] in Blood by Automated count,67.2,10*3/uL,numeric
+1977-03-25T23:49:25Z,aa395443-c635-8e51-7791-0ae04956dd50,aa395443-c635-8e51-53f5-470b577717cf,laboratory,751-8,Neutrophils [#/volume] in Blood by Automated count,0.5,10*3/uL,numeric
+1977-03-25T23:49:25Z,aa395443-c635-8e51-7791-0ae04956dd50,aa395443-c635-8e51-53f5-470b577717cf,laboratory,709-6,Blasts/100 leukocytes in Blood by Manual count,33.1,%,numeric
+1977-03-25T23:49:25Z,aa395443-c635-8e51-7791-0ae04956dd50,aa395443-c635-8e51-53f5-470b577717cf,laboratory,14804-9,Lactate dehydrogenase [Enzymatic activity/volume] in Serum or Plasma,1569.7,U/L,numeric
+1977-03-25T23:49:25Z,aa395443-c635-8e51-7791-0ae04956dd50,aa395443-c635-8e51-53f5-470b577717cf,laboratory,2160-0,Creatinine [Mass/volume] in Serum or Plasma,1.0,mg/dL,numeric
+1977-03-25T23:49:25Z,aa395443-c635-8e51-7791-0ae04956dd50,aa395443-c635-8e51-53f5-470b577717cf,laboratory,3084-1,Urate [Mass/volume] in Serum or Plasma,9.0,mg/dL,numeric
+1977-03-26T00:20:47Z,aa395443-c635-8e51-7791-0ae04956dd50,aa395443-c635-8e51-53f5-470b577717cf,laboratory,26464-8,Blasts/100 cells in Bone marrow,57.6,%,numeric
+1977-03-26T09:09:54Z,aa395443-c635-8e51-7791-0ae04956dd50,aa395443-c635-8e51-53f5-470b577717cf,laboratory,751-8,Neutrophils [#/volume] in Blood by Automated count,0.3,10*3/uL,numeric
+1977-03-26T09:09:54Z,aa395443-c635-8e51-7791-0ae04956dd50,aa395443-c635-8e51-53f5-470b577717cf,vital-signs,8310-5,Body temperature,102.2,[degF],numeric
+1977-03-26T10:25:32Z,aa395443-c635-8e51-7791-0ae04956dd50,aa395443-c635-8e51-53f5-470b577717cf,laboratory,102098-1,Acute myeloid leukemia minimal residual disease in Bone marrow by Flow cytometry (FC) Narrative,3.0,%,numeric
+1978-01-15T23:49:25Z,aa395443-c635-8e51-7791-0ae04956dd50,aa395443-c635-8e51-4360-eb37b48ad415,exam,69453-9,Cause of Death [US Standard Certificate of Death],Acute myeloid leukemia with myelodysplasia-related changes (disorder),,text
+2016-04-01T05:09:31Z,2bf59e39-d7aa-81b8-b684-f1b966bfd351,,,QALY,QALY,38.0,a,numeric
+2017-04-01T05:09:31Z,2bf59e39-d7aa-81b8-b684-f1b966bfd351,,,QALY,QALY,39.0,a,numeric
+2018-04-01T05:09:31Z,2bf59e39-d7aa-81b8-b684-f1b966bfd351,,,QALY,QALY,40.0,a,numeric
+2019-04-01T05:09:31Z,2bf59e39-d7aa-81b8-b684-f1b966bfd351,,,QALY,QALY,41.0,a,numeric
+2020-04-01T05:09:31Z,2bf59e39-d7aa-81b8-b684-f1b966bfd351,,,QALY,QALY,42.0,a,numeric
+2021-04-01T05:09:31Z,2bf59e39-d7aa-81b8-b684-f1b966bfd351,,,QALY,QALY,43.0,a,numeric
+2022-04-01T05:09:31Z,2bf59e39-d7aa-81b8-b684-f1b966bfd351,,,QALY,QALY,44.0,a,numeric
+2023-04-01T05:09:31Z,2bf59e39-d7aa-81b8-b684-f1b966bfd351,,,QALY,QALY,45.0,a,numeric
+2024-04-01T05:09:31Z,2bf59e39-d7aa-81b8-b684-f1b966bfd351,,,QALY,QALY,46.0,a,numeric
+2025-04-01T05:09:31Z,2bf59e39-d7aa-81b8-b684-f1b966bfd351,,,QALY,QALY,47.0,a,numeric
+2016-04-01T05:09:31Z,2bf59e39-d7aa-81b8-b684-f1b966bfd351,,,DALY,DALY,0.0,a,numeric
+2017-04-01T05:09:31Z,2bf59e39-d7aa-81b8-b684-f1b966bfd351,,,DALY,DALY,0.0,a,numeric
+2018-04-01T05:09:31Z,2bf59e39-d7aa-81b8-b684-f1b966bfd351,,,DALY,DALY,0.0,a,numeric
+2019-04-01T05:09:31Z,2bf59e39-d7aa-81b8-b684-f1b966bfd351,,,DALY,DALY,0.0,a,numeric
+2020-04-01T05:09:31Z,2bf59e39-d7aa-81b8-b684-f1b966bfd351,,,DALY,DALY,0.0,a,numeric
+2021-04-01T05:09:31Z,2bf59e39-d7aa-81b8-b684-f1b966bfd351,,,DALY,DALY,0.0,a,numeric
+2022-04-01T05:09:31Z,2bf59e39-d7aa-81b8-b684-f1b966bfd351,,,DALY,DALY,0.0,a,numeric
+2023-04-01T05:09:31Z,2bf59e39-d7aa-81b8-b684-f1b966bfd351,,,DALY,DALY,0.0,a,numeric
+2024-04-01T05:09:31Z,2bf59e39-d7aa-81b8-b684-f1b966bfd351,,,DALY,DALY,0.0,a,numeric
+2025-04-01T05:09:31Z,2bf59e39-d7aa-81b8-b684-f1b966bfd351,,,DALY,DALY,0.0,a,numeric
+2016-04-01T05:09:31Z,2bf59e39-d7aa-81b8-b684-f1b966bfd351,,,QOLS,QOLS,1.0,{score},numeric
+2017-04-01T05:09:31Z,2bf59e39-d7aa-81b8-b684-f1b966bfd351,,,QOLS,QOLS,1.0,{score},numeric
+2018-04-01T05:09:31Z,2bf59e39-d7aa-81b8-b684-f1b966bfd351,,,QOLS,QOLS,1.0,{score},numeric
+2019-04-01T05:09:31Z,2bf59e39-d7aa-81b8-b684-f1b966bfd351,,,QOLS,QOLS,1.0,{score},numeric
+2020-04-01T05:09:31Z,2bf59e39-d7aa-81b8-b684-f1b966bfd351,,,QOLS,QOLS,1.0,{score},numeric
+2021-04-01T05:09:31Z,2bf59e39-d7aa-81b8-b684-f1b966bfd351,,,QOLS,QOLS,1.0,{score},numeric
+2022-04-01T05:09:31Z,2bf59e39-d7aa-81b8-b684-f1b966bfd351,,,QOLS,QOLS,1.0,{score},numeric
+2023-04-01T05:09:31Z,2bf59e39-d7aa-81b8-b684-f1b966bfd351,,,QOLS,QOLS,1.0,{score},numeric
+2024-04-01T05:09:31Z,2bf59e39-d7aa-81b8-b684-f1b966bfd351,,,QOLS,QOLS,1.0,{score},numeric
+2025-04-01T05:09:31Z,2bf59e39-d7aa-81b8-b684-f1b966bfd351,,,QOLS,QOLS,1.0,{score},numeric
+2016-11-10T21:41:35Z,86471960-331d-47f7-2a28-95d9eeb3721f,,,QALY,QALY,19.0,a,numeric
+2017-11-10T21:41:35Z,86471960-331d-47f7-2a28-95d9eeb3721f,,,QALY,QALY,20.0,a,numeric
+2018-11-10T21:41:35Z,86471960-331d-47f7-2a28-95d9eeb3721f,,,QALY,QALY,21.0,a,numeric
+2019-11-10T21:41:35Z,86471960-331d-47f7-2a28-95d9eeb3721f,,,QALY,QALY,22.0,a,numeric
+2020-11-10T21:41:35Z,86471960-331d-47f7-2a28-95d9eeb3721f,,,QALY,QALY,23.0,a,numeric
+2021-11-10T21:41:35Z,86471960-331d-47f7-2a28-95d9eeb3721f,,,QALY,QALY,24.0,a,numeric
+2022-11-10T21:41:35Z,86471960-331d-47f7-2a28-95d9eeb3721f,,,QALY,QALY,25.0,a,numeric
+2023-11-10T21:41:35Z,86471960-331d-47f7-2a28-95d9eeb3721f,,,QALY,QALY,26.0,a,numeric
+2024-11-10T21:41:35Z,86471960-331d-47f7-2a28-95d9eeb3721f,,,QALY,QALY,27.0,a,numeric
+2025-11-10T21:41:35Z,86471960-331d-47f7-2a28-95d9eeb3721f,,,QALY,QALY,28.0,a,numeric
+2016-11-10T21:41:35Z,86471960-331d-47f7-2a28-95d9eeb3721f,,,DALY,DALY,0.0,a,numeric
+2017-11-10T21:41:35Z,86471960-331d-47f7-2a28-95d9eeb3721f,,,DALY,DALY,0.0,a,numeric
+2018-11-10T21:41:35Z,86471960-331d-47f7-2a28-95d9eeb3721f,,,DALY,DALY,0.0,a,numeric
+2019-11-10T21:41:35Z,86471960-331d-47f7-2a28-95d9eeb3721f,,,DALY,DALY,0.0,a,numeric
+2020-11-10T21:41:35Z,86471960-331d-47f7-2a28-95d9eeb3721f,,,DALY,DALY,0.0,a,numeric
+2021-11-10T21:41:35Z,86471960-331d-47f7-2a28-95d9eeb3721f,,,DALY,DALY,0.0,a,numeric
+2022-11-10T21:41:35Z,86471960-331d-47f7-2a28-95d9eeb3721f,,,DALY,DALY,0.0,a,numeric
+2023-11-10T21:41:35Z,86471960-331d-47f7-2a28-95d9eeb3721f,,,DALY,DALY,0.0,a,numeric
+2024-11-10T21:41:35Z,86471960-331d-47f7-2a28-95d9eeb3721f,,,DALY,DALY,0.0,a,numeric
+2025-11-10T21:41:35Z,86471960-331d-47f7-2a28-95d9eeb3721f,,,DALY,DALY,0.0,a,numeric
+2016-11-10T21:41:35Z,86471960-331d-47f7-2a28-95d9eeb3721f,,,QOLS,QOLS,1.0,{score},numeric
+2017-11-10T21:41:35Z,86471960-331d-47f7-2a28-95d9eeb3721f,,,QOLS,QOLS,1.0,{score},numeric
+2018-11-10T21:41:35Z,86471960-331d-47f7-2a28-95d9eeb3721f,,,QOLS,QOLS,1.0,{score},numeric
+2019-11-10T21:41:35Z,86471960-331d-47f7-2a28-95d9eeb3721f,,,QOLS,QOLS,1.0,{score},numeric
+2020-11-10T21:41:35Z,86471960-331d-47f7-2a28-95d9eeb3721f,,,QOLS,QOLS,1.0,{score},numeric
+2021-11-10T21:41:35Z,86471960-331d-47f7-2a28-95d9eeb3721f,,,QOLS,QOLS,1.0,{score},numeric
+2022-11-10T21:41:35Z,86471960-331d-47f7-2a28-95d9eeb3721f,,,QOLS,QOLS,1.0,{score},numeric
+2023-11-10T21:41:35Z,86471960-331d-47f7-2a28-95d9eeb3721f,,,QOLS,QOLS,1.0,{score},numeric
+2024-11-10T21:41:35Z,86471960-331d-47f7-2a28-95d9eeb3721f,,,QOLS,QOLS,1.0,{score},numeric
+2025-11-10T21:41:35Z,86471960-331d-47f7-2a28-95d9eeb3721f,,,QOLS,QOLS,1.0,{score},numeric
+2016-06-26T04:18:49Z,42699f54-c5da-c122-c414-0a1bb107a078,,,QALY,QALY,79.0,a,numeric
+2017-06-26T04:18:49Z,42699f54-c5da-c122-c414-0a1bb107a078,,,QALY,QALY,80.0,a,numeric
+2018-06-26T04:18:49Z,42699f54-c5da-c122-c414-0a1bb107a078,,,QALY,QALY,81.0,a,numeric
+2019-06-26T04:18:49Z,42699f54-c5da-c122-c414-0a1bb107a078,,,QALY,QALY,82.0,a,numeric
+2020-06-26T04:18:49Z,42699f54-c5da-c122-c414-0a1bb107a078,,,QALY,QALY,83.0,a,numeric
+2021-06-26T04:18:49Z,42699f54-c5da-c122-c414-0a1bb107a078,,,QALY,QALY,84.0,a,numeric
+2022-06-26T04:18:49Z,42699f54-c5da-c122-c414-0a1bb107a078,,,QALY,QALY,85.0,a,numeric
+2023-06-26T04:18:49Z,42699f54-c5da-c122-c414-0a1bb107a078,,,QALY,QALY,86.0,a,numeric
+2024-06-26T04:18:49Z,42699f54-c5da-c122-c414-0a1bb107a078,,,QALY,QALY,87.0,a,numeric
+2025-06-26T04:18:49Z,42699f54-c5da-c122-c414-0a1bb107a078,,,QALY,QALY,88.0,a,numeric
+2016-06-26T04:18:49Z,42699f54-c5da-c122-c414-0a1bb107a078,,,DALY,DALY,0.0,a,numeric
+2017-06-26T04:18:49Z,42699f54-c5da-c122-c414-0a1bb107a078,,,DALY,DALY,0.0,a,numeric
+2018-06-26T04:18:49Z,42699f54-c5da-c122-c414-0a1bb107a078,,,DALY,DALY,0.0,a,numeric
+2019-06-26T04:18:49Z,42699f54-c5da-c122-c414-0a1bb107a078,,,DALY,DALY,0.0,a,numeric
+2020-06-26T04:18:49Z,42699f54-c5da-c122-c414-0a1bb107a078,,,DALY,DALY,0.0,a,numeric
+2021-06-26T04:18:49Z,42699f54-c5da-c122-c414-0a1bb107a078,,,DALY,DALY,0.0,a,numeric
+2022-06-26T04:18:49Z,42699f54-c5da-c122-c414-0a1bb107a078,,,DALY,DALY,0.0,a,numeric
+2023-06-26T04:18:49Z,42699f54-c5da-c122-c414-0a1bb107a078,,,DALY,DALY,0.0,a,numeric
+2024-06-26T04:18:49Z,42699f54-c5da-c122-c414-0a1bb107a078,,,DALY,DALY,0.0,a,numeric
+2025-06-26T04:18:49Z,42699f54-c5da-c122-c414-0a1bb107a078,,,DALY,DALY,0.0,a,numeric
+2016-06-26T04:18:49Z,42699f54-c5da-c122-c414-0a1bb107a078,,,QOLS,QOLS,1.0,{score},numeric
+2017-06-26T04:18:49Z,42699f54-c5da-c122-c414-0a1bb107a078,,,QOLS,QOLS,1.0,{score},numeric
+2018-06-26T04:18:49Z,42699f54-c5da-c122-c414-0a1bb107a078,,,QOLS,QOLS,1.0,{score},numeric
+2019-06-26T04:18:49Z,42699f54-c5da-c122-c414-0a1bb107a078,,,QOLS,QOLS,1.0,{score},numeric
+2020-06-26T04:18:49Z,42699f54-c5da-c122-c414-0a1bb107a078,,,QOLS,QOLS,1.0,{score},numeric
+2021-06-26T04:18:49Z,42699f54-c5da-c122-c414-0a1bb107a078,,,QOLS,QOLS,1.0,{score},numeric
+2022-06-26T04:18:49Z,42699f54-c5da-c122-c414-0a1bb107a078,,,QOLS,QOLS,1.0,{score},numeric
+2023-06-26T04:18:49Z,42699f54-c5da-c122-c414-0a1bb107a078,,,QOLS,QOLS,1.0,{score},numeric
+2024-06-26T04:18:49Z,42699f54-c5da-c122-c414-0a1bb107a078,,,QOLS,QOLS,1.0,{score},numeric
+2025-06-26T04:18:49Z,42699f54-c5da-c122-c414-0a1bb107a078,,,QOLS,QOLS,1.0,{score},numeric
+1985-03-25T23:49:25Z,aded9f1a-9168-4ea7-9697-2db9b972a79b,aded9f1a-9168-4ea7-a975-1eff927ed9f8,laboratory,6690-2,Leukocytes [#/volume] in Blood by Automated count,76.7,10*3/uL,numeric
+1985-03-25T23:49:25Z,aded9f1a-9168-4ea7-9697-2db9b972a79b,aded9f1a-9168-4ea7-a975-1eff927ed9f8,laboratory,718-7,Hemoglobin [Mass/volume] in Blood,8.1,g/dL,numeric
+1985-03-25T23:49:25Z,aded9f1a-9168-4ea7-9697-2db9b972a79b,aded9f1a-9168-4ea7-a975-1eff927ed9f8,laboratory,777-3,Platelets [#/volume] in Blood by Automated count,51.7,10*3/uL,numeric
+1985-03-25T23:49:25Z,aded9f1a-9168-4ea7-9697-2db9b972a79b,aded9f1a-9168-4ea7-a975-1eff927ed9f8,laboratory,751-8,Neutrophils [#/volume] in Blood by Automated count,0.2,10*3/uL,numeric
+1985-03-25T23:49:25Z,aded9f1a-9168-4ea7-9697-2db9b972a79b,aded9f1a-9168-4ea7-a975-1eff927ed9f8,laboratory,709-6,Blasts/100 leukocytes in Blood by Manual count,58.6,%,numeric
+1985-03-25T23:49:25Z,aded9f1a-9168-4ea7-9697-2db9b972a79b,aded9f1a-9168-4ea7-a975-1eff927ed9f8,laboratory,14804-9,Lactate dehydrogenase [Enzymatic activity/volume] in Serum or Plasma,1329.1,U/L,numeric
+1985-03-25T23:49:25Z,aded9f1a-9168-4ea7-9697-2db9b972a79b,aded9f1a-9168-4ea7-a975-1eff927ed9f8,laboratory,2160-0,Creatinine [Mass/volume] in Serum or Plasma,1.0,mg/dL,numeric
+1985-03-25T23:49:25Z,aded9f1a-9168-4ea7-9697-2db9b972a79b,aded9f1a-9168-4ea7-a975-1eff927ed9f8,laboratory,3084-1,Urate [Mass/volume] in Serum or Plasma,9.9,mg/dL,numeric
+1985-03-26T00:29:22Z,aded9f1a-9168-4ea7-9697-2db9b972a79b,aded9f1a-9168-4ea7-a975-1eff927ed9f8,laboratory,26464-8,Blasts/100 cells in Bone marrow,32.4,%,numeric
+1985-03-26T07:56:39Z,aded9f1a-9168-4ea7-9697-2db9b972a79b,aded9f1a-9168-4ea7-a975-1eff927ed9f8,laboratory,751-8,Neutrophils [#/volume] in Blood by Automated count,0.4,10*3/uL,numeric
+1985-03-26T07:56:39Z,aded9f1a-9168-4ea7-9697-2db9b972a79b,aded9f1a-9168-4ea7-a975-1eff927ed9f8,vital-signs,8310-5,Body temperature,96.7,[degF],numeric
+1985-03-26T09:15:33Z,aded9f1a-9168-4ea7-9697-2db9b972a79b,aded9f1a-9168-4ea7-a975-1eff927ed9f8,laboratory,102098-1,Acute myeloid leukemia minimal residual disease in Bone marrow by Flow cytometry (FC) Narrative,0.9,%,numeric
+1985-12-15T23:49:25Z,aded9f1a-9168-4ea7-9697-2db9b972a79b,aded9f1a-9168-4ea7-b051-aca98a741c24,exam,69453-9,Cause of Death [US Standard Certificate of Death],Acute myeloid leukemia with myelodysplasia-related changes (disorder),,text
+2016-12-26T16:43:56Z,a7378bbc-154e-437e-d6b0-c8471b17ee4b,,,QALY,QALY,49.0,a,numeric
+2017-12-26T16:43:56Z,a7378bbc-154e-437e-d6b0-c8471b17ee4b,,,QALY,QALY,50.0,a,numeric
+2018-12-26T16:43:56Z,a7378bbc-154e-437e-d6b0-c8471b17ee4b,,,QALY,QALY,51.0,a,numeric
+2019-12-26T16:43:56Z,a7378bbc-154e-437e-d6b0-c8471b17ee4b,,,QALY,QALY,52.0,a,numeric
+2020-12-26T16:43:56Z,a7378bbc-154e-437e-d6b0-c8471b17ee4b,,,QALY,QALY,53.0,a,numeric
+2021-12-26T16:43:56Z,a7378bbc-154e-437e-d6b0-c8471b17ee4b,,,QALY,QALY,54.0,a,numeric
+2022-12-26T16:43:56Z,a7378bbc-154e-437e-d6b0-c8471b17ee4b,,,QALY,QALY,55.0,a,numeric
+2023-12-26T16:43:56Z,a7378bbc-154e-437e-d6b0-c8471b17ee4b,,,QALY,QALY,56.0,a,numeric
+2024-12-26T16:43:56Z,a7378bbc-154e-437e-d6b0-c8471b17ee4b,,,QALY,QALY,57.0,a,numeric
+2025-12-26T16:43:56Z,a7378bbc-154e-437e-d6b0-c8471b17ee4b,,,QALY,QALY,58.0,a,numeric
+2016-12-26T16:43:56Z,a7378bbc-154e-437e-d6b0-c8471b17ee4b,,,DALY,DALY,0.0,a,numeric
+2017-12-26T16:43:56Z,a7378bbc-154e-437e-d6b0-c8471b17ee4b,,,DALY,DALY,0.0,a,numeric
+2018-12-26T16:43:56Z,a7378bbc-154e-437e-d6b0-c8471b17ee4b,,,DALY,DALY,0.0,a,numeric
+2019-12-26T16:43:56Z,a7378bbc-154e-437e-d6b0-c8471b17ee4b,,,DALY,DALY,0.0,a,numeric
+2020-12-26T16:43:56Z,a7378bbc-154e-437e-d6b0-c8471b17ee4b,,,DALY,DALY,0.0,a,numeric
+2021-12-26T16:43:56Z,a7378bbc-154e-437e-d6b0-c8471b17ee4b,,,DALY,DALY,0.0,a,numeric
+2022-12-26T16:43:56Z,a7378bbc-154e-437e-d6b0-c8471b17ee4b,,,DALY,DALY,0.0,a,numeric
+2023-12-26T16:43:56Z,a7378bbc-154e-437e-d6b0-c8471b17ee4b,,,DALY,DALY,0.0,a,numeric
+2024-12-26T16:43:56Z,a7378bbc-154e-437e-d6b0-c8471b17ee4b,,,DALY,DALY,0.0,a,numeric
+2025-12-26T16:43:56Z,a7378bbc-154e-437e-d6b0-c8471b17ee4b,,,DALY,DALY,0.0,a,numeric
+2016-12-26T16:43:56Z,a7378bbc-154e-437e-d6b0-c8471b17ee4b,,,QOLS,QOLS,1.0,{score},numeric
+2017-12-26T16:43:56Z,a7378bbc-154e-437e-d6b0-c8471b17ee4b,,,QOLS,QOLS,1.0,{score},numeric
+2018-12-26T16:43:56Z,a7378bbc-154e-437e-d6b0-c8471b17ee4b,,,QOLS,QOLS,1.0,{score},numeric
+2019-12-26T16:43:56Z,a7378bbc-154e-437e-d6b0-c8471b17ee4b,,,QOLS,QOLS,1.0,{score},numeric
+2020-12-26T16:43:56Z,a7378bbc-154e-437e-d6b0-c8471b17ee4b,,,QOLS,QOLS,1.0,{score},numeric
+2021-12-26T16:43:56Z,a7378bbc-154e-437e-d6b0-c8471b17ee4b,,,QOLS,QOLS,1.0,{score},numeric
+2022-12-26T16:43:56Z,a7378bbc-154e-437e-d6b0-c8471b17ee4b,,,QOLS,QOLS,1.0,{score},numeric
+2023-12-26T16:43:56Z,a7378bbc-154e-437e-d6b0-c8471b17ee4b,,,QOLS,QOLS,1.0,{score},numeric
+2024-12-26T16:43:56Z,a7378bbc-154e-437e-d6b0-c8471b17ee4b,,,QOLS,QOLS,1.0,{score},numeric
+2025-12-26T16:43:56Z,a7378bbc-154e-437e-d6b0-c8471b17ee4b,,,QOLS,QOLS,1.0,{score},numeric
+2016-09-17T20:35:48Z,c621f0b1-2f4c-9aab-6a00-480c40d2ca4b,,,QALY,QALY,76.0,a,numeric
+2017-09-17T20:35:48Z,c621f0b1-2f4c-9aab-6a00-480c40d2ca4b,,,QALY,QALY,77.0,a,numeric
+2018-09-17T20:35:48Z,c621f0b1-2f4c-9aab-6a00-480c40d2ca4b,,,QALY,QALY,78.0,a,numeric
+2019-09-17T20:35:48Z,c621f0b1-2f4c-9aab-6a00-480c40d2ca4b,,,QALY,QALY,79.0,a,numeric
+2020-09-17T20:35:48Z,c621f0b1-2f4c-9aab-6a00-480c40d2ca4b,,,QALY,QALY,80.0,a,numeric
+2021-09-17T20:35:48Z,c621f0b1-2f4c-9aab-6a00-480c40d2ca4b,,,QALY,QALY,81.0,a,numeric
+2022-09-17T20:35:48Z,c621f0b1-2f4c-9aab-6a00-480c40d2ca4b,,,QALY,QALY,82.0,a,numeric
+2023-09-17T20:35:48Z,c621f0b1-2f4c-9aab-6a00-480c40d2ca4b,,,QALY,QALY,83.0,a,numeric
+2024-09-17T20:35:48Z,c621f0b1-2f4c-9aab-6a00-480c40d2ca4b,,,QALY,QALY,84.0,a,numeric
+2025-09-17T20:35:48Z,c621f0b1-2f4c-9aab-6a00-480c40d2ca4b,,,QALY,QALY,85.0,a,numeric
+2016-09-17T20:35:48Z,c621f0b1-2f4c-9aab-6a00-480c40d2ca4b,,,DALY,DALY,0.0,a,numeric
+2017-09-17T20:35:48Z,c621f0b1-2f4c-9aab-6a00-480c40d2ca4b,,,DALY,DALY,0.0,a,numeric
+2018-09-17T20:35:48Z,c621f0b1-2f4c-9aab-6a00-480c40d2ca4b,,,DALY,DALY,0.0,a,numeric
+2019-09-17T20:35:48Z,c621f0b1-2f4c-9aab-6a00-480c40d2ca4b,,,DALY,DALY,0.0,a,numeric
+2020-09-17T20:35:48Z,c621f0b1-2f4c-9aab-6a00-480c40d2ca4b,,,DALY,DALY,0.0,a,numeric
+2021-09-17T20:35:48Z,c621f0b1-2f4c-9aab-6a00-480c40d2ca4b,,,DALY,DALY,0.0,a,numeric
+2022-09-17T20:35:48Z,c621f0b1-2f4c-9aab-6a00-480c40d2ca4b,,,DALY,DALY,0.0,a,numeric
+2023-09-17T20:35:48Z,c621f0b1-2f4c-9aab-6a00-480c40d2ca4b,,,DALY,DALY,0.0,a,numeric
+2024-09-17T20:35:48Z,c621f0b1-2f4c-9aab-6a00-480c40d2ca4b,,,DALY,DALY,0.0,a,numeric
+2025-09-17T20:35:48Z,c621f0b1-2f4c-9aab-6a00-480c40d2ca4b,,,DALY,DALY,0.0,a,numeric
+2016-09-17T20:35:48Z,c621f0b1-2f4c-9aab-6a00-480c40d2ca4b,,,QOLS,QOLS,1.0,{score},numeric
+2017-09-17T20:35:48Z,c621f0b1-2f4c-9aab-6a00-480c40d2ca4b,,,QOLS,QOLS,1.0,{score},numeric
+2018-09-17T20:35:48Z,c621f0b1-2f4c-9aab-6a00-480c40d2ca4b,,,QOLS,QOLS,1.0,{score},numeric
+2019-09-17T20:35:48Z,c621f0b1-2f4c-9aab-6a00-480c40d2ca4b,,,QOLS,QOLS,1.0,{score},numeric
+2020-09-17T20:35:48Z,c621f0b1-2f4c-9aab-6a00-480c40d2ca4b,,,QOLS,QOLS,1.0,{score},numeric
+2021-09-17T20:35:48Z,c621f0b1-2f4c-9aab-6a00-480c40d2ca4b,,,QOLS,QOLS,1.0,{score},numeric
+2022-09-17T20:35:48Z,c621f0b1-2f4c-9aab-6a00-480c40d2ca4b,,,QOLS,QOLS,1.0,{score},numeric
+2023-09-17T20:35:48Z,c621f0b1-2f4c-9aab-6a00-480c40d2ca4b,,,QOLS,QOLS,1.0,{score},numeric
+2024-09-17T20:35:48Z,c621f0b1-2f4c-9aab-6a00-480c40d2ca4b,,,QOLS,QOLS,1.0,{score},numeric
+2025-09-17T20:35:48Z,c621f0b1-2f4c-9aab-6a00-480c40d2ca4b,,,QOLS,QOLS,1.0,{score},numeric
+2016-03-26T00:49:25Z,3ac48c18-cfc0-1217-3d22-dba4bffc84d0,,,QALY,QALY,42.0,a,numeric
+2017-03-26T00:49:25Z,3ac48c18-cfc0-1217-3d22-dba4bffc84d0,,,QALY,QALY,43.0,a,numeric
+2018-03-25T23:49:25Z,3ac48c18-cfc0-1217-3d22-dba4bffc84d0,,,QALY,QALY,44.0,a,numeric
+2019-03-26T00:49:25Z,3ac48c18-cfc0-1217-3d22-dba4bffc84d0,,,QALY,QALY,45.0,a,numeric
+2020-03-26T00:49:25Z,3ac48c18-cfc0-1217-3d22-dba4bffc84d0,,,QALY,QALY,46.0,a,numeric
+2021-03-26T00:49:25Z,3ac48c18-cfc0-1217-3d22-dba4bffc84d0,,,QALY,QALY,47.0,a,numeric
+2022-03-26T00:49:25Z,3ac48c18-cfc0-1217-3d22-dba4bffc84d0,,,QALY,QALY,48.0,a,numeric
+2023-03-26T00:49:25Z,3ac48c18-cfc0-1217-3d22-dba4bffc84d0,,,QALY,QALY,49.0,a,numeric
+2024-03-26T00:49:25Z,3ac48c18-cfc0-1217-3d22-dba4bffc84d0,,,QALY,QALY,50.0,a,numeric
+2025-03-26T00:49:25Z,3ac48c18-cfc0-1217-3d22-dba4bffc84d0,,,QALY,QALY,51.0,a,numeric
+2016-03-26T00:49:25Z,3ac48c18-cfc0-1217-3d22-dba4bffc84d0,,,DALY,DALY,0.0,a,numeric
+2017-03-26T00:49:25Z,3ac48c18-cfc0-1217-3d22-dba4bffc84d0,,,DALY,DALY,0.0,a,numeric
+2018-03-25T23:49:25Z,3ac48c18-cfc0-1217-3d22-dba4bffc84d0,,,DALY,DALY,0.0,a,numeric
+2019-03-26T00:49:25Z,3ac48c18-cfc0-1217-3d22-dba4bffc84d0,,,DALY,DALY,0.0,a,numeric
+2020-03-26T00:49:25Z,3ac48c18-cfc0-1217-3d22-dba4bffc84d0,,,DALY,DALY,0.0,a,numeric
+2021-03-26T00:49:25Z,3ac48c18-cfc0-1217-3d22-dba4bffc84d0,,,DALY,DALY,0.0,a,numeric
+2022-03-26T00:49:25Z,3ac48c18-cfc0-1217-3d22-dba4bffc84d0,,,DALY,DALY,0.0,a,numeric
+2023-03-26T00:49:25Z,3ac48c18-cfc0-1217-3d22-dba4bffc84d0,,,DALY,DALY,0.0,a,numeric
+2024-03-26T00:49:25Z,3ac48c18-cfc0-1217-3d22-dba4bffc84d0,,,DALY,DALY,0.0,a,numeric
+2025-03-26T00:49:25Z,3ac48c18-cfc0-1217-3d22-dba4bffc84d0,,,DALY,DALY,0.0,a,numeric
+2016-03-26T00:49:25Z,3ac48c18-cfc0-1217-3d22-dba4bffc84d0,,,QOLS,QOLS,1.0,{score},numeric
+2017-03-26T00:49:25Z,3ac48c18-cfc0-1217-3d22-dba4bffc84d0,,,QOLS,QOLS,1.0,{score},numeric
+2018-03-25T23:49:25Z,3ac48c18-cfc0-1217-3d22-dba4bffc84d0,,,QOLS,QOLS,1.0,{score},numeric
+2019-03-26T00:49:25Z,3ac48c18-cfc0-1217-3d22-dba4bffc84d0,,,QOLS,QOLS,1.0,{score},numeric
+2020-03-26T00:49:25Z,3ac48c18-cfc0-1217-3d22-dba4bffc84d0,,,QOLS,QOLS,1.0,{score},numeric
+2021-03-26T00:49:25Z,3ac48c18-cfc0-1217-3d22-dba4bffc84d0,,,QOLS,QOLS,1.0,{score},numeric
+2022-03-26T00:49:25Z,3ac48c18-cfc0-1217-3d22-dba4bffc84d0,,,QOLS,QOLS,1.0,{score},numeric
+2023-03-26T00:49:25Z,3ac48c18-cfc0-1217-3d22-dba4bffc84d0,,,QOLS,QOLS,1.0,{score},numeric
+2024-03-26T00:49:25Z,3ac48c18-cfc0-1217-3d22-dba4bffc84d0,,,QOLS,QOLS,1.0,{score},numeric
+2025-03-26T00:49:25Z,3ac48c18-cfc0-1217-3d22-dba4bffc84d0,,,QOLS,QOLS,1.0,{score},numeric

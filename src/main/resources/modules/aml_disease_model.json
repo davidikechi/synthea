@@ -1,1700 +1,1562 @@
 {
-  "name": "AML Disease Model",
-  "remarks": [
-    "Full AML disease model covering WHO-HAEM5 / ELN-2022 subtypes, diagnostic workup",
-    "(karyotype, FISH, NGS, RT-PCR, flow cytometry, bone marrow biopsy), CBC and chemistry",
-    "labs, subtype-specific induction and targeted therapies, APL-specific ATRA/ATO,",
-    "supportive-care medications, oncologic complications, genomic alterations, and MRD",
-    "response assessment.",
-    "",
-    "Subtype prevalence approximated from SEER / published literature:",
-    "  NPM1-mutated AML         ~27%",
-    "  FLT3-ITD AML             ~25%",
-    "  CBF AML (RUNX1::RUNX1T1) ~ 8%",
-    "  APL (PML::RARA)          ~10%",
-    "  IDH1/IDH2-mutated AML    ~10%",
-    "  TP53 / MDS-related AML   ~20%",
-    "",
-    "Incidence gate: 0.2% females, 0.3% males (ACS 2022), consistent with",
-    "acute_myeloid_leukemia.json.  Onset distributed across ages 0-21 years.",
-    "",
-    "Ontology systems used: SNOMED-CT, LOINC, RxNorm, NUBC.",
-    "",
-    "FIXES applied:",
-    "  - reason fields on Encounter/Procedure/MedicationOrder now reference the",
-    "    ConditionOnset STATE NAME (AML_Condition_Onset) not the attribute name.",
-    "  - ConditionEnd states use condition_onset: STATE NAME (e.g. Febrile_Neutropenia_Onset).",
-    "  - All MedicationOrder states have assign_to_attribute for tracking.",
-    "  - MedicationEnd states added for every MedicationOrder.",
-    "  - RxNorm codes are integers as required by Synthea.",
-    "  - Death states added after MRD assessment with subtype-specific SNOMED causes",
-    "    and realistic ELN-2022 mortality rates (APL 15%, NPM1 20%, CBF 25%,",
-    "    IDH 35%, FLT3-ITD 40%, TP53/MDS 60%). Death occurs 1-12 months post-induction."
-  ],
-  "gmf_version": 2,
-  "states": {
+    "name": "AML Disease Model",
+    "remarks": [
+        "Full AML disease model covering WHO-HAEM5 / ELN-2022 subtypes, diagnostic workup",
+        "(karyotype, FISH, NGS, RT-PCR, flow cytometry, bone marrow biopsy), CBC and chemistry",
+        "labs, subtype-specific induction and targeted therapies, APL-specific ATRA/ATO,",
+        "supportive-care medications, oncologic complications, genomic alterations, and MRD",
+        "response assessment.",
+        "",
+        "Subtype prevalence approximated from SEER / published literature:",
+        "  NPM1-mutated AML         ~27%",
+        "  FLT3-ITD AML             ~25%",
+        "  CBF AML (RUNX1::RUNX1T1) ~ 8%",
+        "  APL (PML::RARA)          ~10%",
+        "  IDH1/IDH2-mutated AML    ~10%",
+        "  TP53 / MDS-related AML   ~20%",
+        "",
+        "Incidence gate: 0.2% females, 0.3% males (ACS 2022), consistent with",
+        "acute_myeloid_leukemia.json.  Onset distributed across ages 0-21 years.",
+        "",
+        "Ontology systems used: SNOMED-CT, LOINC, RxNorm, NUBC.",
+        "",
+        "FIXES applied:",
+        "  - reason fields on Encounter/Procedure/MedicationOrder now reference the",
+        "    ConditionOnset STATE NAME (AML_Condition_Onset) not the attribute name.",
+        "  - ConditionEnd states use condition_onset: STATE NAME (e.g. Febrile_Neutropenia_Onset).",
+        "  - All MedicationOrder states have assign_to_attribute for tracking.",
+        "  - MedicationEnd states added for every MedicationOrder.",
+        "  - RxNorm codes are integers as required by Synthea.",
+        "  - Death states added after MRD assessment with subtype-specific SNOMED causes",
+        "    and realistic ELN-2022 mortality rates (APL 15%, NPM1 20%, CBF 25%,",
+        "    IDH 35%, FLT3-ITD 40%, TP53/MDS 60%). Death occurs 1-12 months post-induction."
+    ],
+    "gmf_version": 2,
+    "states": {
 
-    "Initial": {
-      "type": "Initial",
-      "remarks": [
-        "Every simulated patient in this module develops AML.",
-        "The population incidence gate has been removed so -p N generates exactly N AML patients.",
-        "This is intentional for research and dataset generation.",
-        "To restore realistic prevalence (~0.3% M / ~0.2% F), replace direct_transition",
-        "with the original complex_transition gender distributions."
-      ],
-      "direct_transition": "Cancerous"
-    },
+        "Initial": {
+            "type": "Initial",
+            "remarks": [
+                "Every simulated patient in this module develops AML.",
+                "The population incidence gate has been removed so -p N generates exactly N AML patients.",
+                "This is intentional for research and dataset generation.",
+                "To restore realistic prevalence (~0.3% M / ~0.2% F), replace direct_transition",
+                "with the original complex_transition gender distributions."
+            ],
+            "direct_transition": "Cancerous"
+        },
 
-    "Cancerous": {
-      "type": "Simple",
-      "remarks": ["Distribute AML onset uniformly across ages 0-21 (years of delay)."],
-      "distributed_transition": [
-        { "transition": "Delay_0",  "distribution": 0.0455 },
-        { "transition": "Delay_1",  "distribution": 0.0455 },
-        { "transition": "Delay_2",  "distribution": 0.0455 },
-        { "transition": "Delay_3",  "distribution": 0.0455 },
-        { "transition": "Delay_4",  "distribution": 0.0455 },
-        { "transition": "Delay_5",  "distribution": 0.0455 },
-        { "transition": "Delay_6",  "distribution": 0.0455 },
-        { "transition": "Delay_7",  "distribution": 0.0455 },
-        { "transition": "Delay_8",  "distribution": 0.0455 },
-        { "transition": "Delay_9",  "distribution": 0.0455 },
-        { "transition": "Delay_10", "distribution": 0.0455 },
-        { "transition": "Delay_11", "distribution": 0.0455 },
-        { "transition": "Delay_12", "distribution": 0.0455 },
-        { "transition": "Delay_13", "distribution": 0.0455 },
-        { "transition": "Delay_14", "distribution": 0.0455 },
-        { "transition": "Delay_15", "distribution": 0.0455 },
-        { "transition": "Delay_16", "distribution": 0.0455 },
-        { "transition": "Delay_17", "distribution": 0.0455 },
-        { "transition": "Delay_18", "distribution": 0.0455 },
-        { "transition": "Delay_19", "distribution": 0.0455 },
-        { "transition": "Delay_20", "distribution": 0.0455 },
-        { "transition": "Delay_21", "distribution": 0.0445 }
-      ]
-    },
+        "Cancerous": {
+            "type": "Simple",
+            "remarks": ["Distribute AML onset uniformly across ages 0-21 (years of delay)."],
+            "distributed_transition": [
+                { "transition": "Delay_0", "distribution": 0.0455 },
+                { "transition": "Delay_1", "distribution": 0.0455 },
+                { "transition": "Delay_2", "distribution": 0.0455 },
+                { "transition": "Delay_3", "distribution": 0.0455 },
+                { "transition": "Delay_4", "distribution": 0.0455 },
+                { "transition": "Delay_5", "distribution": 0.0455 },
+                { "transition": "Delay_6", "distribution": 0.0455 },
+                { "transition": "Delay_7", "distribution": 0.0455 },
+                { "transition": "Delay_8", "distribution": 0.0455 },
+                { "transition": "Delay_9", "distribution": 0.0455 },
+                { "transition": "Delay_10", "distribution": 0.0455 },
+                { "transition": "Delay_11", "distribution": 0.0455 },
+                { "transition": "Delay_12", "distribution": 0.0455 },
+                { "transition": "Delay_13", "distribution": 0.0455 },
+                { "transition": "Delay_14", "distribution": 0.0455 },
+                { "transition": "Delay_15", "distribution": 0.0455 },
+                { "transition": "Delay_16", "distribution": 0.0455 },
+                { "transition": "Delay_17", "distribution": 0.0455 },
+                { "transition": "Delay_18", "distribution": 0.0455 },
+                { "transition": "Delay_19", "distribution": 0.0455 },
+                { "transition": "Delay_20", "distribution": 0.0455 },
+                { "transition": "Delay_21", "distribution": 0.0445 }
+            ]
+        },
 
-    "Delay_0":  { "type": "Delay", "exact": { "quantity": 0,  "unit": "years" }, "direct_transition": "Assign_AML_Subtype" },
-    "Delay_1":  { "type": "Delay", "exact": { "quantity": 1,  "unit": "years" }, "direct_transition": "Assign_AML_Subtype" },
-    "Delay_2":  { "type": "Delay", "exact": { "quantity": 2,  "unit": "years" }, "direct_transition": "Assign_AML_Subtype" },
-    "Delay_3":  { "type": "Delay", "exact": { "quantity": 3,  "unit": "years" }, "direct_transition": "Assign_AML_Subtype" },
-    "Delay_4":  { "type": "Delay", "exact": { "quantity": 4,  "unit": "years" }, "direct_transition": "Assign_AML_Subtype" },
-    "Delay_5":  { "type": "Delay", "exact": { "quantity": 5,  "unit": "years" }, "direct_transition": "Assign_AML_Subtype" },
-    "Delay_6":  { "type": "Delay", "exact": { "quantity": 6,  "unit": "years" }, "direct_transition": "Assign_AML_Subtype" },
-    "Delay_7":  { "type": "Delay", "exact": { "quantity": 7,  "unit": "years" }, "direct_transition": "Assign_AML_Subtype" },
-    "Delay_8":  { "type": "Delay", "exact": { "quantity": 8,  "unit": "years" }, "direct_transition": "Assign_AML_Subtype" },
-    "Delay_9":  { "type": "Delay", "exact": { "quantity": 9,  "unit": "years" }, "direct_transition": "Assign_AML_Subtype" },
-    "Delay_10": { "type": "Delay", "exact": { "quantity": 10, "unit": "years" }, "direct_transition": "Assign_AML_Subtype" },
-    "Delay_11": { "type": "Delay", "exact": { "quantity": 11, "unit": "years" }, "direct_transition": "Assign_AML_Subtype" },
-    "Delay_12": { "type": "Delay", "exact": { "quantity": 12, "unit": "years" }, "direct_transition": "Assign_AML_Subtype" },
-    "Delay_13": { "type": "Delay", "exact": { "quantity": 13, "unit": "years" }, "direct_transition": "Assign_AML_Subtype" },
-    "Delay_14": { "type": "Delay", "exact": { "quantity": 14, "unit": "years" }, "direct_transition": "Assign_AML_Subtype" },
-    "Delay_15": { "type": "Delay", "exact": { "quantity": 15, "unit": "years" }, "direct_transition": "Assign_AML_Subtype" },
-    "Delay_16": { "type": "Delay", "exact": { "quantity": 16, "unit": "years" }, "direct_transition": "Assign_AML_Subtype" },
-    "Delay_17": { "type": "Delay", "exact": { "quantity": 17, "unit": "years" }, "direct_transition": "Assign_AML_Subtype" },
-    "Delay_18": { "type": "Delay", "exact": { "quantity": 18, "unit": "years" }, "direct_transition": "Assign_AML_Subtype" },
-    "Delay_19": { "type": "Delay", "exact": { "quantity": 19, "unit": "years" }, "direct_transition": "Assign_AML_Subtype" },
-    "Delay_20": { "type": "Delay", "exact": { "quantity": 20, "unit": "years" }, "direct_transition": "Assign_AML_Subtype" },
-    "Delay_21": { "type": "Delay", "exact": { "quantity": 21, "unit": "years" }, "direct_transition": "Assign_AML_Subtype" },
+        "Delay_0": { "type": "Delay", "exact": { "quantity": 0, "unit": "years" }, "direct_transition": "Assign_AML_Subtype" },
+        "Delay_1": { "type": "Delay", "exact": { "quantity": 1, "unit": "years" }, "direct_transition": "Assign_AML_Subtype" },
+        "Delay_2": { "type": "Delay", "exact": { "quantity": 2, "unit": "years" }, "direct_transition": "Assign_AML_Subtype" },
+        "Delay_3": { "type": "Delay", "exact": { "quantity": 3, "unit": "years" }, "direct_transition": "Assign_AML_Subtype" },
+        "Delay_4": { "type": "Delay", "exact": { "quantity": 4, "unit": "years" }, "direct_transition": "Assign_AML_Subtype" },
+        "Delay_5": { "type": "Delay", "exact": { "quantity": 5, "unit": "years" }, "direct_transition": "Assign_AML_Subtype" },
+        "Delay_6": { "type": "Delay", "exact": { "quantity": 6, "unit": "years" }, "direct_transition": "Assign_AML_Subtype" },
+        "Delay_7": { "type": "Delay", "exact": { "quantity": 7, "unit": "years" }, "direct_transition": "Assign_AML_Subtype" },
+        "Delay_8": { "type": "Delay", "exact": { "quantity": 8, "unit": "years" }, "direct_transition": "Assign_AML_Subtype" },
+        "Delay_9": { "type": "Delay", "exact": { "quantity": 9, "unit": "years" }, "direct_transition": "Assign_AML_Subtype" },
+        "Delay_10": { "type": "Delay", "exact": { "quantity": 10, "unit": "years" }, "direct_transition": "Assign_AML_Subtype" },
+        "Delay_11": { "type": "Delay", "exact": { "quantity": 11, "unit": "years" }, "direct_transition": "Assign_AML_Subtype" },
+        "Delay_12": { "type": "Delay", "exact": { "quantity": 12, "unit": "years" }, "direct_transition": "Assign_AML_Subtype" },
+        "Delay_13": { "type": "Delay", "exact": { "quantity": 13, "unit": "years" }, "direct_transition": "Assign_AML_Subtype" },
+        "Delay_14": { "type": "Delay", "exact": { "quantity": 14, "unit": "years" }, "direct_transition": "Assign_AML_Subtype" },
+        "Delay_15": { "type": "Delay", "exact": { "quantity": 15, "unit": "years" }, "direct_transition": "Assign_AML_Subtype" },
+        "Delay_16": { "type": "Delay", "exact": { "quantity": 16, "unit": "years" }, "direct_transition": "Assign_AML_Subtype" },
+        "Delay_17": { "type": "Delay", "exact": { "quantity": 17, "unit": "years" }, "direct_transition": "Assign_AML_Subtype" },
+        "Delay_18": { "type": "Delay", "exact": { "quantity": 18, "unit": "years" }, "direct_transition": "Assign_AML_Subtype" },
+        "Delay_19": { "type": "Delay", "exact": { "quantity": 19, "unit": "years" }, "direct_transition": "Assign_AML_Subtype" },
+        "Delay_20": { "type": "Delay", "exact": { "quantity": 20, "unit": "years" }, "direct_transition": "Assign_AML_Subtype" },
+        "Delay_21": { "type": "Delay", "exact": { "quantity": 21, "unit": "years" }, "direct_transition": "Assign_AML_Subtype" },
 
-    "Assign_AML_Subtype": {
-      "type": "Simple",
-      "remarks": [
-        "Distribute patients across six clinically representative AML subtypes.",
-        "Proportions reflect approximate published incidence fractions."
-      ],
-      "distributed_transition": [
-        { "transition": "Set_Subtype_NPM1",       "distribution": 0.27 },
-        { "transition": "Set_Subtype_FLT3_ITD",   "distribution": 0.25 },
-        { "transition": "Set_Subtype_APL",         "distribution": 0.10 },
-        { "transition": "Set_Subtype_CBF",         "distribution": 0.08 },
-        { "transition": "Set_Subtype_IDH",         "distribution": 0.10 },
-        { "transition": "Set_Subtype_TP53_MDS",    "distribution": 0.20 }
-      ]
-    },
+        "Assign_AML_Subtype": {
+            "type": "Simple",
+            "remarks": [
+                "Distribute patients across six clinically representative AML subtypes.",
+                "Proportions reflect approximate published incidence fractions."
+            ],
+            "distributed_transition": [
+                { "transition": "Set_Subtype_NPM1", "distribution": 0.27 },
+                { "transition": "Set_Subtype_FLT3_ITD", "distribution": 0.25 },
+                { "transition": "Set_Subtype_APL", "distribution": 0.10 },
+                { "transition": "Set_Subtype_CBF", "distribution": 0.08 },
+                { "transition": "Set_Subtype_IDH", "distribution": 0.10 },
+                { "transition": "Set_Subtype_TP53_MDS", "distribution": 0.20 }
+            ]
+        },
 
-    "Set_Subtype_NPM1": {
-      "type": "SetAttribute",
-      "attribute": "aml_subtype",
-      "value": "AML_NPM1",
-      "direct_transition": "Set_ELN_Risk_Favorable"
-    },
-    "Set_Subtype_FLT3_ITD": {
-      "type": "SetAttribute",
-      "attribute": "aml_subtype",
-      "value": "AML_FLT3_ITD",
-      "direct_transition": "Set_ELN_Risk_Intermediate"
-    },
-    "Set_Subtype_APL": {
-      "type": "SetAttribute",
-      "attribute": "aml_subtype",
-      "value": "APL_PML_RARA",
-      "direct_transition": "Set_ELN_Risk_Favorable"
-    },
-    "Set_Subtype_CBF": {
-      "type": "SetAttribute",
-      "attribute": "aml_subtype",
-      "value": "AML_CBF_RUNX1_RUNX1T1",
-      "direct_transition": "Set_ELN_Risk_Favorable"
-    },
-    "Set_Subtype_IDH": {
-      "type": "SetAttribute",
-      "attribute": "aml_subtype",
-      "value": "AML_IDH",
-      "direct_transition": "Set_ELN_Risk_Intermediate"
-    },
-    "Set_Subtype_TP53_MDS": {
-      "type": "SetAttribute",
-      "attribute": "aml_subtype",
-      "value": "AML_TP53_MDS",
-      "direct_transition": "Set_ELN_Risk_Adverse"
-    },
-
-    "Set_ELN_Risk_Favorable": {
-      "type": "SetAttribute",
-      "attribute": "aml_eln_risk",
-      "value": "Favorable",
-      "direct_transition": "Subtype_Condition_Branch"
-    },
-    "Set_ELN_Risk_Intermediate": {
-      "type": "SetAttribute",
-      "attribute": "aml_eln_risk",
-      "value": "Intermediate",
-      "direct_transition": "Subtype_Condition_Branch"
-    },
-    "Set_ELN_Risk_Adverse": {
-      "type": "SetAttribute",
-      "attribute": "aml_eln_risk",
-      "value": "Adverse",
-      "direct_transition": "Subtype_Condition_Branch"
-    },
-
-    "Subtype_Condition_Branch": {
-      "type": "Simple",
-      "remarks": [
-        "Record the specific AML subtype as a ConditionOnset so it appears in conditions.csv.",
-        "Each subtype has a distinct SNOMED-CT code from the AML/hematology hierarchy."
-      ],
-      "complex_transition": [
-        {
-          "condition": {
-            "condition_type": "Attribute",
+        "Set_Subtype_NPM1": {
+            "type": "SetAttribute",
             "attribute": "aml_subtype",
-            "operator": "==",
-            "value": "AML_NPM1"
-          },
-          "transition": "Subtype_NPM1_Onset"
+            "value": "AML_NPM1",
+            "direct_transition": "Set_ELN_Risk_Favorable"
         },
-        {
-          "condition": {
-            "condition_type": "Attribute",
+        "Set_Subtype_FLT3_ITD": {
+            "type": "SetAttribute",
             "attribute": "aml_subtype",
-            "operator": "==",
-            "value": "AML_FLT3_ITD"
-          },
-          "transition": "Subtype_FLT3_Onset"
+            "value": "AML_FLT3_ITD",
+            "direct_transition": "Set_ELN_Risk_Intermediate"
         },
-        {
-          "condition": {
-            "condition_type": "Attribute",
+        "Set_Subtype_APL": {
+            "type": "SetAttribute",
             "attribute": "aml_subtype",
-            "operator": "==",
-            "value": "APL_PML_RARA"
-          },
-          "transition": "Subtype_APL_Onset"
+            "value": "APL_PML_RARA",
+            "direct_transition": "Set_ELN_Risk_Favorable"
         },
-        {
-          "condition": {
-            "condition_type": "Attribute",
+        "Set_Subtype_CBF": {
+            "type": "SetAttribute",
             "attribute": "aml_subtype",
-            "operator": "==",
-            "value": "AML_CBF_RUNX1_RUNX1T1"
-          },
-          "transition": "Subtype_CBF_Onset"
+            "value": "AML_CBF_RUNX1_RUNX1T1",
+            "direct_transition": "Set_ELN_Risk_Favorable"
         },
-        {
-          "condition": {
-            "condition_type": "Attribute",
+        "Set_Subtype_IDH": {
+            "type": "SetAttribute",
             "attribute": "aml_subtype",
-            "operator": "==",
-            "value": "AML_IDH"
-          },
-          "transition": "Subtype_IDH_Onset"
+            "value": "AML_IDH",
+            "direct_transition": "Set_ELN_Risk_Intermediate"
         },
-        {
-          "transition": "Subtype_TP53_MDS_Onset"
-        }
-      ]
-    },
-
-    "Subtype_NPM1_Onset": {
-      "type": "ConditionOnset",
-      "assign_to_attribute": "aml_subtype_condition",
-      "codes": [
-        {
-          "system": "SNOMED-CT",
-          "code": "703820005",
-          "display": "Acute myeloid leukemia with mutated NPM1 (disorder)"
-        }
-      ],
-      "direct_transition": "AML_Condition_Onset"
-    },
-    "Subtype_FLT3_Onset": {
-      "type": "ConditionOnset",
-      "assign_to_attribute": "aml_subtype_condition",
-      "codes": [
-        {
-          "system": "SNOMED-CT",
-          "code": "91861009",
-          "display": "Acute myeloid leukemia (disorder)"
-        }
-      ],
-      "direct_transition": "AML_Condition_Onset"
-    },
-    "Subtype_APL_Onset": {
-      "type": "ConditionOnset",
-      "assign_to_attribute": "aml_subtype_condition",
-      "codes": [
-        {
-          "system": "SNOMED-CT",
-          "code": "28950004",
-          "display": "Acute promyelocytic leukemia with PML::RARA fusion (disorder)"
-        }
-      ],
-      "direct_transition": "AML_Condition_Onset"
-    },
-    "Subtype_CBF_Onset": {
-      "type": "ConditionOnset",
-      "assign_to_attribute": "aml_subtype_condition",
-      "codes": [
-        {
-          "system": "SNOMED-CT",
-          "code": "1148906001",
-          "display": "Acute myeloid leukemia with t(8;21)(q22;q22) RUNX1-RUNX1T1 (disorder)"
-        }
-      ],
-      "direct_transition": "AML_Condition_Onset"
-    },
-    "Subtype_IDH_Onset": {
-      "type": "ConditionOnset",
-      "assign_to_attribute": "aml_subtype_condition",
-      "codes": [
-        {
-          "system": "SNOMED-CT",
-          "code": "91861009",
-          "display": "Acute myeloid leukemia (disorder)"
-        }
-      ],
-      "direct_transition": "AML_Condition_Onset"
-    },
-    "Subtype_TP53_MDS_Onset": {
-      "type": "ConditionOnset",
-      "assign_to_attribute": "aml_subtype_condition",
-      "codes": [
-        {
-          "system": "SNOMED-CT",
-          "code": "445448008",
-          "display": "Acute myeloid leukemia with myelodysplasia-related changes (disorder)"
-        }
-      ],
-      "direct_transition": "AML_Condition_Onset"
-    },
-
-    "AML_Condition_Onset": {
-      "type": "ConditionOnset",
-      "assign_to_attribute": "aml_condition",
-      "codes": [
-        {
-          "system": "SNOMED-CT",
-          "code": "91861009",
-          "display": "Acute myeloid leukemia (disorder)"
-        }
-      ],
-      "direct_transition": "Inpatient_Encounter"
-    },
-
-    "Inpatient_Encounter": {
-      "type": "Encounter",
-      "encounter_class": "inpatient",
-      "reason": "AML_Condition_Onset",
-      "codes": [
-        {
-          "system": "SNOMED-CT",
-          "code": "185347001",
-          "display": "Encounter for problem (procedure)"
-        }
-      ],
-      "direct_transition": "CBC_WBC"
-    },
-
-    "CBC_WBC": {
-      "type": "Observation",
-      "category": "laboratory",
-      "unit": "10*3/uL",
-      "codes": [
-        {
-          "system": "LOINC",
-          "code": "6690-2",
-          "display": "Leukocytes [#/volume] in Blood by Automated count"
-        }
-      ],
-      "range": { "low": 3.0, "high": 120.0 },
-      "direct_transition": "CBC_Hemoglobin"
-    },
-    "CBC_Hemoglobin": {
-      "type": "Observation",
-      "category": "laboratory",
-      "unit": "g/dL",
-      "codes": [
-        {
-          "system": "LOINC",
-          "code": "718-7",
-          "display": "Hemoglobin [Mass/volume] in Blood"
-        }
-      ],
-      "range": { "low": 6.0, "high": 10.5 },
-      "direct_transition": "CBC_Platelets"
-    },
-    "CBC_Platelets": {
-      "type": "Observation",
-      "category": "laboratory",
-      "unit": "10*3/uL",
-      "codes": [
-        {
-          "system": "LOINC",
-          "code": "777-3",
-          "display": "Platelets [#/volume] in Blood by Automated count"
-        }
-      ],
-      "range": { "low": 10.0, "high": 100.0 },
-      "direct_transition": "CBC_ANC"
-    },
-    "CBC_ANC": {
-      "type": "Observation",
-      "category": "laboratory",
-      "unit": "10*3/uL",
-      "codes": [
-        {
-          "system": "LOINC",
-          "code": "751-8",
-          "display": "Neutrophils [#/volume] in Blood by Automated count"
-        }
-      ],
-      "range": { "low": 0.1, "high": 1.0 },
-      "direct_transition": "Peripheral_Blood_Blasts"
-    },
-    "Peripheral_Blood_Blasts": {
-      "type": "Observation",
-      "category": "laboratory",
-      "unit": "%",
-      "codes": [
-        {
-          "system": "LOINC",
-          "code": "709-6",
-          "display": "Blasts/100 leukocytes in Blood by Manual count"
-        }
-      ],
-      "range": { "low": 20.0, "high": 80.0 },
-      "direct_transition": "LDH_Chemistry"
-    },
-    "LDH_Chemistry": {
-      "type": "Observation",
-      "category": "laboratory",
-      "unit": "U/L",
-      "codes": [
-        {
-          "system": "LOINC",
-          "code": "14804-9",
-          "display": "Lactate dehydrogenase [Enzymatic activity/volume] in Serum or Plasma"
-        }
-      ],
-      "range": { "low": 300.0, "high": 2000.0 },
-      "direct_transition": "Creatinine_Chemistry"
-    },
-    "Creatinine_Chemistry": {
-      "type": "Observation",
-      "category": "laboratory",
-      "unit": "mg/dL",
-      "codes": [
-        {
-          "system": "LOINC",
-          "code": "2160-0",
-          "display": "Creatinine [Mass/volume] in Serum or Plasma"
-        }
-      ],
-      "range": { "low": 0.4, "high": 1.2 },
-      "direct_transition": "Uric_Acid_Chemistry"
-    },
-    "Uric_Acid_Chemistry": {
-      "type": "Observation",
-      "category": "laboratory",
-      "unit": "mg/dL",
-      "codes": [
-        {
-          "system": "LOINC",
-          "code": "3084-1",
-          "display": "Urate [Mass/volume] in Serum or Plasma"
-        }
-      ],
-      "range": { "low": 4.0, "high": 12.0 },
-      "direct_transition": "Bone_Marrow_Biopsy"
-    },
-
-    "Bone_Marrow_Biopsy": {
-      "type": "Procedure",
-      "codes": [
-        {
-          "system": "SNOMED-CT",
-          "code": "86273004",
-          "display": "Biopsy of bone marrow"
-        }
-      ],
-      "duration": { "low": 30, "high": 60, "unit": "minutes" },
-      "reason": "AML_Condition_Onset",
-      "direct_transition": "BM_Blast_Percentage"
-    },
-    "BM_Blast_Percentage": {
-      "type": "Observation",
-      "category": "laboratory",
-      "unit": "%",
-      "codes": [
-        {
-          "system": "LOINC",
-          "code": "26464-8",
-          "display": "Blasts/100 cells in Bone marrow"
-        }
-      ],
-      "range": { "low": 20.0, "high": 90.0 },
-      "direct_transition": "Karyotype_Procedure"
-    },
-
-    "Karyotype_Procedure": {
-      "type": "Procedure",
-      "codes": [
-        {
-          "system": "SNOMED-CT",
-          "code": "734877004",
-          "display": "Karyotyping of bone marrow specimen (procedure)"
-        }
-      ],
-      "duration": { "low": 60, "high": 120, "unit": "minutes" },
-      "reason": "AML_Condition_Onset",
-      "direct_transition": "FISH_Procedure"
-    },
-    "FISH_Procedure": {
-      "type": "Procedure",
-      "codes": [
-        {
-          "system": "SNOMED-CT",
-          "code": "445484009",
-          "display": "Fluorescence in situ hybridization (procedure)"
-        }
-      ],
-      "duration": { "low": 30, "high": 60, "unit": "minutes" },
-      "reason": "AML_Condition_Onset",
-      "direct_transition": "NGS_Panel_Procedure"
-    },
-    "NGS_Panel_Procedure": {
-      "type": "Procedure",
-      "codes": [
-        {
-          "system": "SNOMED-CT",
-          "code": "1186936003",
-          "display": "Next generation sequencing panel testing (procedure)"
-        }
-      ],
-      "duration": { "low": 60, "high": 120, "unit": "minutes" },
-      "reason": "AML_Condition_Onset",
-      "direct_transition": "Subtype_Assay_Branch"
-    },
-
-    "Subtype_Assay_Branch": {
-      "type": "Simple",
-      "remarks": [
-        "Branch to subtype-specific confirmatory assays and genomic capture.",
-        "RT-PCR for fusion subtypes (APL, CBF); molecular observations for point-mutation subtypes."
-      ],
-      "complex_transition": [
-        {
-          "condition": {
-            "condition_type": "Attribute",
+        "Set_Subtype_TP53_MDS": {
+            "type": "SetAttribute",
             "attribute": "aml_subtype",
-            "operator": "==",
-            "value": "APL_PML_RARA"
-          },
-          "transition": "RT_PCR_PML_RARA"
+            "value": "AML_TP53_MDS",
+            "direct_transition": "Set_ELN_Risk_Adverse"
         },
-        {
-          "condition": {
-            "condition_type": "Attribute",
-            "attribute": "aml_subtype",
-            "operator": "==",
-            "value": "AML_CBF_RUNX1_RUNX1T1"
-          },
-          "transition": "RT_PCR_RUNX1_RUNX1T1"
+
+        "Set_ELN_Risk_Favorable": {
+            "type": "SetAttribute",
+            "attribute": "aml_eln_risk",
+            "value": "Favorable",
+            "direct_transition": "Subtype_Condition_Branch"
         },
-        {
-          "condition": {
-            "condition_type": "Attribute",
-            "attribute": "aml_subtype",
-            "operator": "==",
-            "value": "AML_FLT3_ITD"
-          },
-          "transition": "FLT3_ITD_Observation"
+        "Set_ELN_Risk_Intermediate": {
+            "type": "SetAttribute",
+            "attribute": "aml_eln_risk",
+            "value": "Intermediate",
+            "direct_transition": "Subtype_Condition_Branch"
         },
-        {
-          "condition": {
-            "condition_type": "Attribute",
-            "attribute": "aml_subtype",
-            "operator": "==",
-            "value": "AML_NPM1"
-          },
-          "transition": "NPM1_Mutation_Observation"
+        "Set_ELN_Risk_Adverse": {
+            "type": "SetAttribute",
+            "attribute": "aml_eln_risk",
+            "value": "Adverse",
+            "direct_transition": "Subtype_Condition_Branch"
         },
-        {
-          "condition": {
-            "condition_type": "Attribute",
-            "attribute": "aml_subtype",
-            "operator": "==",
-            "value": "AML_IDH"
-          },
-          "transition": "IDH_Mutation_Observation"
+
+        "Subtype_Condition_Branch": {
+            "type": "Simple",
+            "remarks": [
+                "Record the specific AML subtype as a ConditionOnset so it appears in conditions.csv.",
+                "Each subtype has a distinct SNOMED-CT code from the AML/hematology hierarchy."
+            ],
+            "complex_transition": [{
+                    "condition": {
+                        "condition_type": "Attribute",
+                        "attribute": "aml_subtype",
+                        "operator": "==",
+                        "value": "AML_NPM1"
+                    },
+                    "transition": "Subtype_NPM1_Onset"
+                },
+                {
+                    "condition": {
+                        "condition_type": "Attribute",
+                        "attribute": "aml_subtype",
+                        "operator": "==",
+                        "value": "AML_FLT3_ITD"
+                    },
+                    "transition": "Subtype_FLT3_Onset"
+                },
+                {
+                    "condition": {
+                        "condition_type": "Attribute",
+                        "attribute": "aml_subtype",
+                        "operator": "==",
+                        "value": "APL_PML_RARA"
+                    },
+                    "transition": "Subtype_APL_Onset"
+                },
+                {
+                    "condition": {
+                        "condition_type": "Attribute",
+                        "attribute": "aml_subtype",
+                        "operator": "==",
+                        "value": "AML_CBF_RUNX1_RUNX1T1"
+                    },
+                    "transition": "Subtype_CBF_Onset"
+                },
+                {
+                    "condition": {
+                        "condition_type": "Attribute",
+                        "attribute": "aml_subtype",
+                        "operator": "==",
+                        "value": "AML_IDH"
+                    },
+                    "transition": "Subtype_IDH_Onset"
+                },
+                {
+                    "transition": "Subtype_TP53_MDS_Onset"
+                }
+            ]
         },
-        {
-          "transition": "Genomics_TP53_MDS"
-        }
-      ]
-    },
 
-    "RT_PCR_PML_RARA": {
-      "type": "Procedure",
-      "codes": [
-        {
-          "system": "SNOMED-CT",
-          "code": "726654001",
-          "display": "Reverse transcription polymerase chain reaction (procedure)"
-        }
-      ],
-      "duration": { "low": 30, "high": 60, "unit": "minutes" },
-      "reason": "AML_Condition_Onset",
-      "direct_transition": "PML_RARA_Fusion_Observation"
-    },
-    "PML_RARA_Fusion_Observation": {
-      "type": "Observation",
-      "category": "laboratory",
-      "unit": "{ratio}",
-      "codes": [
-        {
-          "system": "LOINC",
-          "code": "72216-5",
-          "display": "t(15;17)(q24.1;q21.1)(PML,RARA) bcr1 fusion transcript/control transcript [# Ratio] in Blood or Tissue by Molecular genetics method"
-        }
-      ],
-      "value_code": {
-        "system": "SNOMED-CT",
-        "code": "10828004",
-        "display": "Positive (qualifier value)"
-      },
-      "direct_transition": "Genomics_APL"
-    },
-
-    "RT_PCR_RUNX1_RUNX1T1": {
-      "type": "Procedure",
-      "codes": [
-        {
-          "system": "SNOMED-CT",
-          "code": "726654001",
-          "display": "Reverse transcription polymerase chain reaction (procedure)"
-        }
-      ],
-      "duration": { "low": 30, "high": 60, "unit": "minutes" },
-      "reason": "AML_Condition_Onset",
-      "direct_transition": "RUNX1_RUNX1T1_Fusion_Observation"
-    },
-    "RUNX1_RUNX1T1_Fusion_Observation": {
-      "type": "Observation",
-      "category": "laboratory",
-      "unit": "{Qualitative}",
-      "codes": [
-        {
-          "system": "LOINC",
-          "code": "53007-3",
-          "display": "RUNX1T1 gene rearrangements [Presence] in Blood or Tissue"
-        }
-      ],
-      "value_code": {
-        "system": "SNOMED-CT",
-        "code": "10828004",
-        "display": "Positive (qualifier value)"
-      },
-      "direct_transition": "Genomics_CBF"
-    },
-
-    "FLT3_ITD_Observation": {
-      "type": "Observation",
-      "category": "laboratory",
-      "unit": "{Qualitative}",
-      "codes": [
-        {
-          "system": "LOINC",
-          "code": "85176-4",
-          "display": "FLT3 gene internal tandem duplication [Presence] in Blood or Tissue by Molecular genetics method"
-        }
-      ],
-      "value_code": {
-        "system": "SNOMED-CT",
-        "code": "10828004",
-        "display": "Positive (qualifier value)"
-      },
-      "direct_transition": "Genomics_FLT3_ITD"
-    },
-
-    "NPM1_Mutation_Observation": {
-      "type": "Observation",
-      "category": "laboratory",
-      "unit": "{Qualitative}",
-      "codes": [
-        {
-          "system": "LOINC",
-          "code": "89266-3",
-          "display": "NPM1 gene mutation analysis in Blood or Tissue by Molecular genetics method"
-        }
-      ],
-      "value_code": {
-        "system": "SNOMED-CT",
-        "code": "10828004",
-        "display": "Positive (qualifier value)"
-      },
-      "direct_transition": "Genomics_NPM1"
-    },
-
-    "IDH_Mutation_Observation": {
-      "type": "Observation",
-      "category": "laboratory",
-      "unit": "{Qualitative}",
-      "codes": [
-        {
-          "system": "LOINC",
-          "code": "94077-5",
-          "display": "IDH1 gene mutation analysis in Blood or Tissue by Molecular genetics method"
-        }
-      ],
-      "value_code": {
-        "system": "SNOMED-CT",
-        "code": "10828004",
-        "display": "Positive (qualifier value)"
-      },
-      "direct_transition": "Genomics_IDH"
-    },
-
-    "Genomics_NPM1": {
-      "type": "SetAttribute",
-      "attribute": "genomics_alterations",
-      "value": [
-        {
-          "method_genomics": "NGS",
-          "source_genomics": "Bone marrow",
-          "alteration_type": "Insertion",
-          "gene": "NPM1",
-          "alteration_status": "Pathogenic",
-          "hgvs_coding": "c.860_863dup",
-          "hgvs_protein": "p.Trp288CysfsTer12",
-          "genome_version": "GRCh38",
-          "vaf": 0.45
-        }
-      ],
-      "direct_transition": "Allopurinol_TLS_Prophylaxis"
-    },
-
-    "Genomics_FLT3_ITD": {
-      "type": "SetAttribute",
-      "attribute": "genomics_alterations",
-      "value": [
-        {
-          "method_genomics": "NGS",
-          "source_genomics": "Bone marrow",
-          "alteration_type": "Insertion",
-          "gene": "FLT3",
-          "alteration_status": "Pathogenic",
-          "hgvs_coding": "c.1770_1771insATGATG",
-          "hgvs_protein": "p.Ile590_Ile591insMetMet",
-          "genome_version": "GRCh38",
-          "vaf": 0.42
-        }
-      ],
-      "direct_transition": "Allopurinol_TLS_Prophylaxis"
-    },
-
-    "Genomics_APL": {
-      "type": "SetAttribute",
-      "attribute": "genomics_alterations",
-      "value": [
-        {
-          "method_genomics": "RT-PCR",
-          "source_genomics": "Bone marrow",
-          "alteration_type": "Fusion",
-          "gene": "PML",
-          "gene_other": "RARA",
-          "fusion": "PML::RARA",
-          "structural_event": "t(15;17)(q24.1;q21.2)",
-          "alteration_status": "Pathogenic",
-          "genome_version": "GRCh38",
-          "vaf": 0.50
-        }
-      ],
-      "direct_transition": "Allopurinol_TLS_Prophylaxis"
-    },
-
-    "Genomics_CBF": {
-      "type": "SetAttribute",
-      "attribute": "genomics_alterations",
-      "value": [
-        {
-          "method_genomics": "RT-PCR",
-          "source_genomics": "Bone marrow",
-          "alteration_type": "Fusion",
-          "gene": "RUNX1",
-          "gene_other": "RUNX1T1",
-          "fusion": "RUNX1::RUNX1T1",
-          "structural_event": "t(8;21)(q22;q22.1)",
-          "alteration_status": "Pathogenic",
-          "genome_version": "GRCh38",
-          "vaf": 0.48
-        }
-      ],
-      "direct_transition": "Allopurinol_TLS_Prophylaxis"
-    },
-
-    "Genomics_IDH": {
-      "type": "SetAttribute",
-      "attribute": "genomics_alterations",
-      "value": [
-        {
-          "method_genomics": "NGS",
-          "source_genomics": "Bone marrow",
-          "alteration_type": "SNV",
-          "gene": "IDH1",
-          "alteration_status": "Pathogenic",
-          "hgvs_coding": "c.394C>T",
-          "hgvs_protein": "p.Arg132Cys",
-          "genome_version": "GRCh38",
-          "vaf": 0.40
-        }
-      ],
-      "direct_transition": "Allopurinol_TLS_Prophylaxis"
-    },
-
-    "Genomics_TP53_MDS": {
-      "type": "SetAttribute",
-      "attribute": "genomics_alterations",
-      "value": [
-        {
-          "method_genomics": "NGS",
-          "source_genomics": "Bone marrow",
-          "alteration_type": "SNV",
-          "gene": "TP53",
-          "alteration_status": "Pathogenic",
-          "hgvs_coding": "c.817C>T",
-          "hgvs_protein": "p.Arg273Cys",
-          "genome_version": "GRCh38",
-          "vaf": 0.55
+        "Subtype_NPM1_Onset": {
+            "type": "ConditionOnset",
+            "assign_to_attribute": "aml_subtype_condition",
+            "codes": [{
+                "system": "SNOMED-CT",
+                "code": "703820005",
+                "display": "Acute myeloid leukemia with mutated NPM1 (disorder)"
+            }],
+            "direct_transition": "AML_Condition_Onset"
         },
-        {
-          "method_genomics": "NGS",
-          "source_genomics": "Bone marrow",
-          "alteration_type": "SNV",
-          "gene": "ASXL1",
-          "alteration_status": "Pathogenic",
-          "hgvs_coding": "c.1900_1901dup",
-          "hgvs_protein": "p.Glu634GlyfsTer12",
-          "genome_version": "GRCh38",
-          "vaf": 0.38
-        }
-      ],
-      "direct_transition": "Allopurinol_TLS_Prophylaxis"
-    },
-
-    "Allopurinol_TLS_Prophylaxis": {
-      "type": "MedicationOrder",
-      "assign_to_attribute": "allopurinol_medication",
-      "codes": [
-        {
-          "system": "RxNorm",
-          "code": 197319,
-          "display": "allopurinol 100 MG Oral Tablet"
-        }
-      ],
-      "reason": "AML_Condition_Onset",
-      "administration": true,
-      "prescription": {
-        "dosage": { "amount": 1, "frequency": 1, "period": 1, "unit": "days" },
-        "duration": { "quantity": 7, "unit": "days" }
-      },
-      "direct_transition": "Induction_Therapy_Branch"
-    },
-
-    "Induction_Therapy_Branch": {
-      "type": "Simple",
-      "remarks": ["Route to subtype-appropriate induction regimen."],
-      "complex_transition": [
-        {
-          "condition": {
-            "condition_type": "Attribute",
-            "attribute": "aml_subtype",
-            "operator": "==",
-            "value": "APL_PML_RARA"
-          },
-          "transition": "Give_ATRA"
+        "Subtype_FLT3_Onset": {
+            "type": "ConditionOnset",
+            "assign_to_attribute": "aml_subtype_condition",
+            "codes": [{
+                "system": "SNOMED-CT",
+                "code": "91861009",
+                "display": "Acute myeloid leukemia (disorder)"
+            }],
+            "direct_transition": "AML_Condition_Onset"
         },
-        {
-          "condition": {
-            "condition_type": "Attribute",
-            "attribute": "aml_subtype",
-            "operator": "==",
-            "value": "AML_FLT3_ITD"
-          },
-          "transition": "Give_Cytarabine_FLT3"
+        "Subtype_APL_Onset": {
+            "type": "ConditionOnset",
+            "assign_to_attribute": "aml_subtype_condition",
+            "codes": [{
+                "system": "SNOMED-CT",
+                "code": "28950004",
+                "display": "Acute promyelocytic leukemia with PML::RARA fusion (disorder)"
+            }],
+            "direct_transition": "AML_Condition_Onset"
         },
-        {
-          "condition": {
-            "condition_type": "Attribute",
-            "attribute": "aml_subtype",
-            "operator": "==",
-            "value": "AML_CBF_RUNX1_RUNX1T1"
-          },
-          "transition": "Give_Cytarabine_CBF"
+        "Subtype_CBF_Onset": {
+            "type": "ConditionOnset",
+            "assign_to_attribute": "aml_subtype_condition",
+            "codes": [{
+                "system": "SNOMED-CT",
+                "code": "1148906001",
+                "display": "Acute myeloid leukemia with t(8;21)(q22;q22) RUNX1-RUNX1T1 (disorder)"
+            }],
+            "direct_transition": "AML_Condition_Onset"
         },
-        {
-          "condition": {
-            "condition_type": "Attribute",
-            "attribute": "aml_subtype",
-            "operator": "==",
-            "value": "AML_TP53_MDS"
-          },
-          "transition": "Give_Venetoclax"
+        "Subtype_IDH_Onset": {
+            "type": "ConditionOnset",
+            "assign_to_attribute": "aml_subtype_condition",
+            "codes": [{
+                "system": "SNOMED-CT",
+                "code": "91861009",
+                "display": "Acute myeloid leukemia (disorder)"
+            }],
+            "direct_transition": "AML_Condition_Onset"
         },
-        {
-          "condition": {
-            "condition_type": "Attribute",
-            "attribute": "aml_subtype",
-            "operator": "==",
-            "value": "AML_IDH"
-          },
-          "transition": "Give_Cytarabine_IDH"
+        "Subtype_TP53_MDS_Onset": {
+            "type": "ConditionOnset",
+            "assign_to_attribute": "aml_subtype_condition",
+            "codes": [{
+                "system": "SNOMED-CT",
+                "code": "445448008",
+                "display": "Acute myeloid leukemia with myelodysplasia-related changes (disorder)"
+            }],
+            "direct_transition": "AML_Condition_Onset"
         },
-        {
-          "transition": "Give_Cytarabine_NPM1"
-        }
-      ]
-    },
 
-    "Give_ATRA": {
-      "type": "MedicationOrder",
-      "assign_to_attribute": "atra_medication",
-      "codes": [
-        {
-          "system": "RxNorm",
-          "code": 199159,
-          "display": "tretinoin 10 MG Oral Capsule"
-        }
-      ],
-      "reason": "AML_Condition_Onset",
-      "administration": true,
-      "prescription": {
-        "dosage": { "amount": 2, "frequency": 2, "period": 1, "unit": "days" },
-        "duration": { "quantity": 28, "unit": "days" }
-      },
-      "direct_transition": "Give_ATO"
-    },
-    "Give_ATO": {
-      "type": "MedicationOrder",
-      "assign_to_attribute": "ato_medication",
-      "codes": [
-        {
-          "system": "RxNorm",
-          "code": 829926,
-          "display": "arsenic trioxide 1 MG/ML Injection"
-        }
-      ],
-      "reason": "AML_Condition_Onset",
-      "administration": true,
-      "prescription": {
-        "dosage": { "amount": 1, "frequency": 1, "period": 1, "unit": "days" },
-        "duration": { "quantity": 28, "unit": "days" }
-      },
-      "direct_transition": "Induction_Chemo_Procedure"
-    },
-
-    "Give_Cytarabine_FLT3": {
-      "type": "MedicationOrder",
-      "assign_to_attribute": "cytarabine_medication",
-      "codes": [
-        {
-          "system": "RxNorm",
-          "code": 197361,
-          "display": "cytarabine 100 MG/mL Injectable Solution"
-        }
-      ],
-      "reason": "AML_Condition_Onset",
-      "administration": true,
-      "prescription": {
-        "dosage": { "amount": 1, "frequency": 1, "period": 1, "unit": "days" },
-        "duration": { "quantity": 7, "unit": "days" }
-      },
-      "direct_transition": "Give_Daunorubicin_FLT3"
-    },
-    "Give_Daunorubicin_FLT3": {
-      "type": "MedicationOrder",
-      "assign_to_attribute": "daunorubicin_medication",
-      "codes": [
-        {
-          "system": "RxNorm",
-          "code": 3002,
-          "display": "daunorubicin"
-        }
-      ],
-      "reason": "AML_Condition_Onset",
-      "administration": true,
-      "prescription": {
-        "dosage": { "amount": 1, "frequency": 1, "period": 1, "unit": "days" },
-        "duration": { "quantity": 3, "unit": "days" }
-      },
-      "direct_transition": "Give_Midostaurin"
-    },
-    "Give_Midostaurin": {
-      "type": "MedicationOrder",
-      "assign_to_attribute": "midostaurin_medication",
-      "codes": [
-        {
-          "system": "RxNorm",
-          "code": 1919088,
-          "display": "midostaurin 25 MG Oral Capsule"
-        }
-      ],
-      "reason": "AML_Condition_Onset",
-      "administration": true,
-      "prescription": {
-        "dosage": { "amount": 2, "frequency": 2, "period": 1, "unit": "days" },
-        "duration": { "quantity": 14, "unit": "days" }
-      },
-      "direct_transition": "Induction_Chemo_Procedure"
-    },
-
-    "Give_Cytarabine_NPM1": {
-      "type": "MedicationOrder",
-      "assign_to_attribute": "cytarabine_medication",
-      "codes": [
-        {
-          "system": "RxNorm",
-          "code": 197361,
-          "display": "cytarabine 100 MG/mL Injectable Solution"
-        }
-      ],
-      "reason": "AML_Condition_Onset",
-      "administration": true,
-      "prescription": {
-        "dosage": { "amount": 1, "frequency": 1, "period": 1, "unit": "days" },
-        "duration": { "quantity": 7, "unit": "days" }
-      },
-      "direct_transition": "Give_Daunorubicin_NPM1"
-    },
-    "Give_Daunorubicin_NPM1": {
-      "type": "MedicationOrder",
-      "assign_to_attribute": "daunorubicin_medication",
-      "codes": [
-        {
-          "system": "RxNorm",
-          "code": 3002,
-          "display": "daunorubicin"
-        }
-      ],
-      "reason": "AML_Condition_Onset",
-      "administration": true,
-      "prescription": {
-        "dosage": { "amount": 1, "frequency": 1, "period": 1, "unit": "days" },
-        "duration": { "quantity": 3, "unit": "days" }
-      },
-      "direct_transition": "Induction_Chemo_Procedure"
-    },
-
-    "Give_Cytarabine_CBF": {
-      "type": "MedicationOrder",
-      "assign_to_attribute": "cytarabine_medication",
-      "codes": [
-        {
-          "system": "RxNorm",
-          "code": 197361,
-          "display": "cytarabine 100 MG/mL Injectable Solution"
-        }
-      ],
-      "reason": "AML_Condition_Onset",
-      "administration": true,
-      "prescription": {
-        "dosage": { "amount": 1, "frequency": 1, "period": 1, "unit": "days" },
-        "duration": { "quantity": 7, "unit": "days" }
-      },
-      "direct_transition": "Give_Daunorubicin_CBF"
-    },
-    "Give_Daunorubicin_CBF": {
-      "type": "MedicationOrder",
-      "assign_to_attribute": "daunorubicin_medication",
-      "codes": [
-        {
-          "system": "RxNorm",
-          "code": 3002,
-          "display": "daunorubicin"
-        }
-      ],
-      "reason": "AML_Condition_Onset",
-      "administration": true,
-      "prescription": {
-        "dosage": { "amount": 1, "frequency": 1, "period": 1, "unit": "days" },
-        "duration": { "quantity": 3, "unit": "days" }
-      },
-      "direct_transition": "Give_Gemtuzumab"
-    },
-    "Give_Gemtuzumab": {
-      "type": "MedicationOrder",
-      "assign_to_attribute": "gemtuzumab_medication",
-      "codes": [
-        {
-          "system": "RxNorm",
-          "code": 1294581,
-          "display": "gemtuzumab ozogamicin 1 MG/ML Injectable Solution"
-        }
-      ],
-      "reason": "AML_Condition_Onset",
-      "administration": true,
-      "prescription": {
-        "dosage": { "amount": 1, "frequency": 1, "period": 1, "unit": "days" },
-        "duration": { "quantity": 1, "unit": "days" }
-      },
-      "direct_transition": "Induction_Chemo_Procedure"
-    },
-
-    "Give_Cytarabine_IDH": {
-      "type": "MedicationOrder",
-      "assign_to_attribute": "cytarabine_medication",
-      "codes": [
-        {
-          "system": "RxNorm",
-          "code": 197361,
-          "display": "cytarabine 100 MG/mL Injectable Solution"
-        }
-      ],
-      "reason": "AML_Condition_Onset",
-      "administration": true,
-      "prescription": {
-        "dosage": { "amount": 1, "frequency": 1, "period": 1, "unit": "days" },
-        "duration": { "quantity": 7, "unit": "days" }
-      },
-      "direct_transition": "Give_Daunorubicin_IDH"
-    },
-    "Give_Daunorubicin_IDH": {
-      "type": "MedicationOrder",
-      "assign_to_attribute": "daunorubicin_medication",
-      "codes": [
-        {
-          "system": "RxNorm",
-          "code": 3002,
-          "display": "daunorubicin"
-        }
-      ],
-      "reason": "AML_Condition_Onset",
-      "administration": true,
-      "prescription": {
-        "dosage": { "amount": 1, "frequency": 1, "period": 1, "unit": "days" },
-        "duration": { "quantity": 3, "unit": "days" }
-      },
-      "direct_transition": "Give_Ivosidenib"
-    },
-    "Give_Ivosidenib": {
-      "type": "MedicationOrder",
-      "assign_to_attribute": "ivosidenib_medication",
-      "codes": [
-        {
-          "system": "RxNorm",
-          "code": 2049878,
-          "display": "ivosidenib 250 MG Oral Tablet"
-        }
-      ],
-      "reason": "AML_Condition_Onset",
-      "administration": true,
-      "prescription": {
-        "dosage": { "amount": 1, "frequency": 1, "period": 1, "unit": "days" },
-        "duration": { "quantity": 28, "unit": "days" }
-      },
-      "direct_transition": "Induction_Chemo_Procedure"
-    },
-
-    "Give_Venetoclax": {
-      "type": "MedicationOrder",
-      "assign_to_attribute": "venetoclax_medication",
-      "codes": [
-        {
-          "system": "RxNorm",
-          "code": 1747567,
-          "display": "venetoclax 100 MG Oral Tablet"
-        }
-      ],
-      "reason": "AML_Condition_Onset",
-      "administration": true,
-      "prescription": {
-        "dosage": { "amount": 1, "frequency": 1, "period": 1, "unit": "days" },
-        "duration": { "quantity": 28, "unit": "days" }
-      },
-      "direct_transition": "Give_Azacitidine"
-    },
-    "Give_Azacitidine": {
-      "type": "MedicationOrder",
-      "assign_to_attribute": "azacitidine_medication",
-      "codes": [
-        {
-          "system": "RxNorm",
-          "code": 485246,
-          "display": "azacitidine 100 MG Injection"
-        }
-      ],
-      "reason": "AML_Condition_Onset",
-      "administration": true,
-      "prescription": {
-        "dosage": { "amount": 1, "frequency": 1, "period": 1, "unit": "days" },
-        "duration": { "quantity": 7, "unit": "days" }
-      },
-      "direct_transition": "Induction_Chemo_Procedure"
-    },
-
-    "Induction_Chemo_Procedure": {
-      "type": "Procedure",
-      "codes": [
-        {
-          "system": "SNOMED-CT",
-          "code": "367336001",
-          "display": "Chemotherapy (procedure)"
-        }
-      ],
-      "duration": { "low": 120, "high": 300, "unit": "minutes" },
-      "reason": "AML_Condition_Onset",
-      "direct_transition": "Antimicrobial_Prophylaxis"
-    },
-
-    "Antimicrobial_Prophylaxis": {
-      "type": "MedicationOrder",
-      "assign_to_attribute": "levofloxacin_medication",
-      "codes": [
-        {
-          "system": "RxNorm",
-          "code": 199885,
-          "display": "levofloxacin 500 MG Oral Tablet"
-        }
-      ],
-      "reason": "AML_Condition_Onset",
-      "administration": true,
-      "prescription": {
-        "dosage": { "amount": 1, "frequency": 1, "period": 1, "unit": "days" },
-        "duration": { "quantity": 14, "unit": "days" }
-      },
-      "direct_transition": "Antifungal_Prophylaxis"
-    },
-    "Antifungal_Prophylaxis": {
-      "type": "MedicationOrder",
-      "assign_to_attribute": "posaconazole_medication",
-      "codes": [
-        {
-          "system": "RxNorm",
-          "code": 703569,
-          "display": "posaconazole 40 MG/ML Oral Suspension"
-        }
-      ],
-      "reason": "AML_Condition_Onset",
-      "administration": true,
-      "prescription": {
-        "dosage": { "amount": 1, "frequency": 3, "period": 1, "unit": "days" },
-        "duration": { "quantity": 14, "unit": "days" }
-      },
-      "direct_transition": "Antiviral_Prophylaxis"
-    },
-    "Antiviral_Prophylaxis": {
-      "type": "MedicationOrder",
-      "assign_to_attribute": "acyclovir_medication",
-      "codes": [
-        {
-          "system": "RxNorm",
-          "code": 14581,
-          "display": "acyclovir 400 MG Oral Tablet"
-        }
-      ],
-      "reason": "AML_Condition_Onset",
-      "administration": true,
-      "prescription": {
-        "dosage": { "amount": 1, "frequency": 2, "period": 1, "unit": "days" },
-        "duration": { "quantity": 14, "unit": "days" }
-      },
-      "direct_transition": "Post_Induction_ANC"
-    },
-
-    "Post_Induction_ANC": {
-      "type": "Observation",
-      "category": "laboratory",
-      "unit": "10*3/uL",
-      "codes": [
-        {
-          "system": "LOINC",
-          "code": "751-8",
-          "display": "Neutrophils [#/volume] in Blood by Automated count"
-        }
-      ],
-      "range": { "low": 0.1, "high": 0.5 },
-      "direct_transition": "Post_Induction_Temperature"
-    },
-    "Post_Induction_Temperature": {
-      "type": "Observation",
-      "category": "vital-signs",
-      "unit": "[degF]",
-      "codes": [
-        {
-          "system": "LOINC",
-          "code": "8310-5",
-          "display": "Body temperature"
-        }
-      ],
-      "range": { "low": 96.0, "high": 103.0 },
-      "direct_transition": "Complication_Branch"
-    },
-
-    "Complication_Branch": {
-      "type": "Simple",
-      "distributed_transition": [
-        { "transition": "Febrile_Neutropenia_Onset",    "distribution": 0.55 },
-        { "transition": "Tumor_Lysis_Syndrome_Onset",   "distribution": 0.10 },
-        { "transition": "DIC_Onset",                    "distribution": 0.05 },
-        { "transition": "MRD_Flow_Cytometry",           "distribution": 0.30 }
-      ]
-    },
-
-    "Febrile_Neutropenia_Onset": {
-      "type": "ConditionOnset",
-      "assign_to_attribute": "febrile_neutropenia_condition",
-      "codes": [
-        {
-          "system": "SNOMED-CT",
-          "code": "409089005",
-          "display": "Febrile neutropenia (disorder)"
-        }
-      ],
-      "direct_transition": "MRD_Flow_Cytometry"
-    },
-    "Tumor_Lysis_Syndrome_Onset": {
-      "type": "ConditionOnset",
-      "assign_to_attribute": "tls_condition",
-      "codes": [
-        {
-          "system": "SNOMED-CT",
-          "code": "426263006",
-          "display": "Tumor lysis syndrome (disorder)"
-        }
-      ],
-      "direct_transition": "MRD_Flow_Cytometry"
-    },
-    "DIC_Onset": {
-      "type": "ConditionOnset",
-      "assign_to_attribute": "dic_condition",
-      "codes": [
-        {
-          "system": "SNOMED-CT",
-          "code": "234466008",
-          "display": "Disseminated intravascular coagulation (disorder)"
-        }
-      ],
-      "direct_transition": "MRD_Flow_Cytometry"
-    },
-
-    "MRD_Flow_Cytometry": {
-      "type": "Procedure",
-      "codes": [
-        {
-          "system": "SNOMED-CT",
-          "code": "116148004",
-          "display": "Flow cytometry (procedure)"
-        }
-      ],
-      "duration": { "low": 60, "high": 120, "unit": "minutes" },
-      "reason": "AML_Condition_Onset",
-      "direct_transition": "MRD_Result_Observation"
-    },
-    "MRD_Result_Observation": {
-      "type": "Observation",
-      "category": "laboratory",
-      "unit": "%",
-      "codes": [
-        {
-          "system": "LOINC",
-          "code": "102098-1",
-          "display": "Acute myeloid leukemia minimal residual disease in Bone marrow by Flow cytometry (FC) Narrative"
-        }
-      ],
-      "range": { "low": 0.001, "high": 5.0 },
-      "direct_transition": "Treatment_Outcome_Branch"
-    },
-
-    "Treatment_Outcome_Branch": {
-      "type": "Simple",
-      "remarks": [
-        "Route each patient to a subtype-specific mortality outcome state.",
-        "Mortality rates reflect ELN-2022 / SEER estimates for each AML subtype."
-      ],
-      "complex_transition": [
-        {
-          "condition": {
-            "condition_type": "Attribute",
-            "attribute": "aml_subtype",
-            "operator": "==",
-            "value": "AML_NPM1"
-          },
-          "transition": "Outcome_NPM1"
+        "AML_Condition_Onset": {
+            "type": "ConditionOnset",
+            "assign_to_attribute": "aml_condition",
+            "codes": [{
+                "system": "SNOMED-CT",
+                "code": "91861009",
+                "display": "Acute myeloid leukemia (disorder)"
+            }],
+            "direct_transition": "Inpatient_Encounter"
         },
-        {
-          "condition": {
-            "condition_type": "Attribute",
-            "attribute": "aml_subtype",
-            "operator": "==",
-            "value": "AML_FLT3_ITD"
-          },
-          "transition": "Outcome_FLT3_ITD"
-        },
-        {
-          "condition": {
-            "condition_type": "Attribute",
-            "attribute": "aml_subtype",
-            "operator": "==",
-            "value": "APL_PML_RARA"
-          },
-          "transition": "Outcome_APL"
-        },
-        {
-          "condition": {
-            "condition_type": "Attribute",
-            "attribute": "aml_subtype",
-            "operator": "==",
-            "value": "AML_CBF_RUNX1_RUNX1T1"
-          },
-          "transition": "Outcome_CBF"
-        },
-        {
-          "condition": {
-            "condition_type": "Attribute",
-            "attribute": "aml_subtype",
-            "operator": "==",
-            "value": "AML_IDH"
-          },
-          "transition": "Outcome_IDH"
-        },
-        {
-          "transition": "Outcome_TP53_MDS"
-        }
-      ]
-    },
 
-    "Outcome_NPM1": {
-      "type": "Simple",
-      "remarks": ["NPM1-mutated AML: ~20% mortality post-induction (ELN Favorable risk)."],
-      "distributed_transition": [
-        { "distribution": 0.20, "transition": "Death_NPM1" },
-        { "distribution": 0.80, "transition": "End_Medications" }
-      ]
-    },
-    "Outcome_FLT3_ITD": {
-      "type": "Simple",
-      "remarks": ["FLT3-ITD AML: ~40% mortality post-induction (ELN Intermediate risk)."],
-      "distributed_transition": [
-        { "distribution": 0.40, "transition": "Death_FLT3_ITD" },
-        { "distribution": 0.60, "transition": "End_Medications" }
-      ]
-    },
-    "Outcome_APL": {
-      "type": "Simple",
-      "remarks": ["APL (PML::RARA): ~15% mortality post-induction (ELN Favorable, best prognosis)."],
-      "distributed_transition": [
-        { "distribution": 0.15, "transition": "Death_APL" },
-        { "distribution": 0.85, "transition": "End_Medications" }
-      ]
-    },
-    "Outcome_CBF": {
-      "type": "Simple",
-      "remarks": ["CBF AML (RUNX1::RUNX1T1): ~25% mortality post-induction (ELN Favorable risk)."],
-      "distributed_transition": [
-        { "distribution": 0.25, "transition": "Death_CBF" },
-        { "distribution": 0.75, "transition": "End_Medications" }
-      ]
-    },
-    "Outcome_IDH": {
-      "type": "Simple",
-      "remarks": ["IDH1/IDH2-mutated AML: ~35% mortality post-induction (ELN Intermediate risk)."],
-      "distributed_transition": [
-        { "distribution": 0.35, "transition": "Death_IDH" },
-        { "distribution": 0.65, "transition": "End_Medications" }
-      ]
-    },
-    "Outcome_TP53_MDS": {
-      "type": "Simple",
-      "remarks": ["TP53/MDS-related AML: ~60% mortality post-induction (ELN Adverse risk, worst prognosis)."],
-      "distributed_transition": [
-        { "distribution": 0.60, "transition": "Death_TP53_MDS" },
-        { "distribution": 0.40, "transition": "End_Medications" }
-      ]
-    },
-
-    "Death_NPM1": {
-      "type": "Death",
-      "range": { "low": 1, "high": 12, "unit": "months" },
-      "codes": [
-        {
-          "system": "SNOMED-CT",
-          "code": "413448000",
-          "display": "Acute myeloid leukemia with NPM1 mutation (disorder)"
-        }
-      ],
-      "direct_transition": "Terminal"
-    },
-    "Death_FLT3_ITD": {
-      "type": "Death",
-      "range": { "low": 1, "high": 12, "unit": "months" },
-      "codes": [
-        {
-          "system": "SNOMED-CT",
-          "code": "413449008",
-          "display": "Acute myeloid leukemia with FLT3 mutation (disorder)"
-        }
-      ],
-      "direct_transition": "Terminal"
-    },
-    "Death_APL": {
-      "type": "Death",
-      "range": { "low": 1, "high": 12, "unit": "months" },
-      "codes": [
-        {
-          "system": "SNOMED-CT",
-          "code": "413441009",
-          "display": "Acute promyelocytic leukemia (disorder)"
-        }
-      ],
-      "direct_transition": "Terminal"
-    },
-    "Death_CBF": {
-      "type": "Death",
-      "range": { "low": 1, "high": 12, "unit": "months" },
-      "codes": [
-        {
-          "system": "SNOMED-CT",
-          "code": "413442002",
-          "display": "Acute myeloid leukemia with t(8;21)(q22;q22) (disorder)"
-        }
-      ],
-      "direct_transition": "Terminal"
-    },
-    "Death_IDH": {
-      "type": "Death",
-      "range": { "low": 1, "high": 12, "unit": "months" },
-      "codes": [
-        {
-          "system": "SNOMED-CT",
-          "code": "1162864003",
-          "display": "Acute myeloid leukemia with IDH1 mutation (disorder)"
-        }
-      ],
-      "direct_transition": "Terminal"
-    },
-    "Death_TP53_MDS": {
-      "type": "Death",
-      "range": { "low": 1, "high": 12, "unit": "months" },
-      "codes": [
-        {
-          "system": "SNOMED-CT",
-          "code": "763512003",
-          "display": "Acute myeloid leukemia with myelodysplasia-related changes (disorder)"
-        }
-      ],
-      "direct_transition": "Terminal"
-    },
-
-    "End_Medications": {
-      "type": "Simple",
-      "remarks": ["End all active medications before closing conditions and encounter."],
-      "direct_transition": "End_Allopurinol"
-    },
-    "End_Allopurinol": {
-      "type": "MedicationEnd",
-      "medication_order": "Allopurinol_TLS_Prophylaxis",
-      "direct_transition": "End_Antimicrobial"
-    },
-    "End_Antimicrobial": {
-      "type": "MedicationEnd",
-      "medication_order": "Antimicrobial_Prophylaxis",
-      "direct_transition": "End_Antifungal"
-    },
-    "End_Antifungal": {
-      "type": "MedicationEnd",
-      "medication_order": "Antifungal_Prophylaxis",
-      "direct_transition": "End_Antiviral"
-    },
-    "End_Antiviral": {
-      "type": "MedicationEnd",
-      "medication_order": "Antiviral_Prophylaxis",
-      "direct_transition": "End_Induction_Meds"
-    },
-
-    "End_Induction_Meds": {
-      "type": "Simple",
-      "remarks": [
-        "End whichever subtype-specific induction medications were given.",
-        "We use referenced_by_attribute so only the ones that were set will be ended."
-      ],
-      "direct_transition": "End_Cytarabine_If_Set"
-    },
-    "End_Cytarabine_If_Set": {
-      "type": "MedicationEnd",
-      "referenced_by_attribute": "cytarabine_medication",
-      "direct_transition": "End_Daunorubicin_If_Set"
-    },
-    "End_Daunorubicin_If_Set": {
-      "type": "MedicationEnd",
-      "referenced_by_attribute": "daunorubicin_medication",
-      "direct_transition": "End_Targeted_If_Set"
-    },
-    "End_Targeted_If_Set": {
-      "type": "Simple",
-      "remarks": ["Branch to end whichever targeted agent was used for this subtype."],
-      "complex_transition": [
-        {
-          "condition": {
-            "condition_type": "Attribute",
-            "attribute": "aml_subtype",
-            "operator": "==",
-            "value": "APL_PML_RARA"
-          },
-          "transition": "End_ATRA"
+        "Inpatient_Encounter": {
+            "type": "Encounter",
+            "encounter_class": "inpatient",
+            "reason": "AML_Condition_Onset",
+            "codes": [{
+                "system": "SNOMED-CT",
+                "code": "185347001",
+                "display": "Encounter for problem (procedure)"
+            }],
+            "direct_transition": "CBC_WBC"
         },
-        {
-          "condition": {
-            "condition_type": "Attribute",
-            "attribute": "aml_subtype",
-            "operator": "==",
-            "value": "AML_FLT3_ITD"
-          },
-          "transition": "End_Midostaurin"
+
+        "CBC_WBC": {
+            "type": "Observation",
+            "category": "laboratory",
+            "unit": "10*3/uL",
+            "codes": [{
+                "system": "LOINC",
+                "code": "6690-2",
+                "display": "Leukocytes [#/volume] in Blood by Automated count"
+            }],
+            "range": { "low": 3.0, "high": 120.0 },
+            "direct_transition": "CBC_Hemoglobin"
         },
-        {
-          "condition": {
-            "condition_type": "Attribute",
-            "attribute": "aml_subtype",
-            "operator": "==",
-            "value": "AML_CBF_RUNX1_RUNX1T1"
-          },
-          "transition": "End_Gemtuzumab"
+        "CBC_Hemoglobin": {
+            "type": "Observation",
+            "category": "laboratory",
+            "unit": "g/dL",
+            "codes": [{
+                "system": "LOINC",
+                "code": "718-7",
+                "display": "Hemoglobin [Mass/volume] in Blood"
+            }],
+            "range": { "low": 6.0, "high": 10.5 },
+            "direct_transition": "CBC_Platelets"
         },
-        {
-          "condition": {
-            "condition_type": "Attribute",
-            "attribute": "aml_subtype",
-            "operator": "==",
-            "value": "AML_TP53_MDS"
-          },
-          "transition": "End_Venetoclax"
+        "CBC_Platelets": {
+            "type": "Observation",
+            "category": "laboratory",
+            "unit": "10*3/uL",
+            "codes": [{
+                "system": "LOINC",
+                "code": "777-3",
+                "display": "Platelets [#/volume] in Blood by Automated count"
+            }],
+            "range": { "low": 10.0, "high": 100.0 },
+            "direct_transition": "CBC_ANC"
         },
-        {
-          "condition": {
-            "condition_type": "Attribute",
-            "attribute": "aml_subtype",
-            "operator": "==",
-            "value": "AML_IDH"
-          },
-          "transition": "End_Ivosidenib"
+        "CBC_ANC": {
+            "type": "Observation",
+            "category": "laboratory",
+            "unit": "10*3/uL",
+            "codes": [{
+                "system": "LOINC",
+                "code": "751-8",
+                "display": "Neutrophils [#/volume] in Blood by Automated count"
+            }],
+            "range": { "low": 0.1, "high": 1.0 },
+            "direct_transition": "Peripheral_Blood_Blasts"
         },
-        {
-          "transition": "End_Complications"
+        "Peripheral_Blood_Blasts": {
+            "type": "Observation",
+            "category": "laboratory",
+            "unit": "%",
+            "codes": [{
+                "system": "LOINC",
+                "code": "709-6",
+                "display": "Blasts/100 leukocytes in Blood by Manual count"
+            }],
+            "range": { "low": 20.0, "high": 80.0 },
+            "direct_transition": "LDH_Chemistry"
+        },
+        "LDH_Chemistry": {
+            "type": "Observation",
+            "category": "laboratory",
+            "unit": "U/L",
+            "codes": [{
+                "system": "LOINC",
+                "code": "14804-9",
+                "display": "Lactate dehydrogenase [Enzymatic activity/volume] in Serum or Plasma"
+            }],
+            "range": { "low": 300.0, "high": 2000.0 },
+            "direct_transition": "Creatinine_Chemistry"
+        },
+        "Creatinine_Chemistry": {
+            "type": "Observation",
+            "category": "laboratory",
+            "unit": "mg/dL",
+            "codes": [{
+                "system": "LOINC",
+                "code": "2160-0",
+                "display": "Creatinine [Mass/volume] in Serum or Plasma"
+            }],
+            "range": { "low": 0.4, "high": 1.2 },
+            "direct_transition": "Uric_Acid_Chemistry"
+        },
+        "Uric_Acid_Chemistry": {
+            "type": "Observation",
+            "category": "laboratory",
+            "unit": "mg/dL",
+            "codes": [{
+                "system": "LOINC",
+                "code": "3084-1",
+                "display": "Urate [Mass/volume] in Serum or Plasma"
+            }],
+            "range": { "low": 4.0, "high": 12.0 },
+            "direct_transition": "Bone_Marrow_Biopsy"
+        },
+
+        "Bone_Marrow_Biopsy": {
+            "type": "Procedure",
+            "codes": [{
+                "system": "SNOMED-CT",
+                "code": "86273004",
+                "display": "Biopsy of bone marrow"
+            }],
+            "duration": { "low": 30, "high": 60, "unit": "minutes" },
+            "reason": "AML_Condition_Onset",
+            "direct_transition": "BM_Blast_Percentage"
+        },
+        "BM_Blast_Percentage": {
+            "type": "Observation",
+            "category": "laboratory",
+            "unit": "%",
+            "codes": [{
+                "system": "LOINC",
+                "code": "26464-8",
+                "display": "Blasts/100 cells in Bone marrow"
+            }],
+            "range": { "low": 20.0, "high": 90.0 },
+            "direct_transition": "Karyotype_Procedure"
+        },
+
+        "Karyotype_Procedure": {
+            "type": "Procedure",
+            "codes": [{
+                "system": "SNOMED-CT",
+                "code": "734877004",
+                "display": "Karyotyping of bone marrow specimen (procedure)"
+            }],
+            "duration": { "low": 60, "high": 120, "unit": "minutes" },
+            "reason": "AML_Condition_Onset",
+            "direct_transition": "FISH_Procedure"
+        },
+        "FISH_Procedure": {
+            "type": "Procedure",
+            "codes": [{
+                "system": "SNOMED-CT",
+                "code": "445484009",
+                "display": "Fluorescence in situ hybridization (procedure)"
+            }],
+            "duration": { "low": 30, "high": 60, "unit": "minutes" },
+            "reason": "AML_Condition_Onset",
+            "direct_transition": "NGS_Panel_Procedure"
+        },
+        "NGS_Panel_Procedure": {
+            "type": "Procedure",
+            "codes": [{
+                "system": "SNOMED-CT",
+                "code": "1186936003",
+                "display": "Next generation sequencing panel testing (procedure)"
+            }],
+            "duration": { "low": 60, "high": 120, "unit": "minutes" },
+            "reason": "AML_Condition_Onset",
+            "direct_transition": "Subtype_Assay_Branch"
+        },
+
+        "Subtype_Assay_Branch": {
+            "type": "Simple",
+            "remarks": [
+                "Branch to subtype-specific confirmatory assays and genomic capture.",
+                "RT-PCR for fusion subtypes (APL, CBF); molecular observations for point-mutation subtypes."
+            ],
+            "complex_transition": [{
+                    "condition": {
+                        "condition_type": "Attribute",
+                        "attribute": "aml_subtype",
+                        "operator": "==",
+                        "value": "APL_PML_RARA"
+                    },
+                    "transition": "RT_PCR_PML_RARA"
+                },
+                {
+                    "condition": {
+                        "condition_type": "Attribute",
+                        "attribute": "aml_subtype",
+                        "operator": "==",
+                        "value": "AML_CBF_RUNX1_RUNX1T1"
+                    },
+                    "transition": "RT_PCR_RUNX1_RUNX1T1"
+                },
+                {
+                    "condition": {
+                        "condition_type": "Attribute",
+                        "attribute": "aml_subtype",
+                        "operator": "==",
+                        "value": "AML_FLT3_ITD"
+                    },
+                    "transition": "FLT3_ITD_Observation"
+                },
+                {
+                    "condition": {
+                        "condition_type": "Attribute",
+                        "attribute": "aml_subtype",
+                        "operator": "==",
+                        "value": "AML_NPM1"
+                    },
+                    "transition": "NPM1_Mutation_Observation"
+                },
+                {
+                    "condition": {
+                        "condition_type": "Attribute",
+                        "attribute": "aml_subtype",
+                        "operator": "==",
+                        "value": "AML_IDH"
+                    },
+                    "transition": "IDH_Mutation_Observation"
+                },
+                {
+                    "transition": "Genomics_TP53_MDS"
+                }
+            ]
+        },
+
+        "RT_PCR_PML_RARA": {
+            "type": "Procedure",
+            "codes": [{
+                "system": "SNOMED-CT",
+                "code": "726654001",
+                "display": "Reverse transcription polymerase chain reaction (procedure)"
+            }],
+            "duration": { "low": 30, "high": 60, "unit": "minutes" },
+            "reason": "AML_Condition_Onset",
+            "direct_transition": "PML_RARA_Fusion_Observation"
+        },
+        "PML_RARA_Fusion_Observation": {
+            "type": "Observation",
+            "category": "laboratory",
+            "unit": "{ratio}",
+            "codes": [{
+                "system": "LOINC",
+                "code": "72216-5",
+                "display": "t(15;17)(q24.1;q21.1)(PML,RARA) bcr1 fusion transcript/control transcript [# Ratio] in Blood or Tissue by Molecular genetics method"
+            }],
+            "value_code": {
+                "system": "SNOMED-CT",
+                "code": "10828004",
+                "display": "Positive (qualifier value)"
+            },
+            "direct_transition": "Genomics_APL"
+        },
+
+        "RT_PCR_RUNX1_RUNX1T1": {
+            "type": "Procedure",
+            "codes": [{
+                "system": "SNOMED-CT",
+                "code": "726654001",
+                "display": "Reverse transcription polymerase chain reaction (procedure)"
+            }],
+            "duration": { "low": 30, "high": 60, "unit": "minutes" },
+            "reason": "AML_Condition_Onset",
+            "direct_transition": "RUNX1_RUNX1T1_Fusion_Observation"
+        },
+        "RUNX1_RUNX1T1_Fusion_Observation": {
+            "type": "Observation",
+            "category": "laboratory",
+            "unit": "{Qualitative}",
+            "codes": [{
+                "system": "LOINC",
+                "code": "53007-3",
+                "display": "RUNX1T1 gene rearrangements [Presence] in Blood or Tissue"
+            }],
+            "value_code": {
+                "system": "SNOMED-CT",
+                "code": "10828004",
+                "display": "Positive (qualifier value)"
+            },
+            "direct_transition": "Genomics_CBF"
+        },
+
+        "FLT3_ITD_Observation": {
+            "type": "Observation",
+            "category": "laboratory",
+            "unit": "{Qualitative}",
+            "codes": [{
+                "system": "LOINC",
+                "code": "85176-4",
+                "display": "FLT3 gene internal tandem duplication [Presence] in Blood or Tissue by Molecular genetics method"
+            }],
+            "value_code": {
+                "system": "SNOMED-CT",
+                "code": "10828004",
+                "display": "Positive (qualifier value)"
+            },
+            "direct_transition": "Genomics_FLT3_ITD"
+        },
+
+        "NPM1_Mutation_Observation": {
+            "type": "Observation",
+            "category": "laboratory",
+            "unit": "{Qualitative}",
+            "codes": [{
+                "system": "LOINC",
+                "code": "89266-3",
+                "display": "NPM1 gene mutation analysis in Blood or Tissue by Molecular genetics method"
+            }],
+            "value_code": {
+                "system": "SNOMED-CT",
+                "code": "10828004",
+                "display": "Positive (qualifier value)"
+            },
+            "direct_transition": "Genomics_NPM1"
+        },
+
+        "IDH_Mutation_Observation": {
+            "type": "Observation",
+            "category": "laboratory",
+            "unit": "{Qualitative}",
+            "codes": [{
+                "system": "LOINC",
+                "code": "94077-5",
+                "display": "IDH1 gene mutation analysis in Blood or Tissue by Molecular genetics method"
+            }],
+            "value_code": {
+                "system": "SNOMED-CT",
+                "code": "10828004",
+                "display": "Positive (qualifier value)"
+            },
+            "direct_transition": "Genomics_IDH"
+        },
+
+        "Genomics_NPM1": {
+            "type": "SetAttribute",
+            "attribute": "genomics_alterations",
+            "value": [{
+                "method_genomics": "NGS",
+                "source_genomics": "Bone marrow",
+                "alteration_type": "Insertion",
+                "gene": "NPM1",
+                "alteration_status": "Pathogenic",
+                "hgvs_coding": "c.860_863dup",
+                "hgvs_protein": "p.Trp288CysfsTer12",
+                "genome_version": "GRCh38",
+                "vaf": 0.45
+            }],
+            "direct_transition": "Allopurinol_TLS_Prophylaxis"
+        },
+
+        "Genomics_FLT3_ITD": {
+            "type": "SetAttribute",
+            "attribute": "genomics_alterations",
+            "value": [{
+                "method_genomics": "NGS",
+                "source_genomics": "Bone marrow",
+                "alteration_type": "Insertion",
+                "gene": "FLT3",
+                "alteration_status": "Pathogenic",
+                "hgvs_coding": "c.1770_1771insATGATG",
+                "hgvs_protein": "p.Ile590_Ile591insMetMet",
+                "genome_version": "GRCh38",
+                "vaf": 0.42
+            }],
+            "direct_transition": "Allopurinol_TLS_Prophylaxis"
+        },
+
+        "Genomics_APL": {
+            "type": "SetAttribute",
+            "attribute": "genomics_alterations",
+            "value": [{
+                "method_genomics": "RT-PCR",
+                "source_genomics": "Bone marrow",
+                "alteration_type": "Fusion",
+                "gene": "PML",
+                "gene_other": "RARA",
+                "fusion": "PML::RARA",
+                "structural_event": "t(15;17)(q24.1;q21.2)",
+                "alteration_status": "Pathogenic",
+                "genome_version": "GRCh38",
+                "vaf": 0.50
+            }],
+            "direct_transition": "Allopurinol_TLS_Prophylaxis"
+        },
+
+        "Genomics_CBF": {
+            "type": "SetAttribute",
+            "attribute": "genomics_alterations",
+            "value": [{
+                "method_genomics": "RT-PCR",
+                "source_genomics": "Bone marrow",
+                "alteration_type": "Fusion",
+                "gene": "RUNX1",
+                "gene_other": "RUNX1T1",
+                "fusion": "RUNX1::RUNX1T1",
+                "structural_event": "t(8;21)(q22;q22.1)",
+                "alteration_status": "Pathogenic",
+                "genome_version": "GRCh38",
+                "vaf": 0.48
+            }],
+            "direct_transition": "Allopurinol_TLS_Prophylaxis"
+        },
+
+        "Genomics_IDH": {
+            "type": "SetAttribute",
+            "attribute": "genomics_alterations",
+            "value": [{
+                "method_genomics": "NGS",
+                "source_genomics": "Bone marrow",
+                "alteration_type": "SNV",
+                "gene": "IDH1",
+                "alteration_status": "Pathogenic",
+                "hgvs_coding": "c.394C>T",
+                "hgvs_protein": "p.Arg132Cys",
+                "genome_version": "GRCh38",
+                "vaf": 0.40
+            }],
+            "direct_transition": "Allopurinol_TLS_Prophylaxis"
+        },
+
+        "Genomics_TP53_MDS": {
+            "type": "SetAttribute",
+            "attribute": "genomics_alterations",
+            "value": [{
+                    "method_genomics": "NGS",
+                    "source_genomics": "Bone marrow",
+                    "alteration_type": "SNV",
+                    "gene": "TP53",
+                    "alteration_status": "Pathogenic",
+                    "hgvs_coding": "c.817C>T",
+                    "hgvs_protein": "p.Arg273Cys",
+                    "genome_version": "GRCh38",
+                    "vaf": 0.55
+                },
+                {
+                    "method_genomics": "NGS",
+                    "source_genomics": "Bone marrow",
+                    "alteration_type": "SNV",
+                    "gene": "ASXL1",
+                    "alteration_status": "Pathogenic",
+                    "hgvs_coding": "c.1900_1901dup",
+                    "hgvs_protein": "p.Glu634GlyfsTer12",
+                    "genome_version": "GRCh38",
+                    "vaf": 0.38
+                }
+            ],
+            "direct_transition": "Allopurinol_TLS_Prophylaxis"
+        },
+
+        "Allopurinol_TLS_Prophylaxis": {
+            "type": "MedicationOrder",
+            "assign_to_attribute": "allopurinol_medication",
+            "codes": [{
+                "system": "RxNorm",
+                "code": 197319,
+                "display": "allopurinol 100 MG Oral Tablet"
+            }],
+            "reason": "AML_Condition_Onset",
+            "administration": true,
+            "prescription": {
+                "dosage": { "amount": 1, "frequency": 1, "period": 1, "unit": "days" },
+                "duration": { "quantity": 7, "unit": "days" }
+            },
+            "direct_transition": "Induction_Therapy_Branch"
+        },
+
+        "Induction_Therapy_Branch": {
+            "type": "Simple",
+            "remarks": ["Route to subtype-appropriate induction regimen."],
+            "complex_transition": [{
+                    "condition": {
+                        "condition_type": "Attribute",
+                        "attribute": "aml_subtype",
+                        "operator": "==",
+                        "value": "APL_PML_RARA"
+                    },
+                    "transition": "Give_ATRA"
+                },
+                {
+                    "condition": {
+                        "condition_type": "Attribute",
+                        "attribute": "aml_subtype",
+                        "operator": "==",
+                        "value": "AML_FLT3_ITD"
+                    },
+                    "transition": "Give_Cytarabine_FLT3"
+                },
+                {
+                    "condition": {
+                        "condition_type": "Attribute",
+                        "attribute": "aml_subtype",
+                        "operator": "==",
+                        "value": "AML_CBF_RUNX1_RUNX1T1"
+                    },
+                    "transition": "Give_Cytarabine_CBF"
+                },
+                {
+                    "condition": {
+                        "condition_type": "Attribute",
+                        "attribute": "aml_subtype",
+                        "operator": "==",
+                        "value": "AML_TP53_MDS"
+                    },
+                    "transition": "Give_Venetoclax"
+                },
+                {
+                    "condition": {
+                        "condition_type": "Attribute",
+                        "attribute": "aml_subtype",
+                        "operator": "==",
+                        "value": "AML_IDH"
+                    },
+                    "transition": "Give_Cytarabine_IDH"
+                },
+                {
+                    "transition": "Give_Cytarabine_NPM1"
+                }
+            ]
+        },
+
+        "Give_ATRA": {
+            "type": "MedicationOrder",
+            "assign_to_attribute": "atra_medication",
+            "codes": [{
+                "system": "RxNorm",
+                "code": 199159,
+                "display": "tretinoin 10 MG Oral Capsule"
+            }],
+            "reason": "AML_Condition_Onset",
+            "administration": true,
+            "prescription": {
+                "dosage": { "amount": 2, "frequency": 2, "period": 1, "unit": "days" },
+                "duration": { "quantity": 28, "unit": "days" }
+            },
+            "direct_transition": "Give_ATO"
+        },
+        "Give_ATO": {
+            "type": "MedicationOrder",
+            "assign_to_attribute": "ato_medication",
+            "codes": [{
+                "system": "RxNorm",
+                "code": 829926,
+                "display": "arsenic trioxide 1 MG/ML Injection"
+            }],
+            "reason": "AML_Condition_Onset",
+            "administration": true,
+            "prescription": {
+                "dosage": { "amount": 1, "frequency": 1, "period": 1, "unit": "days" },
+                "duration": { "quantity": 28, "unit": "days" }
+            },
+            "direct_transition": "Induction_Chemo_Procedure"
+        },
+
+        "Give_Cytarabine_FLT3": {
+            "type": "MedicationOrder",
+            "assign_to_attribute": "cytarabine_medication",
+            "codes": [{
+                "system": "RxNorm",
+                "code": 197361,
+                "display": "cytarabine 100 MG/mL Injectable Solution"
+            }],
+            "reason": "AML_Condition_Onset",
+            "administration": true,
+            "prescription": {
+                "dosage": { "amount": 1, "frequency": 1, "period": 1, "unit": "days" },
+                "duration": { "quantity": 7, "unit": "days" }
+            },
+            "direct_transition": "Give_Daunorubicin_FLT3"
+        },
+        "Give_Daunorubicin_FLT3": {
+            "type": "MedicationOrder",
+            "assign_to_attribute": "daunorubicin_medication",
+            "codes": [{
+                "system": "RxNorm",
+                "code": 3002,
+                "display": "daunorubicin"
+            }],
+            "reason": "AML_Condition_Onset",
+            "administration": true,
+            "prescription": {
+                "dosage": { "amount": 1, "frequency": 1, "period": 1, "unit": "days" },
+                "duration": { "quantity": 3, "unit": "days" }
+            },
+            "direct_transition": "Give_Midostaurin"
+        },
+        "Give_Midostaurin": {
+            "type": "MedicationOrder",
+            "assign_to_attribute": "midostaurin_medication",
+            "codes": [{
+                "system": "RxNorm",
+                "code": 1919088,
+                "display": "midostaurin 25 MG Oral Capsule"
+            }],
+            "reason": "AML_Condition_Onset",
+            "administration": true,
+            "prescription": {
+                "dosage": { "amount": 2, "frequency": 2, "period": 1, "unit": "days" },
+                "duration": { "quantity": 14, "unit": "days" }
+            },
+            "direct_transition": "Induction_Chemo_Procedure"
+        },
+
+        "Give_Cytarabine_NPM1": {
+            "type": "MedicationOrder",
+            "assign_to_attribute": "cytarabine_medication",
+            "codes": [{
+                "system": "RxNorm",
+                "code": 197361,
+                "display": "cytarabine 100 MG/mL Injectable Solution"
+            }],
+            "reason": "AML_Condition_Onset",
+            "administration": true,
+            "prescription": {
+                "dosage": { "amount": 1, "frequency": 1, "period": 1, "unit": "days" },
+                "duration": { "quantity": 7, "unit": "days" }
+            },
+            "direct_transition": "Give_Daunorubicin_NPM1"
+        },
+        "Give_Daunorubicin_NPM1": {
+            "type": "MedicationOrder",
+            "assign_to_attribute": "daunorubicin_medication",
+            "codes": [{
+                "system": "RxNorm",
+                "code": 3002,
+                "display": "daunorubicin"
+            }],
+            "reason": "AML_Condition_Onset",
+            "administration": true,
+            "prescription": {
+                "dosage": { "amount": 1, "frequency": 1, "period": 1, "unit": "days" },
+                "duration": { "quantity": 3, "unit": "days" }
+            },
+            "direct_transition": "Induction_Chemo_Procedure"
+        },
+
+        "Give_Cytarabine_CBF": {
+            "type": "MedicationOrder",
+            "assign_to_attribute": "cytarabine_medication",
+            "codes": [{
+                "system": "RxNorm",
+                "code": 197361,
+                "display": "cytarabine 100 MG/mL Injectable Solution"
+            }],
+            "reason": "AML_Condition_Onset",
+            "administration": true,
+            "prescription": {
+                "dosage": { "amount": 1, "frequency": 1, "period": 1, "unit": "days" },
+                "duration": { "quantity": 7, "unit": "days" }
+            },
+            "direct_transition": "Give_Daunorubicin_CBF"
+        },
+        "Give_Daunorubicin_CBF": {
+            "type": "MedicationOrder",
+            "assign_to_attribute": "daunorubicin_medication",
+            "codes": [{
+                "system": "RxNorm",
+                "code": 3002,
+                "display": "daunorubicin"
+            }],
+            "reason": "AML_Condition_Onset",
+            "administration": true,
+            "prescription": {
+                "dosage": { "amount": 1, "frequency": 1, "period": 1, "unit": "days" },
+                "duration": { "quantity": 3, "unit": "days" }
+            },
+            "direct_transition": "Give_Gemtuzumab"
+        },
+        "Give_Gemtuzumab": {
+            "type": "MedicationOrder",
+            "assign_to_attribute": "gemtuzumab_medication",
+            "codes": [{
+                "system": "RxNorm",
+                "code": 1294581,
+                "display": "gemtuzumab ozogamicin 1 MG/ML Injectable Solution"
+            }],
+            "reason": "AML_Condition_Onset",
+            "administration": true,
+            "prescription": {
+                "dosage": { "amount": 1, "frequency": 1, "period": 1, "unit": "days" },
+                "duration": { "quantity": 1, "unit": "days" }
+            },
+            "direct_transition": "Induction_Chemo_Procedure"
+        },
+
+        "Give_Cytarabine_IDH": {
+            "type": "MedicationOrder",
+            "assign_to_attribute": "cytarabine_medication",
+            "codes": [{
+                "system": "RxNorm",
+                "code": 197361,
+                "display": "cytarabine 100 MG/mL Injectable Solution"
+            }],
+            "reason": "AML_Condition_Onset",
+            "administration": true,
+            "prescription": {
+                "dosage": { "amount": 1, "frequency": 1, "period": 1, "unit": "days" },
+                "duration": { "quantity": 7, "unit": "days" }
+            },
+            "direct_transition": "Give_Daunorubicin_IDH"
+        },
+        "Give_Daunorubicin_IDH": {
+            "type": "MedicationOrder",
+            "assign_to_attribute": "daunorubicin_medication",
+            "codes": [{
+                "system": "RxNorm",
+                "code": 3002,
+                "display": "daunorubicin"
+            }],
+            "reason": "AML_Condition_Onset",
+            "administration": true,
+            "prescription": {
+                "dosage": { "amount": 1, "frequency": 1, "period": 1, "unit": "days" },
+                "duration": { "quantity": 3, "unit": "days" }
+            },
+            "direct_transition": "Give_Ivosidenib"
+        },
+        "Give_Ivosidenib": {
+            "type": "MedicationOrder",
+            "assign_to_attribute": "ivosidenib_medication",
+            "codes": [{
+                "system": "RxNorm",
+                "code": 2049878,
+                "display": "ivosidenib 250 MG Oral Tablet"
+            }],
+            "reason": "AML_Condition_Onset",
+            "administration": true,
+            "prescription": {
+                "dosage": { "amount": 1, "frequency": 1, "period": 1, "unit": "days" },
+                "duration": { "quantity": 28, "unit": "days" }
+            },
+            "direct_transition": "Induction_Chemo_Procedure"
+        },
+
+        "Give_Venetoclax": {
+            "type": "MedicationOrder",
+            "assign_to_attribute": "venetoclax_medication",
+            "codes": [{
+                "system": "RxNorm",
+                "code": 1747567,
+                "display": "venetoclax 100 MG Oral Tablet"
+            }],
+            "reason": "AML_Condition_Onset",
+            "administration": true,
+            "prescription": {
+                "dosage": { "amount": 1, "frequency": 1, "period": 1, "unit": "days" },
+                "duration": { "quantity": 28, "unit": "days" }
+            },
+            "direct_transition": "Give_Azacitidine"
+        },
+        "Give_Azacitidine": {
+            "type": "MedicationOrder",
+            "assign_to_attribute": "azacitidine_medication",
+            "codes": [{
+                "system": "RxNorm",
+                "code": 485246,
+                "display": "azacitidine 100 MG Injection"
+            }],
+            "reason": "AML_Condition_Onset",
+            "administration": true,
+            "prescription": {
+                "dosage": { "amount": 1, "frequency": 1, "period": 1, "unit": "days" },
+                "duration": { "quantity": 7, "unit": "days" }
+            },
+            "direct_transition": "Induction_Chemo_Procedure"
+        },
+
+        "Induction_Chemo_Procedure": {
+            "type": "Procedure",
+            "codes": [{
+                "system": "SNOMED-CT",
+                "code": "367336001",
+                "display": "Chemotherapy (procedure)"
+            }],
+            "duration": { "low": 120, "high": 300, "unit": "minutes" },
+            "reason": "AML_Condition_Onset",
+            "direct_transition": "Antimicrobial_Prophylaxis"
+        },
+
+        "Antimicrobial_Prophylaxis": {
+            "type": "MedicationOrder",
+            "assign_to_attribute": "levofloxacin_medication",
+            "codes": [{
+                "system": "RxNorm",
+                "code": 199885,
+                "display": "levofloxacin 500 MG Oral Tablet"
+            }],
+            "reason": "AML_Condition_Onset",
+            "administration": true,
+            "prescription": {
+                "dosage": { "amount": 1, "frequency": 1, "period": 1, "unit": "days" },
+                "duration": { "quantity": 14, "unit": "days" }
+            },
+            "direct_transition": "Antifungal_Prophylaxis"
+        },
+        "Antifungal_Prophylaxis": {
+            "type": "MedicationOrder",
+            "assign_to_attribute": "posaconazole_medication",
+            "codes": [{
+                "system": "RxNorm",
+                "code": 703569,
+                "display": "posaconazole 40 MG/ML Oral Suspension"
+            }],
+            "reason": "AML_Condition_Onset",
+            "administration": true,
+            "prescription": {
+                "dosage": { "amount": 1, "frequency": 3, "period": 1, "unit": "days" },
+                "duration": { "quantity": 14, "unit": "days" }
+            },
+            "direct_transition": "Antiviral_Prophylaxis"
+        },
+        "Antiviral_Prophylaxis": {
+            "type": "MedicationOrder",
+            "assign_to_attribute": "acyclovir_medication",
+            "codes": [{
+                "system": "RxNorm",
+                "code": 14581,
+                "display": "acyclovir 400 MG Oral Tablet"
+            }],
+            "reason": "AML_Condition_Onset",
+            "administration": true,
+            "prescription": {
+                "dosage": { "amount": 1, "frequency": 2, "period": 1, "unit": "days" },
+                "duration": { "quantity": 14, "unit": "days" }
+            },
+            "direct_transition": "Post_Induction_ANC"
+        },
+
+        "Post_Induction_ANC": {
+            "type": "Observation",
+            "category": "laboratory",
+            "unit": "10*3/uL",
+            "codes": [{
+                "system": "LOINC",
+                "code": "751-8",
+                "display": "Neutrophils [#/volume] in Blood by Automated count"
+            }],
+            "range": { "low": 0.1, "high": 0.5 },
+            "direct_transition": "Post_Induction_Temperature"
+        },
+        "Post_Induction_Temperature": {
+            "type": "Observation",
+            "category": "vital-signs",
+            "unit": "[degF]",
+            "codes": [{
+                "system": "LOINC",
+                "code": "8310-5",
+                "display": "Body temperature"
+            }],
+            "range": { "low": 96.0, "high": 103.0 },
+            "direct_transition": "Complication_Branch"
+        },
+
+        "Complication_Branch": {
+            "type": "Simple",
+            "distributed_transition": [
+                { "transition": "Febrile_Neutropenia_Onset", "distribution": 0.55 },
+                { "transition": "Tumor_Lysis_Syndrome_Onset", "distribution": 0.10 },
+                { "transition": "DIC_Onset", "distribution": 0.05 },
+                { "transition": "MRD_Flow_Cytometry", "distribution": 0.30 }
+            ]
+        },
+
+        "Febrile_Neutropenia_Onset": {
+            "type": "ConditionOnset",
+            "assign_to_attribute": "febrile_neutropenia_condition",
+            "codes": [{
+                "system": "SNOMED-CT",
+                "code": "409089005",
+                "display": "Febrile neutropenia (disorder)"
+            }],
+            "direct_transition": "MRD_Flow_Cytometry"
+        },
+        "Tumor_Lysis_Syndrome_Onset": {
+            "type": "ConditionOnset",
+            "assign_to_attribute": "tls_condition",
+            "codes": [{
+                "system": "SNOMED-CT",
+                "code": "426263006",
+                "display": "Tumor lysis syndrome (disorder)"
+            }],
+            "direct_transition": "MRD_Flow_Cytometry"
+        },
+        "DIC_Onset": {
+            "type": "ConditionOnset",
+            "assign_to_attribute": "dic_condition",
+            "codes": [{
+                "system": "SNOMED-CT",
+                "code": "234466008",
+                "display": "Disseminated intravascular coagulation (disorder)"
+            }],
+            "direct_transition": "MRD_Flow_Cytometry"
+        },
+
+        "MRD_Flow_Cytometry": {
+            "type": "Procedure",
+            "codes": [{
+                "system": "SNOMED-CT",
+                "code": "116148004",
+                "display": "Flow cytometry (procedure)"
+            }],
+            "duration": { "low": 60, "high": 120, "unit": "minutes" },
+            "reason": "AML_Condition_Onset",
+            "direct_transition": "MRD_Result_Observation"
+        },
+        "MRD_Result_Observation": {
+            "type": "Observation",
+            "category": "laboratory",
+            "unit": "%",
+            "codes": [{
+                "system": "LOINC",
+                "code": "102098-1",
+                "display": "Acute myeloid leukemia minimal residual disease in Bone marrow by Flow cytometry (FC) Narrative"
+            }],
+            "range": { "low": 0.001, "high": 5.0 },
+            "direct_transition": "Treatment_Outcome_Branch"
+        },
+
+        "Treatment_Outcome_Branch": {
+            "type": "Simple",
+            "remarks": [
+                "Route each patient to a subtype-specific mortality outcome state.",
+                "Mortality rates reflect ELN-2022 / SEER estimates for each AML subtype."
+            ],
+            "complex_transition": [{
+                    "condition": {
+                        "condition_type": "Attribute",
+                        "attribute": "aml_subtype",
+                        "operator": "==",
+                        "value": "AML_NPM1"
+                    },
+                    "transition": "Outcome_NPM1"
+                },
+                {
+                    "condition": {
+                        "condition_type": "Attribute",
+                        "attribute": "aml_subtype",
+                        "operator": "==",
+                        "value": "AML_FLT3_ITD"
+                    },
+                    "transition": "Outcome_FLT3_ITD"
+                },
+                {
+                    "condition": {
+                        "condition_type": "Attribute",
+                        "attribute": "aml_subtype",
+                        "operator": "==",
+                        "value": "APL_PML_RARA"
+                    },
+                    "transition": "Outcome_APL"
+                },
+                {
+                    "condition": {
+                        "condition_type": "Attribute",
+                        "attribute": "aml_subtype",
+                        "operator": "==",
+                        "value": "AML_CBF_RUNX1_RUNX1T1"
+                    },
+                    "transition": "Outcome_CBF"
+                },
+                {
+                    "condition": {
+                        "condition_type": "Attribute",
+                        "attribute": "aml_subtype",
+                        "operator": "==",
+                        "value": "AML_IDH"
+                    },
+                    "transition": "Outcome_IDH"
+                },
+                {
+                    "transition": "Outcome_TP53_MDS"
+                }
+            ]
+        },
+
+        "Outcome_NPM1": {
+            "type": "Simple",
+            "remarks": ["NPM1-mutated AML: ~20% mortality post-induction (ELN Favorable risk)."],
+            "distributed_transition": [
+                { "distribution": 0.20, "transition": "Death_NPM1" },
+                { "distribution": 0.80, "transition": "End_Medications" }
+            ]
+        },
+        "Outcome_FLT3_ITD": {
+            "type": "Simple",
+            "remarks": ["FLT3-ITD AML: ~40% mortality post-induction (ELN Intermediate risk)."],
+            "distributed_transition": [
+                { "distribution": 0.40, "transition": "Death_FLT3_ITD" },
+                { "distribution": 0.60, "transition": "End_Medications" }
+            ]
+        },
+        "Outcome_APL": {
+            "type": "Simple",
+            "remarks": ["APL (PML::RARA): ~15% mortality post-induction (ELN Favorable, best prognosis)."],
+            "distributed_transition": [
+                { "distribution": 0.15, "transition": "Death_APL" },
+                { "distribution": 0.85, "transition": "End_Medications" }
+            ]
+        },
+        "Outcome_CBF": {
+            "type": "Simple",
+            "remarks": ["CBF AML (RUNX1::RUNX1T1): ~25% mortality post-induction (ELN Favorable risk)."],
+            "distributed_transition": [
+                { "distribution": 0.25, "transition": "Death_CBF" },
+                { "distribution": 0.75, "transition": "End_Medications" }
+            ]
+        },
+        "Outcome_IDH": {
+            "type": "Simple",
+            "remarks": ["IDH1/IDH2-mutated AML: ~35% mortality post-induction (ELN Intermediate risk)."],
+            "distributed_transition": [
+                { "distribution": 0.35, "transition": "Death_IDH" },
+                { "distribution": 0.65, "transition": "End_Medications" }
+            ]
+        },
+        "Outcome_TP53_MDS": {
+            "type": "Simple",
+            "remarks": ["TP53/MDS-related AML: ~60% mortality post-induction (ELN Adverse risk, worst prognosis)."],
+            "distributed_transition": [
+                { "distribution": 0.60, "transition": "Death_TP53_MDS" },
+                { "distribution": 0.40, "transition": "End_Medications" }
+            ]
+        },
+
+        "Death_NPM1": {
+            "type": "Death",
+            "range": { "low": 1, "high": 12, "unit": "months" },
+            "codes": [{
+                "system": "SNOMED-CT",
+                "code": "413448000",
+                "display": "Acute myeloid leukemia with NPM1 mutation (disorder)"
+            }],
+            "direct_transition": "Terminal"
+        },
+        "Death_FLT3_ITD": {
+            "type": "Death",
+            "range": { "low": 1, "high": 12, "unit": "months" },
+            "codes": [{
+                "system": "SNOMED-CT",
+                "code": "413449008",
+                "display": "Acute myeloid leukemia with FLT3 mutation (disorder)"
+            }],
+            "direct_transition": "Terminal"
+        },
+        "Death_APL": {
+            "type": "Death",
+            "range": { "low": 1, "high": 12, "unit": "months" },
+            "codes": [{
+                "system": "SNOMED-CT",
+                "code": "413441009",
+                "display": "Acute promyelocytic leukemia (disorder)"
+            }],
+            "direct_transition": "Terminal"
+        },
+        "Death_CBF": {
+            "type": "Death",
+            "range": { "low": 1, "high": 12, "unit": "months" },
+            "codes": [{
+                "system": "SNOMED-CT",
+                "code": "413442002",
+                "display": "Acute myeloid leukemia with t(8;21)(q22;q22) (disorder)"
+            }],
+            "direct_transition": "Terminal"
+        },
+        "Death_IDH": {
+            "type": "Death",
+            "range": { "low": 1, "high": 12, "unit": "months" },
+            "codes": [{
+                "system": "SNOMED-CT",
+                "code": "1162864003",
+                "display": "Acute myeloid leukemia with IDH1 mutation (disorder)"
+            }],
+            "direct_transition": "Terminal"
+        },
+        "Death_TP53_MDS": {
+            "type": "Death",
+            "range": { "low": 1, "high": 12, "unit": "months" },
+            "codes": [{
+                "system": "SNOMED-CT",
+                "code": "763512003",
+                "display": "Acute myeloid leukemia with myelodysplasia-related changes (disorder)"
+            }],
+            "direct_transition": "Terminal"
+        },
+
+        "End_Medications": {
+            "type": "Simple",
+            "remarks": ["End all active medications before closing conditions and encounter."],
+            "direct_transition": "End_Allopurinol"
+        },
+        "End_Allopurinol": {
+            "type": "MedicationEnd",
+            "medication_order": "Allopurinol_TLS_Prophylaxis",
+            "direct_transition": "End_Antimicrobial"
+        },
+        "End_Antimicrobial": {
+            "type": "MedicationEnd",
+            "medication_order": "Antimicrobial_Prophylaxis",
+            "direct_transition": "End_Antifungal"
+        },
+        "End_Antifungal": {
+            "type": "MedicationEnd",
+            "medication_order": "Antifungal_Prophylaxis",
+            "direct_transition": "End_Antiviral"
+        },
+        "End_Antiviral": {
+            "type": "MedicationEnd",
+            "medication_order": "Antiviral_Prophylaxis",
+            "direct_transition": "End_Induction_Meds"
+        },
+
+        "End_Induction_Meds": {
+            "type": "Simple",
+            "remarks": [
+                "End whichever subtype-specific induction medications were given.",
+                "We use referenced_by_attribute so only the ones that were set will be ended."
+            ],
+            "direct_transition": "End_Cytarabine_If_Set"
+        },
+        "End_Cytarabine_If_Set": {
+            "type": "MedicationEnd",
+            "referenced_by_attribute": "cytarabine_medication",
+            "direct_transition": "End_Daunorubicin_If_Set"
+        },
+        "End_Daunorubicin_If_Set": {
+            "type": "MedicationEnd",
+            "referenced_by_attribute": "daunorubicin_medication",
+            "direct_transition": "End_Targeted_If_Set"
+        },
+        "End_Targeted_If_Set": {
+            "type": "Simple",
+            "remarks": ["Branch to end whichever targeted agent was used for this subtype."],
+            "complex_transition": [{
+                    "condition": {
+                        "condition_type": "Attribute",
+                        "attribute": "aml_subtype",
+                        "operator": "==",
+                        "value": "APL_PML_RARA"
+                    },
+                    "transition": "End_ATRA"
+                },
+                {
+                    "condition": {
+                        "condition_type": "Attribute",
+                        "attribute": "aml_subtype",
+                        "operator": "==",
+                        "value": "AML_FLT3_ITD"
+                    },
+                    "transition": "End_Midostaurin"
+                },
+                {
+                    "condition": {
+                        "condition_type": "Attribute",
+                        "attribute": "aml_subtype",
+                        "operator": "==",
+                        "value": "AML_CBF_RUNX1_RUNX1T1"
+                    },
+                    "transition": "End_Gemtuzumab"
+                },
+                {
+                    "condition": {
+                        "condition_type": "Attribute",
+                        "attribute": "aml_subtype",
+                        "operator": "==",
+                        "value": "AML_TP53_MDS"
+                    },
+                    "transition": "End_Venetoclax"
+                },
+                {
+                    "condition": {
+                        "condition_type": "Attribute",
+                        "attribute": "aml_subtype",
+                        "operator": "==",
+                        "value": "AML_IDH"
+                    },
+                    "transition": "End_Ivosidenib"
+                },
+                {
+                    "transition": "End_Complications"
+                }
+            ]
+        },
+        "End_ATRA": {
+            "type": "MedicationEnd",
+            "medication_order": "Give_ATRA",
+            "direct_transition": "End_ATO"
+        },
+        "End_ATO": {
+            "type": "MedicationEnd",
+            "medication_order": "Give_ATO",
+            "direct_transition": "End_Complications"
+        },
+        "End_Midostaurin": {
+            "type": "MedicationEnd",
+            "medication_order": "Give_Midostaurin",
+            "direct_transition": "End_Complications"
+        },
+        "End_Gemtuzumab": {
+            "type": "MedicationEnd",
+            "medication_order": "Give_Gemtuzumab",
+            "direct_transition": "End_Complications"
+        },
+        "End_Venetoclax": {
+            "type": "MedicationEnd",
+            "medication_order": "Give_Venetoclax",
+            "direct_transition": "End_Azacitidine"
+        },
+        "End_Azacitidine": {
+            "type": "MedicationEnd",
+            "medication_order": "Give_Azacitidine",
+            "direct_transition": "End_Complications"
+        },
+        "End_Ivosidenib": {
+            "type": "MedicationEnd",
+            "medication_order": "Give_Ivosidenib",
+            "direct_transition": "End_Complications"
+        },
+
+        "End_Complications": {
+            "type": "Simple",
+            "remarks": ["End complication conditions. ConditionEnd is safe even if condition was never set."],
+            "direct_transition": "End_Febrile_Neutropenia"
+        },
+        "End_Febrile_Neutropenia": {
+            "type": "ConditionEnd",
+            "condition_onset": "Febrile_Neutropenia_Onset",
+            "direct_transition": "End_TLS"
+        },
+        "End_TLS": {
+            "type": "ConditionEnd",
+            "condition_onset": "Tumor_Lysis_Syndrome_Onset",
+            "direct_transition": "End_DIC"
+        },
+        "End_DIC": {
+            "type": "ConditionEnd",
+            "condition_onset": "DIC_Onset",
+            "direct_transition": "End_Subtype_Condition"
+        },
+        "End_Subtype_Condition": {
+            "type": "ConditionEnd",
+            "referenced_by_attribute": "aml_subtype_condition",
+            "direct_transition": "End_AML_Condition"
+        },
+        "End_AML_Condition": {
+            "type": "ConditionEnd",
+            "condition_onset": "AML_Condition_Onset",
+            "direct_transition": "End_Encounter"
+        },
+
+        "End_Encounter": {
+            "type": "EncounterEnd",
+            "discharge_disposition": {
+                "system": "NUBC",
+                "code": "1",
+                "display": "Discharge to Home"
+            },
+            "direct_transition": "Terminal"
+        },
+
+        "Terminal": {
+            "type": "Terminal"
         }
-      ]
-    },
-    "End_ATRA": {
-      "type": "MedicationEnd",
-      "medication_order": "Give_ATRA",
-      "direct_transition": "End_ATO"
-    },
-    "End_ATO": {
-      "type": "MedicationEnd",
-      "medication_order": "Give_ATO",
-      "direct_transition": "End_Complications"
-    },
-    "End_Midostaurin": {
-      "type": "MedicationEnd",
-      "medication_order": "Give_Midostaurin",
-      "direct_transition": "End_Complications"
-    },
-    "End_Gemtuzumab": {
-      "type": "MedicationEnd",
-      "medication_order": "Give_Gemtuzumab",
-      "direct_transition": "End_Complications"
-    },
-    "End_Venetoclax": {
-      "type": "MedicationEnd",
-      "medication_order": "Give_Venetoclax",
-      "direct_transition": "End_Azacitidine"
-    },
-    "End_Azacitidine": {
-      "type": "MedicationEnd",
-      "medication_order": "Give_Azacitidine",
-      "direct_transition": "End_Complications"
-    },
-    "End_Ivosidenib": {
-      "type": "MedicationEnd",
-      "medication_order": "Give_Ivosidenib",
-      "direct_transition": "End_Complications"
-    },
-
-    "End_Complications": {
-      "type": "Simple",
-      "remarks": ["End complication conditions. ConditionEnd is safe even if condition was never set."],
-      "direct_transition": "End_Febrile_Neutropenia"
-    },
-    "End_Febrile_Neutropenia": {
-      "type": "ConditionEnd",
-      "condition_onset": "Febrile_Neutropenia_Onset",
-      "direct_transition": "End_TLS"
-    },
-    "End_TLS": {
-      "type": "ConditionEnd",
-      "condition_onset": "Tumor_Lysis_Syndrome_Onset",
-      "direct_transition": "End_DIC"
-    },
-    "End_DIC": {
-      "type": "ConditionEnd",
-      "condition_onset": "DIC_Onset",
-      "direct_transition": "End_Subtype_Condition"
-    },
-    "End_Subtype_Condition": {
-      "type": "ConditionEnd",
-      "referenced_by_attribute": "aml_subtype_condition",
-      "direct_transition": "End_AML_Condition"
-    },
-    "End_AML_Condition": {
-      "type": "ConditionEnd",
-      "condition_onset": "AML_Condition_Onset",
-      "direct_transition": "End_Encounter"
-    },
-
-    "End_Encounter": {
-      "type": "EncounterEnd",
-      "discharge_disposition": {
-        "system": "NUBC",
-        "code": "1",
-        "display": "Discharge to Home"
-      },
-      "direct_transition": "Terminal"
-    },
-
-    "Terminal": {
-      "type": "Terminal"
     }
-  }
 }

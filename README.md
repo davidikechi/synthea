@@ -105,6 +105,11 @@ Generate graphical visualizations of Synthea<sup>TM</sup> rules and modules.
 ./gradlew graphviz
 ```
 
+### Running the AML-focused entrypoint
+```./run_synthea --aml -m aml_disease_model -p 1700 -gr 0.65 --exporter.csv.export=true -a 20-100 --exporter.baseDirectory=
+./aml3_output_folder/
+```
+
 ### Concepts and Attributes
 Generate a list of concepts (used in the records) or attributes (variables on each patient).
 ```

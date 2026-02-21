@@ -1,0 +1,20 @@
+{
+  "runID": "746c6bad-23bc-4c4d-82ca-174679952ebc",
+  "seed": 1771632572551,
+  "clinicianSeed": 1771632572551,
+  "referenceTime": "20260221",
+  "endTime": "20260221",
+  "version": "5d4d0d8ff\n",
+  "patientCount": 39,
+  "providerCount": 1327,
+  "payerCount": 9,
+  "javaVersion": "11.0.24",
+  "generate.thread_pool_size": -1,
+  "generatorThreads": 12,
+  "runStartTime": "2026-02-21T00:09:32Z",
+  "runTimeInSeconds": 23,
+  "exporter.years_of_history": "10",
+  "age": "20-100",
+  "state": "Massachusetts",
+  "modules": "aml_disease_model"
+}

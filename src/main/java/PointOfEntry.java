@@ -7,6 +7,7 @@ import java.util.Arrays;
  * Supported class selectors:
  * <ul>
  *   <li>{@code aml} -> {@link AcuteMyeloidLeukemiaApp}</li>
+ * // add more as expected in the future
  * </ul>
  */
 public final class PointOfEntry {
@@ -44,11 +45,12 @@ public final class PointOfEntry {
       App.main(args);
       return;
     }
-
+    // should you decide to pass the class name as --aml. This is actually called.
     if (className.equalsIgnoreCase("aml")) {
       AcuteMyeloidLeukemiaApp.main(args);
       return;
     }
+    // add more supported classes here as needed
 
     throw new IllegalArgumentException(
         "Unsupported class '" + className + "'. Supported values: " + Arrays.asList("aml"));

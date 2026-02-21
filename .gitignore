@@ -14,6 +14,12 @@ lib/custom/*.jar
 /failed_exports/
 /output/
 /out/
+**aml3_output_folder/**
+**aml2_output_folder/**
+**aml_output_folder/**
+**explain_document_aml.md**
+**explain_document.md**
+**synthea_module_guide.md**
 
 **/*.log
 
